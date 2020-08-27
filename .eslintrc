@@ -1,0 +1,50 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"react-app"
+	],
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"overrides": [
+		{
+			"files": "src/**/*.{js,jsx,ts,tsx}",
+			"rules": {
+				"@typescript-eslint/camelcase": "warn",
+				"@typescript-eslint/explicit-function-return-type": "off",
+				"@typescript-eslint/no-use-before-define": [
+					"error",
+					{
+						"functions": false,
+						"classes": true
+					}
+				]
+			}
+		},
+		{
+			"files": "src/**/*.{ts,tsx}",
+			"rules": {
+				"@typescript-eslint/member-ordering": "warn",
+				"@typescript-eslint/no-inferrable-types": "off",
+				"@typescript-eslint/no-explicit-any": "warn"
+			}
+		},
+		{
+			"files": "src/**/*.test.{js,ts,tsx}",
+			"rules": {
+				"@typescript-eslint/no-empty-function": "off",
+				"@typescript-eslint/no-var-requires": "off"
+			}
+		}
+	],
+	"rules": {
+		"curly": "warn",
+		"no-mixed-spaces-and-tabs": "off",
+		"no-restricted-imports": [
+			"error",
+			"rxjs/Rx"
+		],
+		"prefer-const": "warn"
+	}
+}

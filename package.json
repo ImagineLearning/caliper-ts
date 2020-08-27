@@ -1,0 +1,42 @@
+{
+	"name": "@imaginelearning/caliper-ts",
+	"version": "0.1.0",
+	"author": "Imagine Learning",
+	"license": "MIT",
+	"main": "dist/index.js",
+	"module": "dist/caliper-ts.esm.js",
+	"typings": "dist/index.d.ts",
+	"files": [
+		"dist",
+		"src"
+	],
+	"engines": {
+		"node": ">=10"
+	},
+	"scripts": {
+		"start": "tsdx watch",
+		"build": "tsdx build",
+		"test": "tsdx test",
+		"lint": "eslint \"src/**/*.{js,ts,tsx}\"",
+		"prepare": "tsdx build",
+		"format": "prettier --config .prettierrc --ignore-path \"node_modules/**\" --write \"**/*.{css,js,json,scss,ts,tsx}\""
+	},
+	"peerDependencies": {},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"devDependencies": {
+		"husky": "^4.2.5",
+		"lint-staged": "^10.2.13",
+		"prettier": "^2.1.1",
+		"pretty-quick": "^3.0.0",
+		"tsdx": "^0.13.3",
+		"tslib": "^2.0.1",
+		"typescript": "^4.0.2"
+	},
+	"lint-staged": {
+		"*.(css|js|json|scss|ts|tsx)": "pretty-quick --staged --config .prettierrc"
+	}
+}
