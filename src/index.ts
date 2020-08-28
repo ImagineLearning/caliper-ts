@@ -1,6 +1,4 @@
-export const sum = (a: number, b: number) => {
-	if ('development' === process.env.NODE_ENV) {
-		console.log('boop');
-	}
-	return a + b;
-};
+export { Config } from './config/config';
+export * from './clients/httpClient';
+export { Envelope, EnvelopeOptions } from './envelope';
+export * from './sensor';
