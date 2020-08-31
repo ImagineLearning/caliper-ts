@@ -2,11 +2,6 @@ import { httpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG } from './config/config';
 import { Sensor } from './sensor';
 
-jest.mock('ky', () => ({
-	__esModule: true,
-	default: {}
-}));
-
 describe('Sensor', () => {
 	let sensor: Sensor;
 

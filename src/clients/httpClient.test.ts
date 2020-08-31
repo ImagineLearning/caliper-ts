@@ -1,21 +1,20 @@
-import ky from 'ky';
+import fetchMock from 'jest-fetch-mock';
 import { createEnvelope } from '../envelope';
+import { parseRequestBody } from '../test/requestUtils';
 import { ClientOptions, httpClient, HttpClient } from './httpClient';
-
-jest.mock('ky', () => ({
-	__esModule: true,
-	default: { post: jest.fn() }
-}));
 
 describe('HttpClient', () => {
 	let client: HttpClient;
 
 	beforeEach(() => {
 		jest.resetAllMocks();
+		fetchMock.resetMocks();
+		fetchMock.once(JSON.stringify({ success: true }), { status: 200 });
 	});
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		fetchMock.mockRestore();
 	});
 
 	describe('class', () => {
@@ -45,20 +44,18 @@ describe('HttpClient', () => {
 				expect(client2).not.toBe(client);
 			});
 
-			it('adds "Authorization" header to request', () => {
-				(ky.post as jest.Mock).mockImplementation(() => Promise.resolve({ ok: true, json: jest.fn() }));
+			it('adds "Authorization" header to request', async () => {
 				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
-				client.bearer('my-token').send(envelope);
-				const { headers } = (ky.post as jest.Mock).mock.calls[0][1];
-				expect(headers['Authorization']).toBe('Bearer my-token');
+				await client.bearer('my-token').send(envelope);
+				const { headers } = fetchMock.mock.calls[0][0] as Request;
+				expect(headers.get('authorization')).toBe('Bearer my-token');
 			});
 
-			it('does not add "Authorization" header if no token specified', () => {
-				(ky.post as jest.Mock).mockImplementation(() => Promise.resolve({ ok: true, json: jest.fn() }));
+			it('does not add "Authorization" header if no token specified', async () => {
 				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
-				client.bearer().send(envelope);
-				const { headers } = (ky.post as jest.Mock).mock.calls[0][1];
-				expect(headers['Authorization']).toBeUndefined();
+				await client.bearer().send(envelope);
+				const { headers } = fetchMock.mock.calls[0][0] as Request;
+				expect(headers.get('authorization')).toBeNull();
 			});
 		});
 
@@ -69,13 +66,6 @@ describe('HttpClient', () => {
 		});
 
 		describe('send<T>(..)', () => {
-			let postMock: jest.Mock;
-
-			beforeEach(() => {
-				postMock = ky.post as jest.Mock;
-				postMock.mockImplementation(() => Promise.resolve({ ok: true, json: jest.fn() }));
-			});
-
 			it('throws error if envelope is empty', async () => {
 				let error: Error | undefined;
 				try {
@@ -90,22 +80,22 @@ describe('HttpClient', () => {
 			it('makes POST request to specified URL', async () => {
 				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
 				await client.send(envelope);
-				expect(postMock).toHaveBeenCalled();
-				expect(postMock.mock.calls[0][0]).toBe('https://example.com');
+				const { method, url } = fetchMock.mock.calls[0][0] as Request;
+				expect(method).toBe('POST');
+				expect(url).toBe('https://example.com/');
 			});
 
 			it('posts envelope as JSON payload', async () => {
 				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
 				await client.send(envelope);
-				expect(postMock).toHaveBeenCalled();
-				const { body } = postMock.mock.calls[0][1];
-				expect(body).toEqual(JSON.stringify(envelope));
+				const request = fetchMock.mock.calls[0][0] as Request;
+				const payload = await parseRequestBody(request);
+				expect(payload).toEqual(envelope);
 			});
 
 			it('throws error response', async () => {
-				const errorResponse = { ok: false } as Response;
-				postMock.mockClear();
-				postMock.mockImplementation(() => Promise.resolve(errorResponse));
+				fetchMock.mockRestore();
+				fetchMock.mockRejectOnce(new Error('Oops!'));
 				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
 				let error: Error | undefined;
 				try {
@@ -113,29 +103,12 @@ describe('HttpClient', () => {
 				} catch (err) {
 					error = err;
 				}
-				expect(error).toBe(errorResponse);
-			});
-
-			it('parses JSON response', async () => {
-				const jsonMock = jest.fn().mockImplementation(() => Promise.resolve({ hello: 'world' }));
-				postMock.mockClear();
-				postMock.mockImplementation(() => Promise.resolve({ ok: true, json: jsonMock }));
-				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
-				const response = await client.send(envelope);
-				expect(jsonMock).toHaveBeenCalled();
-				expect(response).toEqual({ hello: 'world' });
+				expect(error).toEqual(new Error('Oops!'));
 			});
 		});
 	});
 
 	describe('httpClient(..)', () => {
-		let postMock: jest.Mock;
-
-		beforeEach(() => {
-			postMock = ky.post as jest.Mock;
-			postMock.mockImplementation(() => Promise.resolve({ ok: true, json: jest.fn() }));
-		});
-
 		it('returns instance of HttpClient', () => {
 			const client = httpClient('id', 'https://example.com');
 			expect(client).toBeInstanceOf(HttpClient);
@@ -145,8 +118,8 @@ describe('HttpClient', () => {
 			const client = httpClient('id', 'https://example.com', 'my-token');
 			const envelope = createEnvelope({ data: [{ hello: 'world' }] });
 			await client.send(envelope);
-			const { headers } = (ky.post as jest.Mock).mock.calls[0][1];
-			expect(headers['Authorization']).toBe('Bearer my-token');
+			const { headers } = fetchMock.mock.calls[0][0] as Request;
+			expect(headers.get('authorization')).toBe('Bearer my-token');
 		});
 	});
 });
