@@ -4,5 +4,6 @@ module.exports = {
 		// Need to map to the UMD build of ky for tests, since Jest can't properly handle ES modules
 		'^ky$': require.resolve('ky').replace('index.js', 'umd.js')
 	},
-	setupFiles: ['<rootDir>/setupTests']
+	setupFiles: ['<rootDir>/setupTests'],
+	testResultsProcessor: 'jest-teamcity-reporter'
 };
