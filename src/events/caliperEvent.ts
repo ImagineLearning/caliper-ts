@@ -1,5 +1,7 @@
-import { CaliperEventType } from './caliperEventType';
+import { SoftwareApplication } from '../entities/agent/agent';
 import { Entity } from '../entities/entity';
+import { Session } from '../entities/session/session';
+import { CaliperEventType } from './caliperEventType';
 
 export interface CaliperEvent {
 	'@context'?: string;
@@ -7,15 +9,15 @@ export interface CaliperEvent {
 	type: CaliperEventType;
 	actor: Entity;
 	action: string;
-	object: {};
+	object: Entity | string;
 	eventTime?: string;
 	generated?: {};
 	target?: {};
 	referrer?: {};
-	edApp?: {};
+	edApp?: SoftwareApplication | string;
 	group?: {};
 	membership?: {};
-	session?: {};
+	session?: Session | string;
 	federatedSession?: {};
-	extensions?: {};
+	extensions?: Record<string, string>;
 }
