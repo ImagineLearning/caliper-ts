@@ -16,9 +16,9 @@
 	"scripts": {
 		"start": "tsdx watch",
 		"build": "tsdx build",
-		"test": "tsdx test",
+		"test": "tsdx test --watch",
+		"test:ci": "cross-env CI=true tsdx test --coverage",
 		"lint": "eslint \"src/**/*.{js,ts,tsx}\"",
-		"prepare": "tsdx build",
 		"format": "prettier --config .prettierrc --ignore-path \"node_modules/**\" --write \"**/*.{css,js,json,scss,ts,tsx}\""
 	},
 	"peerDependencies": {},
@@ -28,15 +28,23 @@
 		}
 	},
 	"devDependencies": {
+		"@types/text-encoding": "^0.0.35",
+		"cross-env": "^7.0.2",
 		"husky": "^4.2.5",
+		"jest-fetch-mock": "^3.0.3",
+		"jest-teamcity-reporter": "^0.9.0",
 		"lint-staged": "^10.2.13",
 		"prettier": "^2.1.1",
 		"pretty-quick": "^3.0.0",
+		"text-encoding": "^0.7.0",
 		"tsdx": "^0.13.3",
 		"tslib": "^2.0.1",
-		"typescript": "^4.0.2"
+		"typescript": "^3.9"
 	},
 	"lint-staged": {
 		"*.(css|js|json|scss|ts|tsx)": "pretty-quick --staged --config .prettierrc"
+	},
+	"dependencies": {
+		"ky": "^0.23.0"
 	}
 }
