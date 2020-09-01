@@ -1,5 +1,5 @@
 import fetchMock from 'jest-fetch-mock';
-import { createEnvelope } from '../envelope';
+import { createEnvelope, Envelope } from '../envelope';
 import { parseRequestBody } from '../test/requestUtils';
 import { ClientOptions, httpClient, HttpClient } from './httpClient';
 
@@ -69,7 +69,7 @@ describe('HttpClient', () => {
 			it('throws error if envelope is empty', async () => {
 				let error: Error | undefined;
 				try {
-					await client.send({});
+					await client.send({} as Envelope<never>);
 				} catch (err) {
 					error = err;
 				} finally {

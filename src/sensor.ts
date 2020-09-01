@@ -25,8 +25,7 @@ export class Sensor {
 		const sensor = opts.sensor || this.id;
 		const sendTime = opts.sendTime || new Date(Date.now()).toISOString();
 		const dataVersion = opts.dataVersion || DEFAULT_CONFIG.dataVersion;
-		const data = Array.isArray(opts.data) ? [...opts.data] : [opts.data];
-		return createEnvelope<T>({ sensor, sendTime, dataVersion, data });
+		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: opts.data });
 	}
 
 	getClient(id: string) {
