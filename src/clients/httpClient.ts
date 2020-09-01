@@ -3,7 +3,7 @@ import { Envelope } from '../envelope';
 
 export interface ClientOptions {
 	uri: string;
-	headers: Record<string, string | number>;
+	headers: Record<string, string>;
 }
 
 export class HttpClient {
@@ -31,16 +31,17 @@ export class HttpClient {
 		return this.id;
 	}
 
-	async send<T>(envelope: Envelope<T>) {
+	send<T>(envelope: Envelope<T>) {
 		if (Object.keys(envelope).length === 0) {
 			throw new Error('Chosen Requestor has not been registered.');
 		}
 
-		const response = await ky.post(this.options.uri, {
-			body: JSON.stringify(envelope),
-			headers: { ...this.options.headers, 'Content-Type': 'application/json' }
-		});
-		return await response.json();
+		return ky
+			.post(this.options.uri, {
+				json: envelope,
+				headers: this.options.headers
+			})
+			.json();
 	}
 }
 
