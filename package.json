@@ -18,6 +18,7 @@
 		"build": "tsdx build",
 		"test": "tsdx test --watch",
 		"test:ci": "cross-env CI=true tsdx test --coverage",
+		"test:coverage": "tsdx test --coverage",
 		"lint": "eslint \"src/**/*.{js,ts,tsx}\"",
 		"format": "prettier --config .prettierrc --ignore-path \"node_modules/**\" --write \"**/*.{css,js,json,scss,ts,tsx}\""
 	},
