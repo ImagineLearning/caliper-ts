@@ -1,4 +1,4 @@
-import { SoftwareApplication } from '../entities/agent/agent';
+import { SoftwareApplication } from '../entities/agent/softwareApplication';
 import { Entity } from '../entities/entity';
 import { Session } from '../entities/session/session';
 import { CaliperEventType } from './caliperEventType';

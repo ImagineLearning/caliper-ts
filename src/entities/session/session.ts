@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { Person } from '../agent/agent';
+import { Person } from '../agent/person';
 import { EntityType } from '../entityType';
 import { DEFAULT_CONFIG } from '../../config/config';
 

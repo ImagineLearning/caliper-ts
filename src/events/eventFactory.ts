@@ -3,5 +3,5 @@ import { getFormattedDateTime } from '../utils/dateUtils';
 import { CaliperEvent } from './caliperEvent';
 
 export function createEvent(delegate: CaliperEvent) {
-	return { '@context': DEFAULT_CONFIG.jsonldExternalCaliperContext, eventTime: getFormattedDateTime(), ...delegate } as CaliperEvent;
+	return { '@context': DEFAULT_CONFIG.jsonldContext.v1p1, eventTime: getFormattedDateTime(), ...delegate } as CaliperEvent;
 }

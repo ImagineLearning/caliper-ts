@@ -9,7 +9,7 @@ export abstract class Entity {
 	extensions?: Record<string, string>;
 	id: string;
 	name?: string;
-	type = EntityType.entity;
+	protected type = EntityType.entity;
 
 	constructor(entity?: Partial<Entity>) {
 		Object.keys(entity || {}).forEach(key => {
