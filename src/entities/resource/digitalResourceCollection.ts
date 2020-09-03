@@ -3,5 +3,5 @@ import { DigitalResource } from './digitalResource';
 
 export type DigitalResourceCollection = {
 	type: EntityType.digitalResourceCollection;
-	items: DigitalResource[];
+	items: DigitalResource[] | string[];
 } & DigitalResource;
