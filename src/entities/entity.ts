@@ -1,10 +1,21 @@
-export interface Entity {
+import { v4 } from 'uuid';
+import { EntityType } from './entityType';
+
+export abstract class Entity {
 	'@context'?: string;
-	id: string;
-	type: string;
-	name?: string;
-	description?: string;
 	dateCreated?: string;
 	dateModified?: string;
+	description?: string;
 	extensions?: Record<string, string>;
+	id: string;
+	name?: string;
+	type = EntityType.entity;
+
+	constructor(entity?: Partial<Entity>) {
+		Object.keys(entity || {}).forEach(key => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			(this as any)[key] = (entity as any)[key];
+		});
+		this.id = entity?.id ?? v4();
+	}
 }
