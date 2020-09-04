@@ -1,5 +1,5 @@
 import { DigitalResource } from './digitalResource';
 
-export interface DigitalResourceCollection extends DigitalResource {
+export type DigitalResourceCollection = {
 	items: DigitalResource[] | string[];
-}
+} & DigitalResource;

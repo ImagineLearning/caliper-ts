@@ -3,8 +3,8 @@ import { createSession } from './session';
 import caliperEntitySession from '../../caliper-spec/fixtures/v1p1/caliperEntitySession.json';
 import { createPerson } from '../agent/person';
 
-describe('createSession()', () => {
-	it('creates session entity that matches caliper json', () => {
+describe('Session Entity', () => {
+	it('createSession() creates session entity that matches caliper json', () => {
 		const person = createPerson({
 			id: 'https://example.edu/users/554433'
 		});

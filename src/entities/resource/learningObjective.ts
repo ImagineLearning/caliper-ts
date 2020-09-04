@@ -1,9 +1,11 @@
 import { Entity } from '../entity';
 import { EntityType } from '../entityType';
 
-export class LearningObjective extends Entity {
-	constructor(delegate?: Partial<LearningObjective>) {
-		super(delegate);
-		this.type = EntityType.learningObjective;
-	}
+export type LearningObjective = {} & Entity;
+
+export function createLearningObjective(delegate: LearningObjective): LearningObjective {
+	return {
+		...delegate,
+		type: EntityType.learningObjective
+	} as LearningObjective;
 }
