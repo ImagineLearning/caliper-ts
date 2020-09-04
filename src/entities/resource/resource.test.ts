@@ -7,7 +7,7 @@ import caliperEntityAttempt from '../../caliper-spec/fixtures/v1p1/caliperEntity
 
 import { createAssessment } from './assessment';
 import { createAssessmentItem } from './assessmentItem';
-import { createAssignableDigitalResource } from './AssignableDigitalResource';
+import { createAssignableDigitalResource } from './assignableDigitalResource';
 import { createLearningObjective } from './learningObjective';
 import { createDigitalResource } from './digitalResource';
 import { createPerson } from '../agent/person';
