@@ -24,7 +24,7 @@ describe('createEvent(..)', () => {
 		});
 
 		expect(event).toEqual({
-			'@context': DEFAULT_CONFIG.jsonldExternalCaliperContext,
+			'@context': DEFAULT_CONFIG.jsonldContext.v1p1,
 			eventTime: '2020-09-02T12:00:00.000Z',
 			type: 'SessionEvent',
 			action: 'LoggedIn',

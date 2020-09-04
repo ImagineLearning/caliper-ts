@@ -2,14 +2,16 @@
 import caliperEntityAssessment from '../../caliper-spec/fixtures/v1p1/caliperEntityAssessment.json';
 import caliperEntityAssignableDigitalResource from '../../caliper-spec/fixtures/v1p1/caliperEntityAssignableDigitalResource.json';
 import caliperEntityLearningObjective from '../../caliper-spec/fixtures/v1p1/caliperEntityLearningObjective.json';
-// import caliperEntityDigitalResource from '../../caliper-spec/fixtures/v1p1/caliperEntityDigitalResource.json';
+import caliperEntityDigitalResource from '../../caliper-spec/fixtures/v1p1/caliperEntityDigitalResource.json';
 
 import { createAssessment } from './assessment';
 import { createAssessmentItem } from './assessmentItem';
 import { createAssignableDigitalResource } from './AssignableDigitalResource';
 import { createLearningObjective } from './learningObjective';
-// import { createDigitalResource } from './digitalResource';
-// import { createPerson } from '../agent/person';
+import { createDigitalResource } from './digitalResource';
+import { createPerson } from '../agent/person';
+import { createDigitalResourceCollection } from './digitalResourceCollection';
+import { createCourseSection } from '../agent/courseSelection';
 
 describe('Resource Entities', () => {
 	it('createAssessment() creates assessment entity that matches expected json', () => {
@@ -81,16 +83,20 @@ describe('Resource Entities', () => {
 		expect(assignableDigitalResource).toEqual(caliperEntityLearningObjective);
 	});
 
-	// it('createDigitalResource() creates digital resource entity that matches expected json', () => {
-	// 	const digitalResource = createDigitalResource({
-	// 		dateCreated: '2016-08-02T11:32:00.000Z',
-	// 		id: 'https://example.edu/terms/201601/courses/7/sections/1/resources/1/syllabus.pdf',
-	// 		creators: [createPerson({ id: 'https://example.edu/users/223344' })],
-	// 		mediaType: 'application/pdf',
-	// 		name: 'Course Syllabus',
-	// 		isPartOf:
-	// 	});
+	it('createDigitalResource() creates digital resource entity that matches expected json', () => {
+		const digitalResource = createDigitalResource({
+			dateCreated: '2016-08-02T11:32:00.000Z',
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/resources/1/syllabus.pdf',
+			creators: [createPerson({ id: 'https://example.edu/users/223344' })],
+			mediaType: 'application/pdf',
+			name: 'Course Syllabus',
+			isPartOf: createDigitalResourceCollection({
+				id: 'https://example.edu/terms/201601/courses/7/sections/1/resources/1',
+				name: 'Course Assets',
+				isPartOf: createCourseSection({ id: 'https://example.edu/terms/201601/courses/7/sections/1' })
+			})
+		});
 
-	// 	expect(digitalResource).toEqual(caliperEntityDigitalResource);
-	// });
+		expect(digitalResource).toEqual(caliperEntityDigitalResource);
+	});
 });
