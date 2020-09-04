@@ -1,7 +1,7 @@
+import { v4 } from 'uuid';
+import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { CourseOffering } from './courseOffering';
-import { JsonLdContextVersion, DEFAULT_CONFIG } from '../../config/config';
-import { v4 } from 'uuid';
 
 export type CourseSection = {
 	courseNumber?: string;
@@ -11,14 +11,16 @@ export type CourseSection = {
 	category?: string;
 } & CourseOffering;
 
+export type CourseSectionParams = Omit<Partial<CourseSection>, '@context' | 'type'>;
+
 export function createCourseSection(
-	delegate: Partial<CourseSection>,
+	delegate: CourseSectionParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): CourseSection {
 	return {
 		...delegate,
 		id: delegate.id ?? v4(),
-		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion],
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.courseSection
 	} as CourseSection;
 }

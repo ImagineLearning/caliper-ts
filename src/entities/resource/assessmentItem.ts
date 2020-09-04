@@ -1,22 +1,24 @@
-import { AssignableDigitalResource } from './assignableDigitalResource';
+import { v4 } from 'uuid';
+import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { Entity } from '../entity';
 import { EntityType } from '../entityType';
-import { v4 } from 'uuid';
-import { JsonLdContextVersion, DEFAULT_CONFIG } from '../../config/config';
+import { AssignableDigitalResource } from './assignableDigitalResource';
 
 export type AssessmentItem = {
 	isTimeDependent?: boolean;
 } & Entity &
 	AssignableDigitalResource;
 
+export type AssessmentItemParams = Omit<Partial<AssessmentItem>, '@context' | 'type'>;
+
 export function createAssessmentItem(
-	delegate: Partial<AssessmentItem>,
+	delegate: AssessmentItemParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): AssessmentItem {
 	return {
 		...delegate,
 		id: delegate.id ?? v4(),
-		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion],
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.assessmentItem
 	} as AssessmentItem;
 }

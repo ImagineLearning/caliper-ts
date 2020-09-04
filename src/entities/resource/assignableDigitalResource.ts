@@ -1,7 +1,7 @@
-import { DigitalResource } from './digitalResource';
-import { DEFAULT_CONFIG, JsonLdContextVersion } from '../../config/config';
-import { EntityType } from '../entityType';
 import { v4 } from 'uuid';
+import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
+import { EntityType } from '../entityType';
+import { DigitalResource } from './digitalResource';
 
 export type AssignableDigitalResource = {
 	dateToActivate?: string;
@@ -13,14 +13,16 @@ export type AssignableDigitalResource = {
 	maxScore?: number;
 } & DigitalResource;
 
+export type AssignableDigitalResourceParams = Omit<Partial<AssignableDigitalResource>, '@context' | 'type'>;
+
 export function createAssignableDigitalResource(
-	delegate: Partial<AssignableDigitalResource>,
+	delegate: AssignableDigitalResourceParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): AssignableDigitalResource {
 	return {
 		...delegate,
 		id: delegate.id ?? v4(),
-		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion],
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.assignableDigitalResource
 	} as AssignableDigitalResource;
 }

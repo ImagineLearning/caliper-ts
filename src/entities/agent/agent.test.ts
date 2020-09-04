@@ -1,24 +1,22 @@
 // import { DEFAULT_CONFIG } from '../config/config';
-import caliperEntityPerson from '../../caliper-spec/fixtures/v1p1/caliperEntityPerson.json';
-import caliperEntitySoftwareApplication from '../../caliper-spec/fixtures/v1p1/caliperEntitySoftwareApplication.json';
 import caliperEntityCourseOffering from '../../caliper-spec/fixtures/v1p1/caliperEntityCourseOffering.json';
 import caliperEntityCourseSection from '../../caliper-spec/fixtures/v1p1/caliperEntityCourseSection.json';
 import caliperEntityOrganization from '../../caliper-spec/fixtures/v1p1/caliperEntityOrganization.json';
-
-import { createPerson } from './person';
-import { DEFAULT_CONFIG, JsonLdContextVersion } from '../../config/config';
-import { createSoftwareApplication } from './softwareApplication';
+import caliperEntityPerson from '../../caliper-spec/fixtures/v1p1/caliperEntityPerson.json';
+import caliperEntitySoftwareApplication from '../../caliper-spec/fixtures/v1p1/caliperEntitySoftwareApplication.json';
+import { JsonLdContextVersion } from '../../config/config';
 import { createCourseOffering } from './courseOffering';
 import { createCourseSection } from './courseSection';
 import { createOrganization } from './organization';
+import { createPerson } from './person';
+import { createSoftwareApplication } from './softwareApplication';
 
 describe('Agent Entities', () => {
 	it('person entity matches expected json', () => {
 		const person = createPerson({
 			dateCreated: '2016-08-01T06:00:00.000Z',
 			dateModified: '2016-09-02T11:30:00.000Z',
-			id: 'https://example.edu/users/554433',
-			'@context': DEFAULT_CONFIG.jsonldContext.v1p1
+			id: 'https://example.edu/users/554433'
 		});
 
 		expect(person).toEqual(caliperEntityPerson);

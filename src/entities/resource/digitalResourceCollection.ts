@@ -1,20 +1,22 @@
-import { DigitalResource } from './digitalResource';
-import { EntityType } from '../entityType';
-import { JsonLdContextVersion, DEFAULT_CONFIG } from '../../config/config';
 import { v4 } from 'uuid';
+import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
+import { EntityType } from '../entityType';
+import { DigitalResource } from './digitalResource';
 
 export type DigitalResourceCollection = {
 	items?: DigitalResource[] | string[];
 } & DigitalResource;
 
+export type DigitalResourceCollectionParams = Omit<Partial<DigitalResourceCollection>, '@context' | 'type'>;
+
 export function createDigitalResourceCollection(
-	delegate: Partial<DigitalResourceCollection>,
+	delegate: DigitalResourceCollectionParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): DigitalResourceCollection {
 	return {
 		...delegate,
 		id: delegate.id ?? v4(),
-		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion],
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.digitalResourceCollection
 	} as DigitalResourceCollection;
 }

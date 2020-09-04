@@ -1,18 +1,20 @@
+import { v4 } from 'uuid';
+import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { Entity } from '../entity';
 import { EntityType } from '../entityType';
-import { JsonLdContextVersion, DEFAULT_CONFIG } from '../../config/config';
-import { v4 } from 'uuid';
 
 export type LearningObjective = {} & Entity;
 
+export type LearningObjectiveParams = Omit<Partial<LearningObjective>, '@context' | 'type'>;
+
 export function createLearningObjective(
-	delegate: Partial<LearningObjective>,
+	delegate: LearningObjectiveParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): LearningObjective {
 	return {
 		...delegate,
 		id: delegate.id ?? v4(),
-		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion],
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.learningObjective
 	} as LearningObjective;
 }

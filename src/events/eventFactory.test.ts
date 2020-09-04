@@ -1,5 +1,4 @@
 import { Action } from '../actions/actions';
-import { DEFAULT_CONFIG } from '../config/config';
 import { Entity } from '../entities/entity';
 import { CaliperEventType } from './caliperEventType';
 import { createEvent } from './eventFactory';
@@ -24,7 +23,7 @@ describe('createEvent(..)', () => {
 		});
 
 		expect(event).toEqual({
-			'@context': DEFAULT_CONFIG.jsonldContext.v1p1,
+			'@context': 'http://purl.imsglobal.org/ctx/caliper/v1p1',
 			eventTime: '2020-09-02T12:00:00.000Z',
 			type: 'SessionEvent',
 			action: 'LoggedIn',

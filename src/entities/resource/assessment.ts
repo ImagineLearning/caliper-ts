@@ -1,19 +1,19 @@
 // import { EntityType } from '../entityType';
-import { JsonLdContextVersion, DEFAULT_CONFIG } from '../../config/config';
-import { DigitalResourceCollection } from './digitalResourceCollection';
-import { AssignableDigitalResource } from './assignableDigitalResource';
+import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { Entity } from '../entity';
 import { EntityType } from '../entityType';
+import { AssessmentItem } from './assessmentItem';
+import { AssignableDigitalResource } from './assignableDigitalResource';
+import { DigitalResourceCollection } from './digitalResourceCollection';
 
 export type Assessment = {} & Entity & DigitalResourceCollection & AssignableDigitalResource;
 
-export function createAssessment(
-	delegate: Partial<Assessment>,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
-): Assessment {
+export type AssessmentParams = Omit<Partial<AssessmentItem>, '@context' | 'type'>;
+
+export function createAssessment(delegate: AssessmentParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Assessment {
 	return {
 		...delegate,
-		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion],
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.assessment
 	} as Assessment;
 }
