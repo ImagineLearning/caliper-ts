@@ -1,6 +1,6 @@
 // import { EntityType } from '../entityType';
 import { DigitalResourceCollection } from './digitalResourceCollection';
-import { AssignableDigitalResource } from './AssignableDigitalResource';
+import { AssignableDigitalResource } from './assignableDigitalResource';
 import { Entity } from '../entity';
 import { DEFAULT_CONFIG } from '../../config/config';
 import { EntityType } from '../entityType';

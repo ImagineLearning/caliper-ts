@@ -10,6 +10,6 @@ export function createSoftwareApplication(delegate: SoftwareApplication): Softwa
 	return {
 		...delegate,
 		'@context': DEFAULT_CONFIG.jsonldContext.v1p1,
-		id: EntityType.softwareApplication
+		type: EntityType.softwareApplication
 	} as SoftwareApplication;
 }

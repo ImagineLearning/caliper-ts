@@ -11,7 +11,7 @@ import { createLearningObjective } from './learningObjective';
 import { createDigitalResource } from './digitalResource';
 import { createPerson } from '../agent/person';
 import { createDigitalResourceCollection } from './digitalResourceCollection';
-import { createCourseSection } from '../agent/courseSelection';
+import { createCourseSection } from '../agent/courseSection';
 
 describe('Resource Entities', () => {
 	it('createAssessment() creates assessment entity that matches expected json', () => {

@@ -3,7 +3,7 @@ export * from './clients/httpClient';
 export { Config } from './config/config';
 export * from './entities/agent/agent';
 export * from './entities/agent/courseOffering';
-export * from './entities/agent/courseSelection';
+export * from './entities/agent/courseSection';
 export * from './entities/agent/organization';
 export * from './entities/agent/person';
 export * from './entities/agent/softwareApplication';
