@@ -1,3 +1,3 @@
 import { Entity } from '../entity';
 
-export class Agent extends Entity {}
+export type Agent = Entity;
