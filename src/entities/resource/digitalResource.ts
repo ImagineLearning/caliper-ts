@@ -3,7 +3,7 @@ import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../co
 import { Agent } from '../agent/agent';
 import { Entity } from '../entity';
 import { EntityType } from '../entityType';
-import { LearningObjective } from './LearningObjective';
+import { LearningObjective } from './learningObjective';
 
 export type DigitalResource = {
 	mediaType?: string;
