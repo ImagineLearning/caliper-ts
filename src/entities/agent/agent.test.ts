@@ -6,7 +6,7 @@ import caliperEntityCourseSection from '../../caliper-spec/fixtures/v1p1/caliper
 import caliperEntityOrganization from '../../caliper-spec/fixtures/v1p1/caliperEntityOrganization.json';
 
 import { createPerson } from './person';
-import { DEFAULT_CONFIG } from '../../config/config';
+import { DEFAULT_CONFIG, JsonLdContextVersion } from '../../config/config';
 import { createSoftwareApplication } from './softwareApplication';
 import { createCourseOffering } from './courseOffering';
 import { createCourseSection } from './courseSection';
@@ -37,10 +37,12 @@ describe('Agent Entities', () => {
 
 	it('organization entity matches expected json', () => {
 		const organization = createOrganization({
-			'@context': DEFAULT_CONFIG.jsonldContext.v1p1,
 			id: 'https://example.edu/colleges/1/depts/1',
 			name: 'Computer Science Department',
-			subOrganizationOf: createOrganization({ id: 'https://example.edu/colleges/1', name: 'College of Engineering' })
+			subOrganizationOf: createOrganization(
+				{ id: 'https://example.edu/colleges/1', name: 'College of Engineering' },
+				JsonLdContextVersion.none
+			)
 		});
 
 		expect(organization).toEqual(caliperEntityOrganization);
@@ -48,7 +50,6 @@ describe('Agent Entities', () => {
 
 	it('courseOffering entity matches expected json', () => {
 		const courseOffering = createCourseOffering({
-			'@context': DEFAULT_CONFIG.jsonldContext.v1p1,
 			id: 'https://example.edu/terms/201601/courses/7',
 			academicSession: 'Fall 2016',
 			courseNumber: 'CPS 435',
@@ -62,17 +63,19 @@ describe('Agent Entities', () => {
 
 	it('courseSelection entity matches expected json', () => {
 		const courseSelection = createCourseSection({
-			'@context': DEFAULT_CONFIG.jsonldContext.v1p1,
 			id: 'https://example.edu/terms/201601/courses/7/sections/1',
 			category: 'seminar',
 			courseNumber: 'CPS 435-01',
 			dateCreated: '2016-08-01T06:00:00.000Z',
 			name: 'CPS 435 Learning Analytics, Section 01',
 			academicSession: 'Fall 2016',
-			subOrganizationOf: createCourseOffering({
-				courseNumber: 'CPS 435',
-				id: 'https://example.edu/terms/201601/courses/7'
-			})
+			subOrganizationOf: createCourseOffering(
+				{
+					courseNumber: 'CPS 435',
+					id: 'https://example.edu/terms/201601/courses/7'
+				},
+				JsonLdContextVersion.none
+			)
 		});
 
 		expect(courseSelection).toEqual(caliperEntityCourseSection);

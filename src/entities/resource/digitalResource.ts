@@ -2,7 +2,8 @@ import { Agent } from '../agent/agent';
 import { Entity } from '../entity';
 import { LearningObjective } from './LearningObjective';
 import { EntityType } from '../entityType';
-import { DEFAULT_CONFIG } from '../../config/config';
+import { JsonLdContextVersion, DEFAULT_CONFIG } from '../../config/config';
+import { v4 } from 'uuid';
 
 export type DigitalResource = {
 	mediaType?: string;
@@ -14,10 +15,14 @@ export type DigitalResource = {
 	version?: string;
 } & Entity;
 
-export function createDigitalResource(delegate: DigitalResource): DigitalResource {
+export function createDigitalResource(
+	delegate: Partial<DigitalResource>,
+	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
+): DigitalResource {
 	return {
 		...delegate,
 		type: EntityType.digitalResource,
-		'@context': DEFAULT_CONFIG.jsonldContext.v1p1
+		id: delegate.id ?? v4(),
+		'@context': DEFAULT_CONFIG.jsonldContext[contextVersion]
 	} as DigitalResource;
 }

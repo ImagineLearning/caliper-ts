@@ -1,4 +1,5 @@
 export enum JsonLdContextVersion {
+	none = 'none',
 	v1p0 = 'v1p0',
 	v1p1 = 'v1p1',
 	v1p1_feedback = 'v1p1_feedback',
@@ -14,7 +15,7 @@ export interface Config {
 	dataFormat: string;
 	dataVersion: string;
 	dateTimeFormat: string;
-	jsonldContext: Record<JsonLdContextVersion, string>;
+	jsonldContext: Record<JsonLdContextVersion, string | undefined>;
 	testFixturesBaseDir?: Record<string, string>;
 	uuidVersion: number;
 }
@@ -24,6 +25,7 @@ export const DEFAULT_CONFIG: Config = {
 	dataVersion: 'http://purl.imsglobal.org/ctx/caliper/v1p1',
 	dateTimeFormat: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 	jsonldContext: {
+		none: undefined,
 		v1p0: 'http://purl.imsglobal.org/ctx/caliper/v1/Context',
 		v1p1: 'http://purl.imsglobal.org/ctx/caliper/v1p1',
 		v1p1_feedback: 'http://purl.imsglobal.org/ctx/caliper/v1p1/FeedbackProfile-extension',

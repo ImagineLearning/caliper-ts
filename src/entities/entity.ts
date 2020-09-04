@@ -3,7 +3,7 @@ import { EntityType } from './entityType';
 
 export type Entity = {
 	'@context'?: string;
-	type?: EntityType;
+	type: EntityType;
 	id: string;
 	name?: string;
 	description?: string;

@@ -2,12 +2,16 @@
 import { createSession } from './session';
 import caliperEntitySession from '../../caliper-spec/fixtures/v1p1/caliperEntitySession.json';
 import { createPerson } from '../agent/person';
+import { JsonLdContextVersion } from '../../config/config';
 
 describe('Session Entity', () => {
 	it('createSession() creates session entity that matches caliper json', () => {
-		const person = createPerson({
-			id: 'https://example.edu/users/554433'
-		});
+		const person = createPerson(
+			{
+				id: 'https://example.edu/users/554433'
+			},
+			JsonLdContextVersion.none
+		);
 
 		const session = createSession({
 			id: 'https://example.edu/sessions/1f6442a482de72ea6ad134943812bff564a76259',
