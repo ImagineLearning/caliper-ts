@@ -5,7 +5,7 @@ import { CaliperEventType } from './caliperEventType';
 import { JsonLdContextVersion } from '../config/config';
 
 export type SessionEvent = {
-	action: Action.loggedIn | Action.loggedOut | Action.timedOut;
+	action: Action.LoggedIn | Action.LoggedOut | Action.TimedOut;
 } & CaliperEvent;
 
 export type SessionEventParams = Omit<SessionEvent, '@context' | 'type'>;

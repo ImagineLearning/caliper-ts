@@ -20,7 +20,7 @@ export function createAssignableDigitalResource(
 ): AssignableDigitalResource {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.assignableDigitalResource,
+		type: EntityType.AssignableDigitalResource,
 		...delegate
 	} as AssignableDigitalResource;
 }

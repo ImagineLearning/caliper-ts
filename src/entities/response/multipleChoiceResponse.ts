@@ -14,7 +14,7 @@ export function createMultipleChoiceResponse(
 ): MultipleChoiceResponse {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.multipleChoiceResponse,
+		type: EntityType.MultipleChoiceResponse,
 		...delegate
 	} as MultipleChoiceResponse;
 }

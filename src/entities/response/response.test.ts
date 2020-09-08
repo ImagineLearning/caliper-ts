@@ -39,7 +39,7 @@ describe('Response Entities', () => {
 						},
 						isPartOf: {
 							id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1',
-							type: EntityType.assessment
+							type: EntityType.Assessment
 						}
 					})
 				},

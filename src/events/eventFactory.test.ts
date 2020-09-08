@@ -16,7 +16,7 @@ describe('createEvent(..)', () => {
 		jest.spyOn(Date, 'now').mockImplementation(() => Date.parse('2020-09-02T12:00:00.000Z'));
 		const event = createEvent({
 			type: CaliperEventType.session,
-			action: Action.loggedIn,
+			action: Action.LoggedIn,
 			actor: {} as Entity,
 			id: 'event-id',
 			object: 'object-id'

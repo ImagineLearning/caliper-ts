@@ -14,7 +14,7 @@ export function createSoftwareApplication(
 ): SoftwareApplication {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.softwareApplication,
+		type: EntityType.SoftwareApplication,
 		...delegate
 	} as SoftwareApplication;
 }

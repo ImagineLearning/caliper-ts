@@ -19,7 +19,7 @@ export type AttemptParams = Omit<Attempt, '@context' | 'type'>;
 export function createAttempt(delegate: AttemptParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Attempt {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.attempt,
+		type: EntityType.Attempt,
 		...delegate
 	} as Attempt;
 }

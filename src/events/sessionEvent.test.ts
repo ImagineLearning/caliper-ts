@@ -14,7 +14,7 @@ describe('Session Events', () => {
 	it('Session event logged in matches expected json', () => {
 		const sessionEvent = createSessionEvent({
 			id: 'urn:uuid:fcd495d0-3740-4298-9bec-1154571dc211',
-			action: Action.loggedIn,
+			action: Action.LoggedIn,
 			actor: createPerson({ id: 'https://example.edu/users/554433' }),
 			object: createSoftwareApplication({ id: 'https://example.edu', version: 'v2' }, JsonLdContextVersion.none),
 			edApp: 'https://example.edu',
@@ -36,7 +36,7 @@ describe('Session Events', () => {
 	it('Session event logged out matches expected json', () => {
 		const sessionEvent = createSessionEvent({
 			id: 'urn:uuid:a438f8ac-1da3-4d48-8c86-94a1b387e0f6',
-			action: Action.loggedOut,
+			action: Action.LoggedOut,
 			actor: createPerson({ id: 'https://example.edu/users/554433' }),
 			object: createSoftwareApplication({ id: 'https://example.edu', version: 'v2' }, JsonLdContextVersion.none),
 			edApp: 'https://example.edu',
@@ -60,7 +60,7 @@ describe('Session Events', () => {
 	it('Session event timed out matches expected json', () => {
 		const sessionEvent = createSessionEvent({
 			id: 'urn:uuid:4e61cf6c-ffbe-45bc-893f-afe7ad4079dc',
-			action: Action.timedOut,
+			action: Action.TimedOut,
 			actor: createSoftwareApplication({ id: 'https://example.edu' }, JsonLdContextVersion.none),
 			object: createSession(
 				{

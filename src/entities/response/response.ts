@@ -14,7 +14,7 @@ export type ResponseParams = Omit<Response, '@context' | 'type'>;
 export function createResponse(delegate: ResponseParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Response {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.response,
+		type: EntityType.Response,
 		...delegate
 	} as Response;
 }

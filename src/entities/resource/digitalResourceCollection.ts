@@ -14,7 +14,7 @@ export function createDigitalResourceCollection(
 ): DigitalResourceCollection {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.digitalResourceCollection,
+		type: EntityType.DigitalResourceCollection,
 		...delegate
 	} as DigitalResourceCollection;
 }

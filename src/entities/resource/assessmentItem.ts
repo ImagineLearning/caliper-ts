@@ -16,7 +16,7 @@ export function createAssessmentItem(
 ): AssessmentItem {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.assessmentItem,
+		type: EntityType.AssessmentItem,
 		...delegate
 	} as AssessmentItem;
 }

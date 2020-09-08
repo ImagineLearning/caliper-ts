@@ -12,7 +12,7 @@ export function createLearningObjective(
 ): LearningObjective {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.learningObjective,
+		type: EntityType.LearningObjective,
 		...delegate
 	} as LearningObjective;
 }

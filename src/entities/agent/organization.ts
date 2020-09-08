@@ -15,7 +15,7 @@ export function createOrganization(
 ): Organization {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.organization,
+		type: EntityType.Organization,
 		...delegate
 	} as Organization;
 }
