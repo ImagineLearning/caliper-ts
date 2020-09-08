@@ -8,8 +8,8 @@ export type PersonParams = Omit<Person, '@context' | 'type'>;
 
 export function createPerson(delegate: PersonParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Person {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.person
+		type: EntityType.person,
+		...delegate
 	} as Person;
 }

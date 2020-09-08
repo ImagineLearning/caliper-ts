@@ -13,8 +13,8 @@ export function createSoftwareApplication(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): SoftwareApplication {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.softwareApplication
+		type: EntityType.softwareApplication,
+		...delegate
 	} as SoftwareApplication;
 }

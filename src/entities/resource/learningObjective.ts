@@ -11,8 +11,8 @@ export function createLearningObjective(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): LearningObjective {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.learningObjective
+		type: EntityType.learningObjective,
+		...delegate
 	} as LearningObjective;
 }

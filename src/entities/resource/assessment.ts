@@ -11,8 +11,8 @@ export type AssessmentParams = Omit<Assessment, '@context' | 'type'>;
 
 export function createAssessment(delegate: AssessmentParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.assessment
+		type: EntityType.assessment,
+		...delegate
 	} as Assessment;
 }

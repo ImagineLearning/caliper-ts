@@ -21,8 +21,8 @@ export function createDigitalResource(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): DigitalResource {
 	return {
-		...delegate,
 		type: EntityType.digitalResource,
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion)
+		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
+		...delegate
 	} as DigitalResource;
 }

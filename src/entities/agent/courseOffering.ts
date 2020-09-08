@@ -14,8 +14,8 @@ export function createCourseOffering(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): CourseOffering {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.courseOffering
+		type: EntityType.courseOffering,
+		...delegate
 	} as CourseOffering;
 }

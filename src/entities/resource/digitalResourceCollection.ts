@@ -13,8 +13,8 @@ export function createDigitalResourceCollection(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): DigitalResourceCollection {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.digitalResourceCollection
+		type: EntityType.digitalResourceCollection,
+		...delegate
 	} as DigitalResourceCollection;
 }

@@ -19,8 +19,8 @@ export function createAssignableDigitalResource(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): AssignableDigitalResource {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.assignableDigitalResource
+		type: EntityType.assignableDigitalResource,
+		...delegate
 	} as AssignableDigitalResource;
 }

@@ -17,8 +17,8 @@ export function createCourseSection(
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): CourseSection {
 	return {
-		...delegate,
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.courseSection
+		type: EntityType.courseSection,
+		...delegate
 	} as CourseSection;
 }
