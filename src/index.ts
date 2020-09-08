@@ -18,7 +18,7 @@ export * from './entities/response/response';
 export * from './entities/response/multipleChoiceResponse';
 export * from './entities/session/session';
 export { Envelope, EnvelopeOptions } from './envelope';
-export * from './events/Event';
+export * from './events/event';
 export * from './events/eventType';
 export * from './events/sessionEvent';
 export * from './sensor';

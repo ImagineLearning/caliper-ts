@@ -1,5 +1,5 @@
 import { Action } from '../actions/actions';
-import { Event } from './Event';
+import { Event } from './event';
 import { createEvent } from './eventFactory';
 import { EventType } from './eventType';
 import { JsonLdContextVersion } from '../config/config';

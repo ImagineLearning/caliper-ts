@@ -1,6 +1,6 @@
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../config/config';
 import { getFormattedDateTime } from '../utils/dateUtils';
-import { Event } from './Event';
+import { Event } from './event';
 
 export function createEvent<T extends Event>(
 	delegate: Omit<T, '@context'>,
