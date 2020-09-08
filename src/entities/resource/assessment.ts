@@ -7,7 +7,7 @@ import { DigitalResourceCollection } from './digitalResourceCollection';
 
 export type Assessment = Entity & DigitalResourceCollection & AssignableDigitalResource;
 
-export type AssessmentParams = Omit<Partial<Assessment>, '@context' | 'type'>;
+export type AssessmentParams = Omit<Assessment, '@context' | 'type'>;
 
 export function createAssessment(delegate: AssessmentParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
 	return {

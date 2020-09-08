@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { CourseOffering } from './courseOffering';
@@ -11,7 +10,7 @@ export type CourseSection = {
 	category?: string;
 } & CourseOffering;
 
-export type CourseSectionParams = Omit<Partial<CourseSection>, '@context' | 'type'>;
+export type CourseSectionParams = Omit<CourseSection, '@context' | 'type'>;
 
 export function createCourseSection(
 	delegate: CourseSectionParams,
@@ -19,7 +18,6 @@ export function createCourseSection(
 ): CourseSection {
 	return {
 		...delegate,
-		id: delegate.id ?? v4(),
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.courseSection
 	} as CourseSection;

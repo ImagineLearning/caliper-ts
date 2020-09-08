@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { Person } from '../agent/person';
 import { Entity } from '../entity';
@@ -11,11 +10,10 @@ export type Session = {
 	duration?: number;
 } & Entity;
 
-export type SessionParams = Omit<Partial<Session>, '@context' | 'type'>;
+export type SessionParams = Omit<Session, '@context' | 'type'>;
 
 export function createSession(delegate: SessionParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Session {
 	return {
-		id: delegate.id ?? v4(),
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.session,
 		...delegate

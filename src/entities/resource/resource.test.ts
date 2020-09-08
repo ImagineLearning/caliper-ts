@@ -28,18 +28,9 @@ describe('Resource Entities', () => {
 			dateToSubmit: '2016-09-28T11:59:59.000Z',
 			id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1',
 			items: [
-				createAssessmentItem(
-					{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1' },
-					JsonLdContextVersion.none
-				),
-				createAssessmentItem(
-					{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2' },
-					JsonLdContextVersion.none
-				),
-				createAssessmentItem(
-					{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3' },
-					JsonLdContextVersion.none
-				)
+				createAssessmentItem({ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1' }),
+				createAssessmentItem({ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2' }),
+				createAssessmentItem({ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3' })
 			],
 			maxAttempts: 2,
 			maxScore: 15,

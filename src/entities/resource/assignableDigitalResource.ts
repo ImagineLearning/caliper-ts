@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { DigitalResource } from './digitalResource';
@@ -13,7 +12,7 @@ export type AssignableDigitalResource = {
 	maxScore?: number;
 } & DigitalResource;
 
-export type AssignableDigitalResourceParams = Omit<Partial<AssignableDigitalResource>, '@context' | 'type'>;
+export type AssignableDigitalResourceParams = Omit<AssignableDigitalResource, '@context' | 'type'>;
 
 export function createAssignableDigitalResource(
 	delegate: AssignableDigitalResourceParams,
@@ -21,7 +20,6 @@ export function createAssignableDigitalResource(
 ): AssignableDigitalResource {
 	return {
 		...delegate,
-		id: delegate.id ?? v4(),
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.assignableDigitalResource
 	} as AssignableDigitalResource;

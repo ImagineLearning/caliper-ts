@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { Person } from '../agent/person';
 import { Entity } from '../entity';
@@ -15,12 +14,11 @@ export type Attempt = {
 	duration?: string;
 } & Entity;
 
-export type AttemptParams = Omit<Partial<Attempt>, '@context' | 'type'>;
+export type AttemptParams = Omit<Attempt, '@context' | 'type'>;
 
 export function createAttempt(delegate: AttemptParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Attempt {
 	return {
 		...delegate,
-		id: delegate.id ?? v4(),
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
 		type: EntityType.attempt
 	} as Attempt;

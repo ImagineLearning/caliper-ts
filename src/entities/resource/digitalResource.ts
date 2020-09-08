@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
 import { Agent } from '../agent/agent';
 import { Entity } from '../entity';
@@ -15,7 +14,7 @@ export type DigitalResource = {
 	version?: string;
 } & Entity;
 
-export type DigitalResourceParams = Omit<Partial<DigitalResource>, '@context' | 'type'>;
+export type DigitalResourceParams = Omit<DigitalResource, '@context' | 'type'>;
 
 export function createDigitalResource(
 	delegate: DigitalResourceParams,
@@ -24,7 +23,6 @@ export function createDigitalResource(
 	return {
 		...delegate,
 		type: EntityType.digitalResource,
-		id: delegate.id ?? v4(),
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion)
 	} as DigitalResource;
 }

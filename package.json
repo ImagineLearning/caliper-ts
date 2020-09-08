@@ -30,7 +30,6 @@
 	},
 	"devDependencies": {
 		"@types/text-encoding": "^0.0.35",
-		"@types/uuid": "^8.3.0",
 		"cross-env": "^7.0.2",
 		"husky": "^4.2.5",
 		"jest-fetch-mock": "^3.0.3",
@@ -47,7 +46,6 @@
 		"*.(css|js|json|scss|ts|tsx)": "pretty-quick --staged --config .prettierrc"
 	},
 	"dependencies": {
-		"ky": "^0.23.0",
-		"uuid": "^8.3.0"
+		"ky": "^0.23.0"
 	}
 }
