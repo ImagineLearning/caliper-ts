@@ -13,11 +13,14 @@ import { createSoftwareApplication } from './softwareApplication';
 
 describe('Agent Entities', () => {
 	it('person entity matches expected json', () => {
-		const person = createPerson({
-			dateCreated: '2016-08-01T06:00:00.000Z',
-			dateModified: '2016-09-02T11:30:00.000Z',
-			id: 'https://example.edu/users/554433'
-		});
+		const person = createPerson(
+			{
+				dateCreated: '2016-08-01T06:00:00.000Z',
+				dateModified: '2016-09-02T11:30:00.000Z',
+				id: 'https://example.edu/users/554433'
+			},
+			JsonLdContextVersion.v1p1
+		);
 
 		expect(person).toEqual(caliperEntityPerson);
 	});

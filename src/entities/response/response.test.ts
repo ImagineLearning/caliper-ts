@@ -1,10 +1,15 @@
 // import { DEFAULT_CONFIG } from '../config/config';
 import caliperEntityResponseExtended from '../../caliper-spec/fixtures/v1p1/caliperEntityResponseExtended.json';
+import caliperEntityMultipleChoiceResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityMultipleChoiceResponse.json';
+
 import { createResponse } from './response';
 import { createAttempt } from '../resource/attempt';
 import { createAssessmentItem } from '../resource/assessmentItem';
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
+import { createMultipleChoiceResponse } from './multipleChoiceResponse';
+import { createAssessment } from '../resource/assessment';
+import { createPerson } from '../agent/person';
 
 describe('Response Entities', () => {
 	it('response entity matches expected json', () => {
@@ -47,5 +52,36 @@ describe('Response Entities', () => {
 		});
 
 		expect(response).toEqual(caliperEntityResponseExtended);
+	});
+
+	it('multipleChoiceResponse entity matches expected json', () => {
+		const multipleChoiceResponse = createMultipleChoiceResponse({
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2/users/554433/responses/1',
+			attempt: createAttempt(
+				{
+					id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2/users/554433/attempts/1',
+					startedAtTime: '2016-11-15T10:15:14.000Z',
+					endedAtTime: '2016-11-15T10:15:20.000Z',
+					count: 1,
+					assignable: createAssessmentItem(
+						{
+							id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2',
+							isPartOf: createAssessment(
+								{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1' },
+								JsonLdContextVersion.none
+							)
+						},
+						JsonLdContextVersion.none
+					),
+					assignee: createPerson({ id: 'https://example.edu/users/554433' })
+				},
+				JsonLdContextVersion.none
+			),
+			dateCreated: '2016-11-15T10:15:20.000Z',
+			endedAtTime: '2016-11-15T10:15:20.000Z',
+			startedAtTime: '2016-11-15T10:15:14.000Z',
+			value: 'C'
+		});
+		expect(multipleChoiceResponse).toEqual(caliperEntityMultipleChoiceResponse);
 	});
 });
