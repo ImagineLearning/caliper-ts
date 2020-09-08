@@ -1,4 +1,4 @@
-export enum CaliperEventType {
+export enum EventType {
 	Annotation = 'AnnotationEvent',
 	Assessment = 'AssessmentEvent',
 	AssessmentItem = 'AssessmentItemEvent',

@@ -1,15 +1,15 @@
 import { Action } from '../actions/actions';
-import { CaliperEvent } from './caliperEvent';
+import { Event } from './Event';
 import { createEvent } from './eventFactory';
-import { CaliperEventType } from './caliperEventType';
+import { EventType } from './eventType';
 import { JsonLdContextVersion } from '../config/config';
 
 export type SessionEvent = {
 	action: Action.LoggedIn | Action.LoggedOut | Action.TimedOut;
-} & CaliperEvent;
+} & Event;
 
 export type SessionEventParams = Omit<SessionEvent, '@context' | 'type'>;
 
 export function createSessionEvent(delegate: SessionEventParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
-	return createEvent<SessionEvent>({ ...delegate, type: CaliperEventType.Session }, contextVersion);
+	return createEvent<SessionEvent>({ ...delegate, type: EventType.Session }, contextVersion);
 }

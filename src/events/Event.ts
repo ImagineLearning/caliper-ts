@@ -2,12 +2,12 @@ import { SoftwareApplication } from '../entities/agent/softwareApplication';
 import { Entity } from '../entities/entity';
 import { Session } from '../entities/session/session';
 import { Action } from '../actions/actions';
-import { CaliperEventType } from './caliperEventType';
+import { EventType } from './eventType';
 
-export interface CaliperEvent {
+export interface Event {
 	'@context'?: string;
 	id: string;
-	type: CaliperEventType;
+	type: EventType;
 	actor: Entity;
 	action: Action;
 	object: Entity | string;

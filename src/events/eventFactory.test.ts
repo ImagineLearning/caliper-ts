@@ -1,6 +1,6 @@
 import { Action } from '../actions/actions';
 import { Entity } from '../entities/entity';
-import { CaliperEventType } from './caliperEventType';
+import { EventType } from './eventType';
 import { createEvent } from './eventFactory';
 
 describe('createEvent(..)', () => {
@@ -15,7 +15,7 @@ describe('createEvent(..)', () => {
 	it('creates event of the specified type', () => {
 		jest.spyOn(Date, 'now').mockImplementation(() => Date.parse('2020-09-02T12:00:00.000Z'));
 		const event = createEvent({
-			type: CaliperEventType.Session,
+			type: EventType.Session,
 			action: Action.LoggedIn,
 			actor: {} as Entity,
 			id: 'event-id',

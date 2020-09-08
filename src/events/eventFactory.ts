@@ -1,8 +1,8 @@
 import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../config/config';
 import { getFormattedDateTime } from '../utils/dateUtils';
-import { CaliperEvent } from './caliperEvent';
+import { Event } from './Event';
 
-export function createEvent<T extends CaliperEvent>(
+export function createEvent<T extends Event>(
 	delegate: Omit<T, '@context'>,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): T {
