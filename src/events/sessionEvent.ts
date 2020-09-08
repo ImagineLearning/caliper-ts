@@ -11,5 +11,5 @@ export type SessionEvent = {
 export type SessionEventParams = Omit<SessionEvent, '@context' | 'type'>;
 
 export function createSessionEvent(delegate: SessionEventParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
-	return createEvent<SessionEvent>({ ...delegate, type: CaliperEventType.session }, contextVersion);
+	return createEvent<SessionEvent>({ ...delegate, type: CaliperEventType.Session }, contextVersion);
 }

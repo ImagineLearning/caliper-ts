@@ -1,8 +1,8 @@
 import { SoftwareApplication } from '../entities/agent/softwareApplication';
 import { Entity } from '../entities/entity';
 import { Session } from '../entities/session/session';
-import { CaliperEventType } from './caliperEventType';
 import { Action } from '../actions/actions';
+import { CaliperEventType } from './caliperEventType';
 
 export interface CaliperEvent {
 	'@context'?: string;
