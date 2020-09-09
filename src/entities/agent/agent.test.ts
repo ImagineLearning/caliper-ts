@@ -31,12 +31,15 @@ describe('Agent Entities', () => {
 	});
 
 	it('softwareApplication entity matches expected json', () => {
-		const softwareApplication = createSoftwareApplication({
-			description: 'Automates assignment scoring.',
-			id: 'https://example.edu/autograder',
-			name: 'Auto Grader',
-			version: '2.5.2'
-		});
+		const softwareApplication = createSoftwareApplication(
+			{
+				description: 'Automates assignment scoring.',
+				id: 'https://example.edu/autograder',
+				name: 'Auto Grader',
+				version: '2.5.2'
+			},
+			JsonLdContextVersion.v1p1
+		);
 
 		expect(softwareApplication).toEqual(caliperEntitySoftwareApplication);
 	});

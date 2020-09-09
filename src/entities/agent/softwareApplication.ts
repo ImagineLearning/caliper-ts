@@ -10,7 +10,7 @@ export type SoftwareApplicationParams = Omit<SoftwareApplication, '@context' | '
 
 export function createSoftwareApplication(
 	delegate: SoftwareApplicationParams,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
+	contextVersion: JsonLdContextVersion = JsonLdContextVersion.none
 ): SoftwareApplication {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),

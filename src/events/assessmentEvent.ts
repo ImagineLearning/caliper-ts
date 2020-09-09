@@ -8,8 +8,8 @@ export type AssessmentEvent = {
 	action: Action.Started | Action.Paused | Action.Resumed | Action.Restarted | Action.Reset | Action.Submitted;
 } & Event;
 
-export type SessionEventParams = Omit<AssessmentEvent, '@context' | 'type'>;
+export type AssessmentEventParams = Omit<AssessmentEvent, '@context' | 'type'>;
 
-export function createSessionEvent(delegate: SessionEventParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
-	return createEvent<AssessmentEvent>({ ...delegate, type: EventType.Session }, contextVersion);
+export function createAssessmentEvent(delegate: AssessmentEventParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+	return createEvent<AssessmentEvent>({ ...delegate, type: EventType.Assessment }, contextVersion);
 }
