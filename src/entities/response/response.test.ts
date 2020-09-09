@@ -12,7 +12,7 @@ import { createAssessmentItem } from '../resource/assessmentItem';
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { createMultipleChoiceResponse } from './multipleChoiceResponse';
-import { createFillinBlankResponse } from './fillinblankResponse';
+import { createFillinBlankResponse } from './fillinBlankResponse';
 
 import { createAssessment } from '../resource/assessment';
 import { createPerson } from '../agent/person';
