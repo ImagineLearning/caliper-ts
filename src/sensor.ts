@@ -1,11 +1,7 @@
 import { HttpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
-
-export interface SensorOptions {
-	id: string;
-	clients?: Record<string, HttpClient>;
-}
+import { getFormattedDateTime } from './utils/dateUtils';
 
 export class Sensor {
 	private clients: Record<string, HttpClient>;
@@ -18,12 +14,12 @@ export class Sensor {
 		this.clients = clients || {};
 	}
 
-	createEnvelope<T>(opts: EnvelopeOptions<T>) {
+	createEnvelope<T>(opts: Partial<EnvelopeOptions<T>>) {
 		if (opts.data === null || opts.data === undefined) {
 			throw new Error('Caliper Sensor Envelope data has not been provided.');
 		}
 		const sensor = opts.sensor || this.id;
-		const sendTime = opts.sendTime || new Date(Date.now()).toISOString();
+		const sendTime = opts.sendTime || getFormattedDateTime();
 		const dataVersion = opts.dataVersion || DEFAULT_CONFIG.dataVersion;
 		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: opts.data });
 	}
@@ -44,20 +40,20 @@ export class Sensor {
 		this.clients[client.getId()] = client;
 	}
 
-	sendToClient<T>(client: HttpClient | string, envelope: Envelope<T>) {
+	sendToClient<TEnvelope, TResponse>(client: HttpClient | string, envelope: Envelope<TEnvelope>) {
 		const httpClient = this.clients[typeof client === 'string' ? client : client.getId()];
 		if (!httpClient) {
 			throw new Error('Chosen Client has not been registered.');
 		}
-		return httpClient.send<T>(envelope);
+		return httpClient.send<TEnvelope, TResponse>(envelope);
 	}
 
-	sendToClients<T>(envelope: Envelope<T>) {
+	sendToClients<TEnvelope, TResponse>(envelope: Envelope<TEnvelope>) {
 		const clients = this.getClients();
 		if (!clients.length) {
 			throw new Error('No Clients have been registered.');
 		}
-		return Promise.all(clients.map(client => client.send<T>(envelope)));
+		return Promise.all(clients.map(client => client.send<TEnvelope, TResponse>(envelope)));
 	}
 
 	unregisterClient(id: string) {
