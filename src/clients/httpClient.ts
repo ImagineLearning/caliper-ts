@@ -31,7 +31,7 @@ export class HttpClient {
 		return this.id;
 	}
 
-	send<T>(envelope: Envelope<T>) {
+	send<TEnvelope, TResponse>(envelope: Envelope<TEnvelope>) {
 		if (Object.keys(envelope).length === 0) {
 			throw new Error('Chosen Requestor has not been registered.');
 		}
@@ -41,7 +41,7 @@ export class HttpClient {
 				json: envelope,
 				headers: this.options.headers
 			})
-			.json();
+			.json<TResponse>();
 	}
 }
 
