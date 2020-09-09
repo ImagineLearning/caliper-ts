@@ -1,6 +1,7 @@
-import { DEFAULT_CONFIG, JsonLdContextVersion, getJsonLdContext } from '../../config/config';
+import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { Response } from './response';
+import { createEntity } from '../entity';
 
 export type MultipleChoiceResponse = {
 	value?: string;
@@ -12,9 +13,5 @@ export function createMultipleChoiceResponse(
 	delegate: MultipleChoiceResponseParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): MultipleChoiceResponse {
-	return {
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.MultipleChoiceResponse,
-		...delegate
-	} as MultipleChoiceResponse;
+	return createEntity<MultipleChoiceResponse>({ type: EntityType.MultipleChoiceResponse, ...delegate }, contextVersion);
 }

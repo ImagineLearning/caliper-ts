@@ -1,6 +1,10 @@
 // import { DEFAULT_CONFIG } from '../config/config';
 import caliperEntityResponseExtended from '../../caliper-spec/fixtures/v1p1/caliperEntityResponseExtended.json';
 import caliperEntityMultipleChoiceResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityMultipleChoiceResponse.json';
+import caliperEntityFillinBlankResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityFillinBlankResponse.json';
+import caliperEntityMultipleResponseResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityMultipleResponseResponse.json';
+import caliperEntitySelectTextResponse from '../../caliper-spec/fixtures/v1p1/caliperEntitySelectTextResponse.json';
+import caliperEntityTrueFalseResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityTrueFalseResponse.json';
 
 import { createResponse } from './response';
 import { createAttempt } from '../resource/attempt';
@@ -8,8 +12,13 @@ import { createAssessmentItem } from '../resource/assessmentItem';
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { createMultipleChoiceResponse } from './multipleChoiceResponse';
+import { createFillinBlankResponse } from './fillinblankResponse';
+
 import { createAssessment } from '../resource/assessment';
 import { createPerson } from '../agent/person';
+import { createMultipleResponseResponse } from './multipleResponseResponse';
+import { createSelectTextResponse } from './selectTextResponse';
+import { createTrueFalseResponse } from './trueFalseResponse';
 
 describe('Response Entities', () => {
 	it('response entity matches expected json', () => {
@@ -83,5 +92,131 @@ describe('Response Entities', () => {
 			value: 'C'
 		});
 		expect(multipleChoiceResponse).toEqual(caliperEntityMultipleChoiceResponse);
+	});
+
+	it('fillinblankresponse entity matches expected json', () => {
+		const fillinblankresponse = createFillinBlankResponse({
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1/users/554433/responses/1',
+			attempt: createAttempt(
+				{
+					endedAtTime: '2016-11-15T10:15:12.000Z',
+					id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1/users/554433/attempts/1',
+					startedAtTime: '2016-11-15T10:15:02.000Z',
+					count: 1,
+					assignable: createAssessmentItem(
+						{
+							id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1',
+							isPartOf: createAssessment(
+								{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1' },
+								JsonLdContextVersion.none
+							)
+						},
+						JsonLdContextVersion.none
+					),
+					assignee: createPerson({ id: 'https://example.edu/users/554433' })
+				},
+				JsonLdContextVersion.none
+			),
+			dateCreated: '2016-11-15T10:15:12.000Z',
+			endedAtTime: '2016-11-15T10:15:12.000Z',
+
+			startedAtTime: '2016-11-15T10:15:02.000Z',
+			values: ['data interoperability', 'semantic interoperability']
+		});
+		expect(fillinblankresponse).toEqual(caliperEntityFillinBlankResponse);
+	});
+
+	it('multipleResponseResponse entity matches expected json', () => {
+		const multipleResponseResponse = createMultipleResponseResponse({
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3/users/554433/responses/1',
+			attempt: createAttempt(
+				{
+					id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3/users/554433/attempts/1',
+					endedAtTime: '2016-11-15T10:15:30.000Z',
+					startedAtTime: '2016-11-15T10:15:22.000Z',
+					count: 1,
+					assignable: createAssessmentItem(
+						{
+							id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3',
+							isPartOf: createAssessment(
+								{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1' },
+								JsonLdContextVersion.none
+							)
+						},
+						JsonLdContextVersion.none
+					),
+					assignee: createPerson({ id: 'https://example.edu/users/554433' })
+				},
+				JsonLdContextVersion.none
+			),
+			dateCreated: '2016-11-15T10:15:22.000Z',
+			endedAtTime: '2016-11-15T10:15:30.000Z',
+			startedAtTime: '2016-11-15T10:15:22.000Z',
+			values: ['D', 'A', 'E']
+		});
+		expect(multipleResponseResponse).toEqual(caliperEntityMultipleResponseResponse);
+	});
+
+	it('selectTextResponse entity matches expected json', () => {
+		const selectTextResponse = createSelectTextResponse({
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/4/users/554433/responses/1',
+			attempt: createAttempt(
+				{
+					id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/4/users/554433/attempts/1',
+					endedAtTime: '2016-11-15T10:15:38.000Z',
+					startedAtTime: '2016-11-15T10:15:32.000Z',
+					count: 1,
+					assignable: createAssessmentItem(
+						{
+							id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/4',
+							isPartOf: createAssessment(
+								{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1' },
+								JsonLdContextVersion.none
+							)
+						},
+						JsonLdContextVersion.none
+					),
+					assignee: createPerson({ id: 'https://example.edu/users/554433' })
+				},
+				JsonLdContextVersion.none
+			),
+			dateCreated: '2016-11-15T10:15:32.000Z',
+			endedAtTime: '2016-11-15T10:15:38.000Z',
+
+			startedAtTime: '2016-11-15T10:15:32.000Z',
+			values: ['Information Model', 'Sensor API', 'Profiles']
+		});
+		expect(selectTextResponse).toEqual(caliperEntitySelectTextResponse);
+	});
+
+	it('trueFalseResponse entity matches expected json', () => {
+		const trueFalseResponse = createTrueFalseResponse({
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/5/users/554433/responses/1',
+			attempt: createAttempt(
+				{
+					endedAtTime: '2016-11-15T10:15:45.000Z',
+					id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/5/users/554433/attempts/1',
+					startedAtTime: '2016-11-15T10:15:40.000Z',
+					count: 1,
+					assignable: createAssessmentItem(
+						{
+							id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/5',
+							isPartOf: createAssessment(
+								{ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1' },
+								JsonLdContextVersion.none
+							)
+						},
+						JsonLdContextVersion.none
+					),
+					assignee: createPerson({ id: 'https://example.edu/users/554433' })
+				},
+				JsonLdContextVersion.none
+			),
+			dateCreated: '2016-11-15T10:15:45.000Z',
+			endedAtTime: '2016-11-15T10:15:45.000Z',
+			startedAtTime: '2016-11-15T10:15:40.000Z',
+			value: 'true'
+		});
+		expect(trueFalseResponse).toEqual(caliperEntityTrueFalseResponse);
 	});
 });
