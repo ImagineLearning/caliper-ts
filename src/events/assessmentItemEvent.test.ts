@@ -1,6 +1,6 @@
 import caliperEventAssessmentItemStarted from '../caliper-spec/fixtures/v1p1/caliperEventAssessmentItemStarted.json';
 
-import { getFormattedUrnUUID } from '../utils/urnUtils';
+import { getFormattedUrnUuid } from '../utils/urnUtils';
 import { Action } from '../actions/actions';
 import { createPerson } from '../entities/agent/person';
 import { createSoftwareApplication } from '../entities/agent/softwareApplication';
@@ -19,7 +19,7 @@ import { createAssessment } from '../entities/resource/assessment';
 describe('Assessment Item Events', () => {
 	it('assessmentItemEvent started matches expected json', () => {
 		const assessmentItemEvent = createAssessmentItemEvent({
-			id: getFormattedUrnUUID('1b557176-ba67-4624-b060-6bee670a3d8e'),
+			id: getFormattedUrnUuid('1b557176-ba67-4624-b060-6bee670a3d8e'),
 			actor: createPerson({ id: 'https://example.edu/users/554433' }),
 			action: Action.Started,
 			object: createAssessmentItem({

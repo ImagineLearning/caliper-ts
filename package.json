@@ -22,7 +22,9 @@
 		"lint": "eslint \"src/**/*.{js,ts,tsx}\"",
 		"format": "prettier --config .prettierrc --ignore-path \"node_modules/**\" --write \"**/*.{css,js,json,scss,ts,tsx}\""
 	},
-	"peerDependencies": {},
+	"peerDependencies": {
+		"uuid": "^8.3.0"
+	},
 	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"
@@ -30,6 +32,7 @@
 	},
 	"devDependencies": {
 		"@types/text-encoding": "^0.0.35",
+		"@types/uuid": "^8.3.0",
 		"cross-env": "^7.0.2",
 		"husky": "^4.2.5",
 		"jest-fetch-mock": "^3.0.3",
@@ -40,7 +43,8 @@
 		"text-encoding": "^0.7.0",
 		"tsdx": "^0.13.3",
 		"tslib": "^2.0.1",
-		"typescript": "^3.9"
+		"typescript": "^3.9",
+		"uuid": "^8.3.0"
 	},
 	"lint-staged": {
 		"*.(css|js|json|scss|ts|tsx)": "pretty-quick --staged --config .prettierrc"
