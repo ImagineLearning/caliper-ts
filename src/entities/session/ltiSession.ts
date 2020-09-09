@@ -5,12 +5,12 @@ import { EntityType } from '../entityType';
 import { getFormattedDuration } from '../../utils/dateUtils';
 
 export type LtiSession = {
-	messageParameters: Record<string, any>;
+	messageParameters?: Record<string, any>;
 } & Session;
 
 export type LtiSessionParams = Omit<LtiSession, '@context' | 'type'>;
 
-export function createSession(delegate: LtiSessionParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+export function createLtiSession(delegate: LtiSessionParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
 	return createEntity<LtiSession>(
 		{
 			...delegate,
