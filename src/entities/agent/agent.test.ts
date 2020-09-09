@@ -1,15 +1,20 @@
-// import { DEFAULT_CONFIG } from '../config/config';
 import caliperEntityCourseOffering from '../../caliper-spec/fixtures/v1p1/caliperEntityCourseOffering.json';
 import caliperEntityCourseSection from '../../caliper-spec/fixtures/v1p1/caliperEntityCourseSection.json';
 import caliperEntityOrganization from '../../caliper-spec/fixtures/v1p1/caliperEntityOrganization.json';
 import caliperEntityPerson from '../../caliper-spec/fixtures/v1p1/caliperEntityPerson.json';
+import caliperEntityMembership from '../../caliper-spec/fixtures/v1p1/caliperEntityMembership.json';
+
 import caliperEntitySoftwareApplication from '../../caliper-spec/fixtures/v1p1/caliperEntitySoftwareApplication.json';
+
 import { JsonLdContextVersion } from '../../config/config';
 import { createCourseOffering } from './courseOffering';
 import { createCourseSection } from './courseSection';
 import { createOrganization } from './organization';
 import { createPerson } from './person';
 import { createSoftwareApplication } from './softwareApplication';
+import { createMembership } from './membership';
+import { Status } from './status';
+import { Role } from './role';
 
 describe('Agent Entities', () => {
 	it('person entity matches expected json', () => {
@@ -62,23 +67,42 @@ describe('Agent Entities', () => {
 		expect(courseOffering).toEqual(caliperEntityCourseOffering);
 	});
 
-	it('courseSelection entity matches expected json', () => {
-		const courseSelection = createCourseSection({
-			id: 'https://example.edu/terms/201601/courses/7/sections/1',
-			category: 'seminar',
-			courseNumber: 'CPS 435-01',
-			dateCreated: '2016-08-01T06:00:00.000Z',
-			name: 'CPS 435 Learning Analytics, Section 01',
-			academicSession: 'Fall 2016',
-			subOrganizationOf: createCourseOffering(
-				{
-					courseNumber: 'CPS 435',
-					id: 'https://example.edu/terms/201601/courses/7'
-				},
-				JsonLdContextVersion.none
-			)
+	it('courseSection entity matches expected json', () => {
+		const courseSection = createCourseSection(
+			{
+				id: 'https://example.edu/terms/201601/courses/7/sections/1',
+				category: 'seminar',
+				courseNumber: 'CPS 435-01',
+				dateCreated: '2016-08-01T06:00:00.000Z',
+				name: 'CPS 435 Learning Analytics, Section 01',
+				academicSession: 'Fall 2016',
+				subOrganizationOf: createCourseOffering(
+					{
+						courseNumber: 'CPS 435',
+						id: 'https://example.edu/terms/201601/courses/7'
+					},
+					JsonLdContextVersion.none
+				)
+			},
+			JsonLdContextVersion.v1p1
+		);
+
+		expect(courseSection).toEqual(caliperEntityCourseSection);
+	});
+
+	it('membership entity matches expected json', () => {
+		const membership = createMembership({
+			id: 'https://example.edu/terms/201601/courses/7/sections/1/rosters/1/members/554433',
+			dateCreated: '2016-11-01T06:00:00.000Z',
+			member: createPerson({ id: 'https://example.edu/users/554433' }),
+			organization: createCourseSection({
+				id: 'https://example.edu/terms/201601/courses/7/sections/1',
+				subOrganizationOf: createCourseOffering({ id: 'https://example.edu/terms/201601/courses/7' }, JsonLdContextVersion.none)
+			}),
+			status: Status.Active,
+			roles: [Role.Learner]
 		});
 
-		expect(courseSelection).toEqual(caliperEntityCourseSection);
+		expect(membership).toEqual(caliperEntityMembership);
 	});
 });

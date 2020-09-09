@@ -14,7 +14,7 @@ export type CourseSectionParams = Omit<CourseSection, '@context' | 'type'>;
 
 export function createCourseSection(
 	delegate: CourseSectionParams,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
+	contextVersion: JsonLdContextVersion = JsonLdContextVersion.none
 ): CourseSection {
 	return {
 		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
