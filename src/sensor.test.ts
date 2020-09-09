@@ -29,12 +29,6 @@ describe('Sensor', () => {
 			expect(() => sensor.createEnvelope({})).toThrowError(new Error('Caliper Sensor Envelope data has not been provided.'));
 		});
 
-		it('throws error if envelope data is null', () => {
-			expect(() => sensor.createEnvelope({ data: null })).toThrowError(
-				new Error('Caliper Sensor Envelope data has not been provided.')
-			);
-		});
-
 		it('creates Envelope with supplied options', () => {
 			const envelope = sensor.createEnvelope({
 				sensor: 'sensor-id',

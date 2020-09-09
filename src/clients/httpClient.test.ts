@@ -45,14 +45,14 @@ describe('HttpClient', () => {
 			});
 
 			it('adds "Authorization" header to request', async () => {
-				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
+				const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 				await client.bearer('my-token').send(envelope);
 				const { headers } = fetchMock.mock.calls[0][0] as Request;
 				expect(headers.get('authorization')).toBe('Bearer my-token');
 			});
 
 			it('does not add "Authorization" header if no token specified', async () => {
-				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
+				const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 				await client.bearer().send(envelope);
 				const { headers } = fetchMock.mock.calls[0][0] as Request;
 				expect(headers.get('authorization')).toBeNull();
@@ -78,7 +78,7 @@ describe('HttpClient', () => {
 			});
 
 			it('makes POST request to specified URL', async () => {
-				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
+				const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 				await client.send(envelope);
 				const { method, url } = fetchMock.mock.calls[0][0] as Request;
 				expect(method).toBe('POST');
@@ -86,7 +86,7 @@ describe('HttpClient', () => {
 			});
 
 			it('posts envelope as JSON payload', async () => {
-				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
+				const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 				await client.send(envelope);
 				const request = fetchMock.mock.calls[0][0] as Request;
 				const payload = await parseRequestBody(request);
@@ -96,7 +96,7 @@ describe('HttpClient', () => {
 			it('throws error response', async () => {
 				fetchMock.mockRestore();
 				fetchMock.mockRejectOnce(new Error('Oops!'));
-				const envelope = createEnvelope({ data: [{ hello: 'world' }] });
+				const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 				let error: Error | undefined;
 				try {
 					await client.send(envelope);
@@ -116,7 +116,7 @@ describe('HttpClient', () => {
 
 		it('initializes client with bearer token if specified', async () => {
 			const client = httpClient('id', 'https://example.com', 'my-token');
-			const envelope = createEnvelope({ data: [{ hello: 'world' }] });
+			const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 			await client.send(envelope);
 			const { headers } = fetchMock.mock.calls[0][0] as Request;
 			expect(headers.get('authorization')).toBe('Bearer my-token');
