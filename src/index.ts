@@ -23,3 +23,4 @@ export * from './events/eventType';
 export * from './events/sessionEvent';
 export * from './sensor';
 export * from './utils/dateUtils';
+export * from './utils/urnUtils';
