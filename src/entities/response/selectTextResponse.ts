@@ -1,6 +1,6 @@
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
-import { Response } from './response';
+import { Response, createResponse } from './response';
 import { createEntity } from '../entityFactory';
 
 export type SelectTextResponse = {
@@ -11,7 +11,9 @@ export type SelectTextResponseParams = Omit<SelectTextResponse, '@context' | 'ty
 
 export function createSelectTextResponse(
 	delegate: SelectTextResponseParams,
+	calculateDuration: boolean = true,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): SelectTextResponse {
-	return createEntity<SelectTextResponse>({ ...delegate, type: EntityType.SelectTextResponse }, contextVersion);
+	const entity = createResponse(delegate, calculateDuration, contextVersion);
+	return createEntity<SelectTextResponse>({ ...delegate, ...entity, type: EntityType.SelectTextResponse }, contextVersion);
 }

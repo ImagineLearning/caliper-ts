@@ -1,6 +1,6 @@
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
-import { Response } from './response';
+import { Response, createResponse } from './response';
 import { createEntity } from '../entityFactory';
 
 export type MultipleChoiceResponse = {
@@ -11,7 +11,9 @@ export type MultipleChoiceResponseParams = Omit<MultipleChoiceResponse, '@contex
 
 export function createMultipleChoiceResponse(
 	delegate: MultipleChoiceResponseParams,
+	calculateDuration: boolean = true,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): MultipleChoiceResponse {
-	return createEntity<MultipleChoiceResponse>({ type: EntityType.MultipleChoiceResponse, ...delegate }, contextVersion);
+	const entity = createResponse(delegate, calculateDuration, contextVersion);
+	return createEntity<MultipleChoiceResponse>({ ...delegate, ...entity, type: EntityType.MultipleChoiceResponse }, contextVersion);
 }

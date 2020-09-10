@@ -1,6 +1,6 @@
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
-import { Response } from './response';
+import { Response, createResponse } from './response';
 import { createEntity } from '../entityFactory';
 
 export type MultipleResponseResponse = {
@@ -11,10 +11,12 @@ export type MultipleResponseResponseParams = Omit<MultipleResponseResponse, '@co
 
 export function createMultipleResponseResponse(
 	delegate: MultipleResponseResponseParams,
+	calculateDuration: boolean = true,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): MultipleResponseResponse {
+	const entity = createResponse(delegate, calculateDuration, contextVersion);
 	return createEntity<MultipleResponseResponse>(
-		{ ...delegate, type: EntityType.MultipleResponseResponse, values: delegate.values?.sort() },
+		{ ...delegate, ...entity, type: EntityType.MultipleResponseResponse, values: delegate.values?.sort() },
 		contextVersion
 	);
 }
