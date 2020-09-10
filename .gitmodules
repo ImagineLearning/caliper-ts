@@ -1,0 +1,3 @@
+[submodule "src/caliper-spec"]
+path = src/caliper-spec
+url = https://github.com/IMSGlobal/caliper-spec.git
