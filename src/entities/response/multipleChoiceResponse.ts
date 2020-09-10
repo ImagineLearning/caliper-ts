@@ -1,7 +1,7 @@
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { Response } from './response';
-import { createEntity } from '../entity';
+import { createEntity } from '../entityFactory';
 
 export type MultipleChoiceResponse = {
 	value?: string;

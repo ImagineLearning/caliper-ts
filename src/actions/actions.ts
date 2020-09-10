@@ -35,7 +35,7 @@ export enum Action {
 	MarkedAsRead = 'MarkedAsRead',
 	MarkedAsUnread = 'MarkedAsUnread',
 	Modified = 'Modified',
-	mMuteduted = 'Muted',
+	Muted = 'Muted',
 	NavigatedTo = 'NavigatedTo',
 	OpenedPopout = 'OpenedPopout',
 	Paused = 'Paused',

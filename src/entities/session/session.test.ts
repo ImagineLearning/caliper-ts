@@ -1,4 +1,3 @@
-// import { DEFAULT_CONFIG } from '../config/config';
 import { createSession } from './session';
 import caliperEntitySession from '../../caliper-spec/fixtures/v1p1/caliperEntitySession.json';
 import caliperEntityLtiSession from '../../caliper-spec/fixtures/v1p1/caliperEntityLtiSession.json';

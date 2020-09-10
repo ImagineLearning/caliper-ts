@@ -1,10 +1,11 @@
 import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
-import { Entity, createEntity } from '../entity';
+import { Entity } from '../entity';
 import { Person } from './person';
 import { Role } from './role';
 import { Status } from './status';
 import { Organization } from './organization';
+import { createEntity } from '../entityFactory';
 
 export type Membership = {
 	organization?: Organization | string;

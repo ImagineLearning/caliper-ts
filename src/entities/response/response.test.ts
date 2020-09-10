@@ -1,22 +1,19 @@
-// import { DEFAULT_CONFIG } from '../config/config';
-import caliperEntityResponseExtended from '../../caliper-spec/fixtures/v1p1/caliperEntityResponseExtended.json';
-import caliperEntityMultipleChoiceResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityMultipleChoiceResponse.json';
 import caliperEntityFillinBlankResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityFillinBlankResponse.json';
+import caliperEntityMultipleChoiceResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityMultipleChoiceResponse.json';
 import caliperEntityMultipleResponseResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityMultipleResponseResponse.json';
+import caliperEntityResponseExtended from '../../caliper-spec/fixtures/v1p1/caliperEntityResponseExtended.json';
 import caliperEntitySelectTextResponse from '../../caliper-spec/fixtures/v1p1/caliperEntitySelectTextResponse.json';
 import caliperEntityTrueFalseResponse from '../../caliper-spec/fixtures/v1p1/caliperEntityTrueFalseResponse.json';
-
-import { createResponse } from './response';
-import { createAttempt } from '../resource/attempt';
-import { createAssessmentItem } from '../resource/assessmentItem';
 import { JsonLdContextVersion } from '../../config/config';
-import { EntityType } from '../entityType';
-import { createMultipleChoiceResponse } from './multipleChoiceResponse';
-import { createFillinBlankResponse } from './fillinBlankResponse';
-
-import { createAssessment } from '../resource/assessment';
 import { createPerson } from '../agent/person';
+import { EntityType } from '../entityType';
+import { createAssessment } from '../resource/assessment';
+import { createAssessmentItem } from '../resource/assessmentItem';
+import { createAttempt } from '../resource/attempt';
+import { createFillinBlankResponse } from './fillinBlankResponse';
+import { createMultipleChoiceResponse } from './multipleChoiceResponse';
 import { createMultipleResponseResponse } from './multipleResponseResponse';
+import { createResponse } from './response';
 import { createSelectTextResponse } from './selectTextResponse';
 import { createTrueFalseResponse } from './trueFalseResponse';
 

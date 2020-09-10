@@ -1,4 +1,3 @@
-// import { DEFAULT_CONFIG, JsonLdContextVersion } from '../config/config';
 import caliperEventSessionLoggedIn from '../caliper-spec/fixtures/v1p1/caliperEventSessionLoggedIn.json';
 import caliperEventSessionLoggedOut from '../caliper-spec/fixtures/v1p1/caliperEventSessionLoggedOut.json';
 import caliperEventSessionTimedOut from '../caliper-spec/fixtures/v1p1/caliperEventSessionTimedOut.json';

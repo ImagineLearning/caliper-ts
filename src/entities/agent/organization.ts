@@ -1,4 +1,5 @@
-import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
+import { JsonLdContextVersion } from '../../config/config';
+import { createEntity } from '../entityFactory';
 import { EntityType } from '../entityType';
 import { Agent } from './agent';
 
@@ -9,13 +10,6 @@ export type Organization = {
 
 export type OrganizationParams = Omit<Organization, '@context' | 'type'>;
 
-export function createOrganization(
-	delegate: OrganizationParams,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
-): Organization {
-	return {
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.Organization,
-		...delegate
-	} as Organization;
+export function createOrganization(delegate: OrganizationParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+	return createEntity<Organization>({ ...delegate, type: EntityType.Organization }, contextVersion);
 }

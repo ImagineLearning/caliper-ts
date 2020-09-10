@@ -1,4 +1,5 @@
-import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
+import { JsonLdContextVersion } from '../../config/config';
+import { createEntity } from '../entityFactory';
 import { EntityType } from '../entityType';
 import { DigitalResource } from './digitalResource';
 
@@ -11,10 +12,6 @@ export type DigitalResourceCollectionParams = Omit<DigitalResourceCollection, '@
 export function createDigitalResourceCollection(
 	delegate: DigitalResourceCollectionParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
-): DigitalResourceCollection {
-	return {
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.DigitalResourceCollection,
-		...delegate
-	} as DigitalResourceCollection;
+) {
+	return createEntity<DigitalResourceCollection>({ ...delegate, type: EntityType.DigitalResourceCollection }, contextVersion);
 }

@@ -1,10 +1,11 @@
 import { JsonLdContextVersion } from '../../config/config';
-import { createEntity } from '../entity';
+import { createEntity } from '../entityFactory';
 import { Session } from './session';
 import { EntityType } from '../entityType';
 import { getFormattedDuration } from '../../utils/dateUtils';
 
 export type LtiSession = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	messageParameters?: Record<string, any>;
 } & Session;
 

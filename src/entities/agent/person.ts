@@ -1,8 +1,9 @@
 import { JsonLdContextVersion } from '../../config/config';
-import { Entity, createEntity } from '../entity';
+import { Entity } from '../entity';
 import { EntityType } from '../entityType';
+import { createEntity } from '../entityFactory';
 
-export type Person = {} & Entity;
+export type Person = Entity;
 
 export type PersonParams = Omit<Person, '@context' | 'type'>;
 

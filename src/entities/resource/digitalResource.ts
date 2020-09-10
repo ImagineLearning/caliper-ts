@@ -1,8 +1,9 @@
-import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
+import { JsonLdContextVersion } from '../../config/config';
 import { Agent } from '../agent/agent';
 import { Entity } from '../entity';
 import { EntityType } from '../entityType';
 import { LearningObjective } from './learningObjective';
+import { createEntity } from '../entityFactory';
 
 export type DigitalResource = {
 	mediaType?: string;
@@ -20,9 +21,5 @@ export function createDigitalResource(
 	delegate: DigitalResourceParams,
 	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
 ): DigitalResource {
-	return {
-		type: EntityType.DigitalResource,
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		...delegate
-	} as DigitalResource;
+	return createEntity<DigitalResource>({ ...delegate, type: EntityType.DigitalResource }, contextVersion);
 }

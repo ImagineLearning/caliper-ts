@@ -66,7 +66,7 @@ export enum Role {
 	TeachingAssistantTeachingAssistantGroup = 'TeachingAssistant#TeachingAssistantGroup'
 }
 
-export const StatusRecord: Readonly<Record<Role, Readonly<ContextTermIri>>> = {
+export const RoleRecord: Readonly<Record<Role, Readonly<ContextTermIri>>> = {
 	[Role.Learner]: {
 		context: getJsonLdContext(DEFAULT_CONFIG, JsonLdContextVersion.v1p1),
 		term: 'Learner',

@@ -1,7 +1,8 @@
-import { Attempt } from '../resource/attempt';
-import { DEFAULT_CONFIG, JsonLdContextVersion, getJsonLdContext } from '../../config/config';
-import { EntityType } from '../entityType';
+import { JsonLdContextVersion } from '../../config/config';
 import { Entity } from '../entity';
+import { EntityType } from '../entityType';
+import { Attempt } from '../resource/attempt';
+import { createEntity } from '../entityFactory';
 export type Response = {
 	attempt?: Attempt | string;
 	startedAtTime?: string;
@@ -12,9 +13,5 @@ export type Response = {
 export type ResponseParams = Omit<Response, '@context' | 'type'>;
 
 export function createResponse(delegate: ResponseParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1): Response {
-	return {
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.Response,
-		...delegate
-	} as Response;
+	return createEntity<Response>({ ...delegate, type: EntityType.Response }, contextVersion);
 }

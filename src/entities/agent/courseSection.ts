@@ -1,6 +1,7 @@
-import { DEFAULT_CONFIG, getJsonLdContext, JsonLdContextVersion } from '../../config/config';
+import { JsonLdContextVersion } from '../../config/config';
 import { EntityType } from '../entityType';
 import { CourseOffering } from './courseOffering';
+import { createEntity } from '../entityFactory';
 
 export type CourseSection = {
 	courseNumber?: string;
@@ -12,13 +13,6 @@ export type CourseSection = {
 
 export type CourseSectionParams = Omit<CourseSection, '@context' | 'type'>;
 
-export function createCourseSection(
-	delegate: CourseSectionParams,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.none
-): CourseSection {
-	return {
-		'@context': getJsonLdContext(DEFAULT_CONFIG, contextVersion),
-		type: EntityType.CourseSection,
-		...delegate
-	} as CourseSection;
+export function createCourseSection(delegate: CourseSectionParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.none) {
+	return createEntity<CourseSection>({ ...delegate, type: EntityType.CourseSection }, contextVersion);
 }

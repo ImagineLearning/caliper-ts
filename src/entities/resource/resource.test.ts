@@ -1,20 +1,18 @@
-// import { DEFAULT_CONFIG } from '../config/config';
 import caliperEntityAssessment from '../../caliper-spec/fixtures/v1p1/caliperEntityAssessment.json';
 import caliperEntityAssignableDigitalResource from '../../caliper-spec/fixtures/v1p1/caliperEntityAssignableDigitalResource.json';
-import caliperEntityLearningObjective from '../../caliper-spec/fixtures/v1p1/caliperEntityLearningObjective.json';
-import caliperEntityDigitalResource from '../../caliper-spec/fixtures/v1p1/caliperEntityDigitalResource.json';
 import caliperEntityAttempt from '../../caliper-spec/fixtures/v1p1/caliperEntityAttempt.json';
-
+import caliperEntityDigitalResource from '../../caliper-spec/fixtures/v1p1/caliperEntityDigitalResource.json';
+import caliperEntityLearningObjective from '../../caliper-spec/fixtures/v1p1/caliperEntityLearningObjective.json';
+import { JsonLdContextVersion } from '../../config/config';
+import { createCourseSection } from '../agent/courseSection';
+import { createPerson } from '../agent/person';
 import { createAssessment } from './assessment';
 import { createAssessmentItem } from './assessmentItem';
 import { createAssignableDigitalResource } from './assignableDigitalResource';
-import { createLearningObjective } from './learningObjective';
-import { createDigitalResource } from './digitalResource';
-import { createPerson } from '../agent/person';
-import { createDigitalResourceCollection } from './digitalResourceCollection';
-import { createCourseSection } from '../agent/courseSection';
 import { createAttempt } from './attempt';
-import { JsonLdContextVersion } from '../../config/config';
+import { createDigitalResource } from './digitalResource';
+import { createDigitalResourceCollection } from './digitalResourceCollection';
+import { createLearningObjective } from './learningObjective';
 
 describe('Resource Entities', () => {
 	it('assessment entity matches expected json', () => {

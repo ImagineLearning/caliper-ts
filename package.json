@@ -1,6 +1,6 @@
 {
 	"name": "@imaginelearning/caliper-ts",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"author": "Imagine Learning",
 	"license": "MIT",
 	"main": "dist/index.js",
