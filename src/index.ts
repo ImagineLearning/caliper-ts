@@ -31,6 +31,8 @@ export { Envelope, EnvelopeOptions } from './envelope';
 export * from './events/event';
 export * from './events/eventType';
 export * from './events/sessionEvent';
+export * from './events/assessmentEvent';
+export * from './events/assessmentItemEvent';
 export * from './sensor';
 export * from './utils/dateUtils';
 export * from './utils/urnUtils';
