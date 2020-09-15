@@ -248,6 +248,148 @@ client.send<Envelope<SessionEvent>, { success: boolean }>(envelope).then(result 
 
 _Note: The `send` function is called by the `Sensor` via the `sendToClient` and `sendToClients` functions. You would not invoke the `send` function directly in a typical application._
 
+### Entity factory functions
+
+Caliper entities can be created through factory functions.
+Each factory function takes two parameters: 1) a delegate, which is an object defining values for properties to be set in the entity (see the [Entity Subtypes section of the Caliper Spec](https://www.imsglobal.org/sites/default/files/caliper/v1p1/caliper-spec-v1p1/caliper-spec-v1p1.html#entities)), and 2) an optional `JsonLdContextVersion` to use for constructing the entity object.
+
+The following entity factory functions are available through the _caliper-ts_ library:
+
+-   `createAssessment`
+-   `createAssessmentItem`
+-   `createAssignableDigitalResource`
+-   `createAttempt`
+-   `createCourseOffering`
+-   `createCourseSection`
+-   `createDigitalResource`
+-   `createDigitalResourceCollection`
+-   `createFillinBlankResponse`
+-   `createLearningObjective`
+-   `createLtiSession`
+-   `createMembership`
+-   `createMultipleChoiceResponse`
+-   `createMultipleResponseResponse`
+-   `createOrganization`
+-   `createPerson`
+-   `createResponse`
+-   `createSelectTextResponse`
+-   `createSession`
+-   `createSoftwareApplication`
+-   `createTrueFalseResponse`
+
+```ts
+const assessment = createAssessment({
+	dateCreated: '2016-08-01T06:00:00.000Z',
+	dateModified: '2016-09-02T11:30:00.000Z',
+	datePublished: '2016-08-15T09:30:00.000Z',
+	dateToActivate: '2016-08-16T05:00:00.000Z',
+	dateToShow: '2016-08-16T05:00:00.000Z',
+	dateToStartOn: '2016-08-16T05:00:00.000Z',
+	dateToSubmit: '2016-09-28T11:59:59.000Z',
+	id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1',
+	items: [
+		createAssessmentItem({ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1' }),
+		createAssessmentItem({ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2' }),
+		createAssessmentItem({ id: 'https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3' })
+	],
+	maxAttempts: 2,
+	maxScore: 15,
+	maxSubmits: 2,
+	name: 'Quiz One',
+	version: '1.0'
+});
+console.log(assessment);
+/* => {
+  "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
+  "id": "https://example.edu/terms/201601/courses/7/sections/1/assess/1",
+  "type": "Assessment",
+  "name": "Quiz One",
+  "items": [
+    {
+      "id": "https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/1",
+      "type": "AssessmentItem"
+    },
+    {
+      "id": "https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/2",
+      "type": "AssessmentItem"
+    },
+    {
+      "id": "https://example.edu/terms/201601/courses/7/sections/1/assess/1/items/3",
+      "type": "AssessmentItem"
+    }
+  ],
+  "dateCreated": "2016-08-01T06:00:00.000Z",
+  "dateModified": "2016-09-02T11:30:00.000Z",
+  "datePublished": "2016-08-15T09:30:00.000Z",
+  "dateToActivate": "2016-08-16T05:00:00.000Z",
+  "dateToShow": "2016-08-16T05:00:00.000Z",
+  "dateToStartOn": "2016-08-16T05:00:00.000Z",
+  "dateToSubmit": "2016-09-28T11:59:59.000Z",
+  "maxAttempts": 2,
+  "maxScore": 15.0,
+  "maxSubmits": 2,
+  "version": "1.0"
+}
+*/
+```
+
+### Event factory functions
+
+Caliper events can be created through factory functions.
+Each factory function takes two parameters: 1) a delegate, which is an object defining values for properties to be set in the event (see the [Event Subtypes section of the Caliper Spec](https://www.imsglobal.org/sites/default/files/caliper/v1p1/caliper-spec-v1p1/caliper-spec-v1p1.html#events)), and 2) an optional `JsonLdContextVersion` to use for constructing the entity object.
+
+The following event factory functions are available through the _caliper-ts_ library:
+
+-   `createAssessmentEvent`
+-   `createAssessmentItemEvent`
+-   `createSessionEvent`
+
+```ts
+const sessionEvent = createSessionEvent({
+	id: 'urn:uuid:fcd495d0-3740-4298-9bec-1154571dc211',
+	action: Action.LoggedIn,
+	actor: createPerson({ id: 'https://example.edu/users/554433' }),
+	object: createSoftwareApplication({ id: 'https://example.edu', version: 'v2' }, JsonLdContextVersion.none),
+	edApp: 'https://example.edu',
+	eventTime: '2016-11-15T10:15:00.000Z',
+	session: createSession(
+		{
+			dateCreated: '2016-11-15T10:00:00.000Z',
+			id: 'https://example.edu/sessions/1f6442a482de72ea6ad134943812bff564a76259',
+			startedAtTime: '2016-11-15T10:00:00.000Z',
+			user: 'https://example.edu/users/554433'
+		},
+		JsonLdContextVersion.none
+	)
+});
+console.log(sessionEvent);
+/* => {
+  "@context": "http://purl.imsglobal.org/ctx/caliper/v1p1",
+  "id": "urn:uuid:fcd495d0-3740-4298-9bec-1154571dc211",
+  "type": "SessionEvent",
+  "actor": {
+    "id": "https://example.edu/users/554433",
+    "type": "Person"
+  },
+  "action": "LoggedIn",
+  "object": {
+    "id": "https://example.edu",
+    "type": "SoftwareApplication",
+    "version": "v2"
+  },
+  "eventTime": "2016-11-15T10:15:00.000Z",
+  "edApp": "https://example.edu",
+  "session": {
+    "id": "https://example.edu/sessions/1f6442a482de72ea6ad134943812bff564a76259",
+    "type": "Session",
+    "user": "https://example.edu/users/554433",
+    "dateCreated": "2016-11-15T10:00:00.000Z",
+    "startedAtTime": "2016-11-15T10:00:00.000Z"
+  }
+}
+*/
+```
+
 ## Local development
 
 This project was bootstrapped with [TSDX](https://tsdx.io/).
