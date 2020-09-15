@@ -1,12 +1,12 @@
-import { HttpClient } from './clients/httpClient';
+import { Client } from './clients/client';
 import { DEFAULT_CONFIG } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
 import { getFormattedDateTime } from './utils/dateUtils';
 
 export class Sensor {
-	private clients: Record<string, HttpClient>;
+	private clients: Record<string, Client>;
 
-	constructor(private id: string, clients?: Record<string, HttpClient>) {
+	constructor(private id: string, clients?: Record<string, Client>) {
 		if (!id) {
 			throw new Error('Caliper Sensor identifier (id) has not been provided.');
 		}
@@ -36,11 +36,11 @@ export class Sensor {
 		return this.id;
 	}
 
-	registerClient(client: HttpClient) {
+	registerClient(client: Client) {
 		this.clients[client.getId()] = client;
 	}
 
-	sendToClient<TEnvelope, TResponse>(client: HttpClient | string, envelope: Envelope<TEnvelope>) {
+	sendToClient<TEnvelope, TResponse>(client: Client | string, envelope: Envelope<TEnvelope>) {
 		const httpClient = this.clients[typeof client === 'string' ? client : client.getId()];
 		if (!httpClient) {
 			throw new Error('Chosen Client has not been registered.');

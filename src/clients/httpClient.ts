@@ -1,12 +1,13 @@
 import ky from 'ky';
 import { Envelope } from '../envelope';
+import { Client } from './client';
 
 export interface ClientOptions {
 	uri: string;
 	headers: Record<string, string>;
 }
 
-export class HttpClient {
+export class HttpClient implements Client {
 	constructor(private id: string, private options: ClientOptions) {
 		if (!id) {
 			throw new Error('Caliper Sensor Client identifier (id) has not been provided.');
