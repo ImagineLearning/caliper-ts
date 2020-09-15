@@ -227,7 +227,7 @@ Returns the ID of the client.
 const client = httpClient('http://example.org/sensors/1/clients/2', 'https://example.edu/caliper/target/endpoint');
 const id = client.getId();
 console.log(id);
-// => 'http://example.org/sensors/1/clients/2'
+// => "http://example.org/sensors/1/clients/2"
 ```
 
 #### `HttpClient.send<TEnvelope, TResponse>(envelope: TEnvelope): Promise<TResponse>`
@@ -388,6 +388,51 @@ console.log(sessionEvent);
   }
 }
 */
+```
+
+### Utility functions
+
+There are a handful of utility functions provided for convenience in properly formatting dates and IDs.
+
+#### `getFormattedDateTime(date?: Date | number | string): string`
+
+Takes an optional `Date` object, number (Unix timestamp), or string and returns a properly formatted ISO-8601 date and time string.
+If no parameter is specified, it uses the current date and time.
+
+```ts
+const date = getFormattedDateTime('9/2/2020, 6:00:00 AM');
+console.log(date);
+// => "2020-09-02T12:00:00.000Z"
+```
+
+#### `getFormattedDuration(startedAtTime: Date | string, endedAtTime: Date | string): string`
+
+Takes start and end `Date` objects or strings, calculates the duration between the specified dates, and returns a properly formatted ISO-8601 duration string.
+
+```ts
+const duration = getFormattedDuration('1969-07-20T02:56:00+0000', '1969-07-21T17:54:00+0000');
+console.log(duration);
+// => "P0Y0M1DT14H58M0S"
+```
+
+#### `getFormattedUrn(urn: URN): string`
+
+Takes a `URN` object which consists of a namespace ID (`nid`) and namespace-specific string (`nss`) and formats it as a [URN](https://www.imsglobal.org/sites/default/files/caliper/v1p1/caliper-spec-v1p1/caliper-spec-v1p1.html#urnDef) string.
+
+```ts
+const urn = getFormattedUrn({ nid: 'WNE', nss: 'GUID_OF_AWESOMENESS' });
+console.log(urn);
+// => "urn:wne:guid_of_awesomeness"
+```
+
+#### `getFormattedUrnUuid(uuid?: string): string`
+
+Takes an optional UUID and formats it as a URN according to [RFC-4122](https://tools.ietf.org/html/rfc4122). If no UUID is provided, a v4 UUID will be generated with [_uuid_](https://github.com/uuidjs/uuid).
+
+```ts
+const urn = getFormattedUrnUuid('ff9ec22a-fc59-4ae1-ae8d-2c9463ee2f8f');
+console.log(urn);
+// => "urn:uuid:ff9ec22a-fc59-4ae1-ae8d-2c9463ee2f8f"
 ```
 
 ## Local development
