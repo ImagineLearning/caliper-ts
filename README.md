@@ -46,13 +46,13 @@ _caliper-ts_ provides a number of classes and factory functions to facilitate wo
 
 ### `Sensor` class
 
-This is the class that manages clients for interacting with a Sensor API,
+The `Sensor` class manages clients for interacting with a Sensor API,
 as well as providing a helper function for creating properly formatted `Envelope` objects for transmitting Caliper events.
 
-#### Constructor: `new Sensor(id: string, clients?: Record<string, HttpClient>)`
+#### Constructor: `new Sensor(id: string, clients?: Record<string, Client>)`
 
 Creates a new instance of a `Sensor` with the specified ID.
-Optionally takes a `Record` of `HttpClient` objects, as an alternative to using the `Sensor.registerClient` function.
+Optionally takes a `Record` of objects that implement the `Client` interface, as an alternative to using the `Sensor.registerClient` function.
 
 ```ts
 const sensor1 = new Sensor('http://example.org/sensors/1');
@@ -102,29 +102,29 @@ console.log(envelope);
 */
 ```
 
-#### `Sensor.getClient(id: string): HttpClient`
+#### `Sensor.getClient(id: string): Client`
 
-Returns the `HttpClient` instance registered under the specified ID.
+Returns the `Client` instance registered under the specified ID.
 
-#### `Sensor.getClients(): HttpClient[]`
+#### `Sensor.getClients(): Client[]`
 
-Returns an array containing all registered `HttpClient` instances.
+Returns an array containing all registered `Client` instances.
 
 #### `Sensor.getId(): string`
 
 Returns the ID of the current `Sensor` instance.
 
-#### `Sensor.registerClient(client: HttpClient): void`
+#### `Sensor.registerClient(client: Client): void`
 
-Adds the specified `HttpClient` to the `Sensor` instance's collection of registered clients.
+Adds the specified `Client` to the `Sensor` instance's collection of registered clients.
 
 ```ts
 sensor.registerClient(httpClient('http://example.org/sensors/1/clients/2', 'https://example.edu/caliper/target/endpoint'));
 ```
 
-#### `Sensor.sendToClient<TEnvelope, TResponse>(client: HttpClient | string, envelope: Envelope<T>): Promise<TResponse>`
+#### `Sensor.sendToClient<TEnvelope, TResponse>(client: Client | string, envelope: Envelope<T>): Promise<TResponse>`
 
-Sends the specified `Envelope` via the specified `HttpClient`.
+Sends the specified `Envelope` via the specified `Client`.
 Returns `Promise<TResponse>` that resolves when the HTTP request has completed.
 
 ```ts
@@ -173,7 +173,80 @@ sensor.sendToClients<SessionEvent, { success: boolean }>(envelope).then(response
 
 #### `Sensor.unregisterClient(id: string): void`
 
-Removes the `HttpClient` instance with the specified ID from the `Sensor` instance's collection of registered clients.
+Removes the `Client` instance with the specified ID from the `Sensor` instance's collection of registered clients.
+
+### `Client` interface
+
+The `Client` interface defines the required functionality for posting HTTP requests to a Sensor API.
+Any object that implements the `Client` interface can be registered with the `Sensor` as a client.
+For convenience, _caliper-ts_ includes an [`HttpClient` class](#httpclient-class) which implements the `Client` interface using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+However, using the `Client` interface you can implement your own client using your preferred method for making HTTP requests.
+
+The `Client` interface requires the following functions in the implementing class:
+
+-   `getId(): string`: Returns the ID of the client.
+-   `send<TEnvelope, TResponse>(envelope: Envelope<TEnvelope>): Promise<TResponse>`: Makes a POST request to a Sensor API endpoint with the specified `Envelope` as the payload. Returns a promise that resolves with the response from the endpoint. This function should also ensure that the appropriate authorization header is included with the request.
+
+### `HttpClient` class
+
+The `HttpClient` is a complete implementation of the `Client` interface using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+Depending on what browsers you need to support for your application, you may need to include an appropriate polyfill, such as [_whatwg-fetch_](https://github.com/github/fetch).
+Each `HttpClient` is configured for a single endpoint, but multiple clients can be registered with a single sensor.
+
+#### `httpClient(id: string, uri: string, token?: string): HttpClient`
+
+This factory function returns a new instance of the `HttpClient` class, configured with the specified ID, URI, and optional access token.
+
+```ts
+// Create HttpClient that will post to https://example.edu/caliper/target/endpoint
+// and include the header `Authorization: Bearer 40dI6P62Q_qrWxpTk95z8w`
+const client = httpClient(
+	'http://example.org/sensors/1/clients/2',
+	'https://example.edu/caliper/target/endpoint',
+	'40dI6P62Q_qrWxpTk95z8w'
+);
+```
+
+#### `HttpClient.bearer(token?: string): HttpClient`
+
+Returns a new instance of `HttpClient` configured to include the specified bearer token in the `Authorization` header for any request sent with the `send` function.
+
+```ts
+// Create HttpClient that will post to https://example.edu/caliper/target/endpoint
+// and configure to include the header `Authorization: Bearer 40dI6P62Q_qrWxpTk95z8w`
+const client = httpClient('http://example.org/sensors/1/clients/2', 'https://example.edu/caliper/target/endpoint').bearer(
+	'40dI6P62Q_qrWxpTk95z8w'
+);
+```
+
+#### `HttpClient.getId(): string`
+
+Returns the ID of the client.
+
+```ts
+const client = httpClient('http://example.org/sensors/1/clients/2', 'https://example.edu/caliper/target/endpoint');
+const id = client.getId();
+console.log(id);
+// => 'http://example.org/sensors/1/clients/2'
+```
+
+#### `HttpClient.send<TEnvelope, TResponse>(envelope: TEnvelope): Promise<TResponse>`
+
+Makes a POST request to the configured Sensor API endpoint with the specified `Envelope` as the payload.
+It includes the `Authorization` header in the request if the client has been configured with a bearer token.
+Returns a promise that resolves with the parsed JSON response.
+
+```ts
+const envelope = sensor.createEnvelope<SessionEvent>({ data });
+const client = httpClient('http://example.org/sensors/1/clients/2', 'https://example.edu/caliper/target/endpoint2');
+
+client.send<Envelope<SessionEvent>, { success: boolean }>(envelope).then(result => {
+	console.log(result);
+	// => { "success": true }
+});
+```
+
+_Note: The `send` function is called by the `Sensor` via the `sendToClient` and `sendToClients` functions. You would not invoke the `send` function directly in a typical application._
 
 ## Local development
 
