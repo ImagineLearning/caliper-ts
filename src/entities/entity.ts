@@ -8,5 +8,6 @@ export interface Entity {
 	description?: string;
 	dateCreated?: string;
 	dateModified?: string;
-	extensions?: Record<string, string>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	extensions?: Record<string, any>;
 }
