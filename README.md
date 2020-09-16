@@ -43,6 +43,70 @@ _caliper-ts_ is still a work in progress and only implements some profiles descr
 ## Usage
 
 _caliper-ts_ provides a number of classes and factory functions to facilitate working with the Sensor API in a consistent way.
+Below is a basic example of configuring a sensor and sending an event, as well as more in-depth documentation of the various classes, factories, and utility functions.
+
+### Basic example
+
+```ts
+// Initialize Caliper sensor
+const sensor = new Sensor('http://example.org/sensors/1');
+
+// Initialize and register client
+const client = httpClient(
+	'http://example.org/sensors/1/clients/2',
+	'https://example.edu/caliper/target/endpoint',
+	'40dI6P62Q_qrWxpTk95z8w'
+);
+sensor.registerClient(client);
+
+// Set Event property values
+// Note: only actor and object property assignments shown
+const actor = createPerson({ id: 'https://example.edu/users/554433' });
+const object = createAssessment({
+	id: 'https://example.edu/terms/201801/courses/7/sections/1/assess/1',
+	dateToStartOn: getFormattedDateTime('2018-08-16T05:00:00.000Z'),
+	dateToSubmit: getFormattedDateTime('2018-09-28T11:59:59.000Z'),
+	maxAttempts: 1,
+	maxScore: 25.0
+	// ... add additional optional property assignments
+});
+
+// ... Use the entity factories to mint additional entity values.
+const edApp = createSoftwareApplication({
+	// ...
+});
+const membership = createMembership({
+	// ...
+});
+const session = createSession({
+	// ...
+});
+
+// Create Event
+const event = createAssessmentEvent({
+	id: getFormattedUrnUuid(),
+	actor,
+	action: Action.Started,
+	object,
+	eventTime: getFormattedDateTime(),
+	edApp,
+	membership,
+	session
+});
+
+// ... Create additional events and/or entity describes.
+
+// Create envelope with data payload
+const envelope = sensor.createEnvelope({
+	data: [
+		event
+		// ... add additional events and/or entity describes
+	]
+});
+
+// Delegate transmission responsibilities to client
+sensor.sendToClient(client, envelope);
+```
 
 ### `Sensor` class
 
