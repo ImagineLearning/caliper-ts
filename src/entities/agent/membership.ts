@@ -1,11 +1,11 @@
 import { JsonLdContextVersion } from '../../config/config';
-import { EntityType } from '../entityType';
 import { Entity } from '../entity';
+import { createEntity } from '../entityFactory';
+import { EntityType } from '../entityType';
+import { Organization } from './organization';
 import { Person } from './person';
 import { Role } from './role';
 import { Status } from './status';
-import { Organization } from './organization';
-import { createEntity } from '../entityFactory';
 
 export type Membership = {
 	organization?: Organization | string;
@@ -16,6 +16,6 @@ export type Membership = {
 
 export type MembershipParams = Omit<Membership, '@context' | 'type'>;
 
-export function createMembership(delegate: MembershipParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+export function createMembership(delegate: MembershipParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<Membership>({ ...delegate, type: EntityType.Membership }, contextVersion);
 }

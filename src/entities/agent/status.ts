@@ -1,4 +1,4 @@
-import { getJsonLdContext, DEFAULT_CONFIG, JsonLdContextVersion } from '../../config/config';
+import { DEFAULT_CONFIG, getJsonLdContext } from '../../config/config';
 import { ContextTermIri } from '../contextTermIri';
 
 export enum Status {
@@ -8,12 +8,12 @@ export enum Status {
 
 export const StatusRecord: Readonly<Record<Status, Readonly<ContextTermIri>>> = {
 	[Status.Active]: {
-		context: getJsonLdContext(DEFAULT_CONFIG, JsonLdContextVersion.v1p1),
+		context: getJsonLdContext(DEFAULT_CONFIG),
 		term: 'Active',
 		iri: 'http://purl.imsglobal.org/vocab/lis/v2/status#Active'
 	},
 	[Status.Inactive]: {
-		context: getJsonLdContext(DEFAULT_CONFIG, JsonLdContextVersion.v1p1),
+		context: getJsonLdContext(DEFAULT_CONFIG),
 		term: 'Inactive',
 		iri: 'http://purl.imsglobal.org/vocab/lis/v2/status#Deleted'
 	}

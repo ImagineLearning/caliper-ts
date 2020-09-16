@@ -1,8 +1,8 @@
 import { JsonLdContextVersion } from '../../config/config';
-import { createEntity } from '../entityFactory';
-import { Session } from './session';
-import { EntityType } from '../entityType';
 import { getFormattedDuration } from '../../utils/dateUtils';
+import { createEntity } from '../entityFactory';
+import { EntityType } from '../entityType';
+import { Session } from './session';
 
 export type LtiSession = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,7 +11,7 @@ export type LtiSession = {
 
 export type LtiSessionParams = Omit<LtiSession, '@context' | 'type'>;
 
-export function createLtiSession(delegate: LtiSessionParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+export function createLtiSession(delegate: LtiSessionParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<LtiSession>(
 		{
 			...delegate,

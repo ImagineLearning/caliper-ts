@@ -1,7 +1,7 @@
 import { JsonLdContextVersion } from '../../config/config';
-import { EntityType } from '../entityType';
-import { Response, createResponse } from './response';
 import { createEntity } from '../entityFactory';
+import { EntityType } from '../entityType';
+import { createResponse, Response } from './response';
 
 export type FillinBlankResponse = {
 	values?: string[];
@@ -12,7 +12,7 @@ export type FillinBlankResponseParams = Omit<FillinBlankResponse, '@context' | '
 export function createFillinBlankResponse(
 	delegate: FillinBlankResponseParams,
 	calculateDuration: boolean = true,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
+	contextVersion?: JsonLdContextVersion
 ): FillinBlankResponse {
 	const entity = createResponse(delegate, calculateDuration, contextVersion);
 	return createEntity<FillinBlankResponse>({ ...delegate, ...entity, type: EntityType.FillinBlankResponse }, contextVersion);

@@ -1,9 +1,9 @@
 import { JsonLdContextVersion } from '../../config/config';
 import { Person } from '../agent/person';
 import { Entity } from '../entity';
+import { createEntity } from '../entityFactory';
 import { EntityType } from '../entityType';
 import { DigitalResource } from './digitalResource';
-import { createEntity } from '../entityFactory';
 
 export type Attempt = {
 	assignee?: Person | string;
@@ -17,6 +17,6 @@ export type Attempt = {
 
 export type AttemptParams = Omit<Attempt, '@context' | 'type'>;
 
-export function createAttempt(delegate: AttemptParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+export function createAttempt(delegate: AttemptParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<Attempt>({ ...delegate, type: EntityType.Attempt }, contextVersion);
 }
