@@ -17,7 +17,7 @@ type JsonLdContexts = {
 
 export interface Config {
 	dataFormat: string;
-	dataVersion: string;
+	dataVersion: JsonLdContextVersion;
 	dateTimeFormat: string;
 	jsonldContext: Record<JsonLdContextVersion, JsonLdContexts | string | undefined>;
 	testFixturesBaseDir?: Omit<Record<JsonLdContextVersion, string>, JsonLdContextVersion.none>;
@@ -26,7 +26,7 @@ export interface Config {
 
 export const DEFAULT_CONFIG: Config = {
 	dataFormat: 'JSON-LD',
-	dataVersion: 'http://purl.imsglobal.org/ctx/caliper/v1p1',
+	dataVersion: JsonLdContextVersion.v1p1,
 	dateTimeFormat: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 	jsonldContext: {
 		[JsonLdContextVersion.none]: undefined,
@@ -50,7 +50,11 @@ export const DEFAULT_CONFIG: Config = {
 	uuidVersion: 4
 };
 
-export function getJsonLdContext(config: Config, version: JsonLdContextVersion, subVersion: keyof JsonLdContexts = 'default') {
+export function getJsonLdContext(
+	config: Config,
+	version: JsonLdContextVersion = DEFAULT_CONFIG.dataVersion,
+	subVersion: keyof JsonLdContexts = 'default'
+) {
 	const context = config.jsonldContext[version];
 	return typeof context === 'object' ? context[subVersion] : context;
 }

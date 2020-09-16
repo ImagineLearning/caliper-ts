@@ -1,5 +1,5 @@
 import { httpClient } from './clients/httpClient';
-import { DEFAULT_CONFIG } from './config/config';
+import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { Sensor } from './sensor';
 
 describe('Sensor', () => {
@@ -58,7 +58,7 @@ describe('Sensor', () => {
 				data: [{ hello: 'world' }]
 			});
 			const { dataVersion, sendTime, sensor: id } = envelope;
-			expect(dataVersion).toBe(DEFAULT_CONFIG.dataVersion);
+			expect(dataVersion).toBe(getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion));
 			expect(sendTime).toBe(date);
 			expect(id).toBe('id');
 		});
