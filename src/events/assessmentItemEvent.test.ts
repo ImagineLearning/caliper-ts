@@ -14,6 +14,7 @@ import '../test/toEqualFixture';
 import { getFormattedDateTime } from '../utils/dateUtils';
 import { getFormattedUrnUuid } from '../utils/urnUtils';
 import { createAssessmentItemEvent } from './assessmentItemEvent';
+import { EventType } from './eventType';
 
 const versions = Object.values(JsonLdContextVersion).filter(version => version !== JsonLdContextVersion.none);
 
@@ -89,7 +90,7 @@ describe('Assessment Item Events', () => {
 					version
 				);
 
-				expect(assessmentItemEvent).toEqualFixture('caliperEventAssessmentItemStarted.json', version);
+				expect(assessmentItemEvent).toEqualEventFixture(EventType.AssessmentItem, Action.Started, version);
 			});
 		});
 	});

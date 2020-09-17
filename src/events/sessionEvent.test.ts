@@ -4,6 +4,7 @@ import { createPerson } from '../entities/agent/person';
 import { createSoftwareApplication } from '../entities/agent/softwareApplication';
 import { createSession } from '../entities/session/session';
 import '../test/toEqualFixture';
+import { EventType } from './eventType';
 import { createSessionEvent } from './sessionEvent';
 
 const versions = Object.values(JsonLdContextVersion).filter(version => version !== JsonLdContextVersion.none);
@@ -33,7 +34,7 @@ describe('Session Events', () => {
 					version
 				);
 
-				expect(sessionEvent).toEqualFixture('caliperEventSessionLoggedIn.json', version);
+				expect(sessionEvent).toEqualEventFixture(EventType.Session, Action.LoggedIn, version);
 			});
 
 			it('Session event logged out matches expected json', () => {
@@ -60,7 +61,7 @@ describe('Session Events', () => {
 					version
 				);
 
-				expect(sessionEvent).toEqualFixture('caliperEventSessionLoggedOut.json', version);
+				expect(sessionEvent).toEqualEventFixture(EventType.Session, Action.LoggedOut, version);
 			});
 
 			it('Session event timed out matches expected json', () => {
@@ -86,7 +87,7 @@ describe('Session Events', () => {
 					version
 				);
 
-				expect(sessionEvent).toEqualFixture('caliperEventSessionTimedOut.json', version);
+				expect(sessionEvent).toEqualEventFixture(EventType.Session, Action.TimedOut, version);
 			});
 		});
 	});

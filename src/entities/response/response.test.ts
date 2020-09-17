@@ -60,7 +60,7 @@ describe('Response Entities', () => {
 					version
 				);
 
-				expect(response).toEqualFixture('caliperEntityResponseExtended.json', version);
+				expect(response).toEqualEntityFixture(EntityType.Response, version, 'Extended');
 			});
 
 			it('multipleChoiceResponse entity matches expected json', () => {
@@ -95,7 +95,7 @@ describe('Response Entities', () => {
 					false,
 					version
 				);
-				expect(multipleChoiceResponse).toEqualFixture('caliperEntityMultipleChoiceResponse.json', version);
+				expect(multipleChoiceResponse).toEqualEntityFixture(EntityType.MultipleChoiceResponse, version);
 			});
 
 			it('fillinblankresponse entity matches expected json', () => {
@@ -131,7 +131,7 @@ describe('Response Entities', () => {
 					false,
 					version
 				);
-				expect(fillinblankresponse).toEqualFixture('caliperEntityFillinBlankResponse.json', version);
+				expect(fillinblankresponse).toEqualEntityFixture(EntityType.FillinBlankResponse, version);
 			});
 
 			it('multipleResponseResponse entity matches expected json', () => {
@@ -166,7 +166,7 @@ describe('Response Entities', () => {
 					false,
 					version
 				);
-				expect(multipleResponseResponse).toEqualFixture('caliperEntityMultipleResponseResponse.json', version);
+				expect(multipleResponseResponse).toEqualEntityFixture(EntityType.MultipleResponseResponse, version);
 			});
 
 			it('selectTextResponse entity matches expected json', () => {
@@ -202,7 +202,7 @@ describe('Response Entities', () => {
 					false,
 					version
 				);
-				expect(selectTextResponse).toEqualFixture('caliperEntitySelectTextResponse.json', version);
+				expect(selectTextResponse).toEqualEntityFixture(EntityType.SelectTextResponse, version);
 			});
 
 			it('trueFalseResponse entity matches expected json', () => {
@@ -237,7 +237,7 @@ describe('Response Entities', () => {
 					false,
 					version
 				);
-				expect(trueFalseResponse).toEqualFixture('caliperEntityTrueFalseResponse.json', version);
+				expect(trueFalseResponse).toEqualEntityFixture(EntityType.TrueFalseResponse, version);
 			});
 		});
 	});

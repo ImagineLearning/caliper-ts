@@ -1,6 +1,7 @@
 import { JsonLdContextVersion } from '../../config/config';
 import '../../test/toEqualFixture';
 import { createPerson } from '../agent/person';
+import { EntityType } from '../entityType';
 import { createLtiSession } from './ltiSession';
 import { createSession } from './session';
 
@@ -26,7 +27,7 @@ describe('Session Entity', () => {
 					version
 				);
 
-				expect(session).toEqualFixture('caliperEntitySession.json', version);
+				expect(session).toEqualEntityFixture(EntityType.Session, version);
 			});
 
 			it('createLtiSession() creates lti session entity that matches caliper json', () => {
@@ -110,7 +111,7 @@ describe('Session Entity', () => {
 					version
 				);
 
-				expect(session).toEqualFixture('caliperEntityLtiSession.json', version);
+				expect(session).toEqualEntityFixture(EntityType.LtiSession, version);
 			});
 		});
 	});

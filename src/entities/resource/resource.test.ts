@@ -2,6 +2,7 @@ import { JsonLdContextVersion } from '../../config/config';
 import '../../test/toEqualFixture';
 import { createCourseSection } from '../agent/courseSection';
 import { createPerson } from '../agent/person';
+import { EntityType } from '../entityType';
 import { createAssessment } from './assessment';
 import { createAssessmentItem } from './assessmentItem';
 import { createAssignableDigitalResource } from './assignableDigitalResource';
@@ -40,7 +41,7 @@ describe('Resource Entities', () => {
 					version
 				);
 
-				expect(assessment).toEqualFixture('caliperEntityAssessment.json', version);
+				expect(assessment).toEqualEntityFixture(EntityType.Assessment, version);
 			});
 
 			it('assignableDigitalResource entity matches expected json', () => {
@@ -61,7 +62,7 @@ describe('Resource Entities', () => {
 					version
 				);
 
-				expect(assignableDigitalResource).toEqualFixture('caliperEntityAssignableDigitalResource.json', version);
+				expect(assignableDigitalResource).toEqualEntityFixture(EntityType.AssignableDigitalResource, version);
 			});
 
 			it('learningObjective entity matches expected json', () => {
@@ -93,7 +94,7 @@ describe('Resource Entities', () => {
 					version
 				);
 
-				expect(assignableDigitalResource).toEqualFixture('caliperEntityLearningObjective.json', version);
+				expect(assignableDigitalResource).toEqualEntityFixture(EntityType.LearningObjective, version);
 			});
 
 			it('digitalResource entity matches expected json', () => {
@@ -119,7 +120,7 @@ describe('Resource Entities', () => {
 					version
 				);
 
-				expect(digitalResource).toEqualFixture('caliperEntityDigitalResource.json', version);
+				expect(digitalResource).toEqualEntityFixture(EntityType.DigitalResource, version);
 			});
 
 			it('attempt entity matches expected json', () => {
@@ -142,7 +143,7 @@ describe('Resource Entities', () => {
 					version
 				);
 
-				expect(attempt).toEqualFixture('caliperEntityAttempt.json', version);
+				expect(attempt).toEqualEntityFixture(EntityType.Attempt, version);
 			});
 		});
 	});
