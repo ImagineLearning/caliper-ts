@@ -40,7 +40,7 @@ export const DEFAULT_CONFIG: Config = {
 			toolLaunch: 'http://purl.imsglobal.org/ctx/caliper/v1p1/ToolLaunchProfile-extension',
 			toolUse: 'http://purl.imsglobal.org/ctx/caliper/v1p1/ToolUseProfile-extension'
 		},
-		[JsonLdContextVersion.v1p2]: 'https://purl.imsglobal.org/caliper/v1p2/context/Core'
+		[JsonLdContextVersion.v1p2]: 'http://purl.imsglobal.org/ctx/caliper/v1p2'
 	},
 	testFixturesBaseDir: {
 		v1p0: '../caliper-spec/fixtures/v1p0/',
