@@ -1,5 +1,8 @@
 import { JsonLdContextVersion } from '../../config/config';
 import '../../test/toEqualFixture';
+import { EntityType } from '../entityType';
+import { IdentifierType } from '../identifiers/identifierType';
+import { createSystemIdentifier } from '../identifiers/systemIdentifier';
 import { createCourseOffering } from './courseOffering';
 import { createCourseSection } from './courseSection';
 import { createMembership } from './membership';
@@ -19,12 +22,38 @@ describe('Agent Entities', () => {
 					{
 						dateCreated: '2016-08-01T06:00:00.000Z',
 						dateModified: '2016-09-02T11:30:00.000Z',
-						id: 'https://example.edu/users/554433'
+						id: 'https://example.edu/users/554433',
+						otherIdentifiers:
+							version === JsonLdContextVersion.v1p2
+								? [
+										createSystemIdentifier({
+											identifier: 'example.edu:71ee7e42-f6d2-414a-80db-b69ac2defd4',
+											identifierType: IdentifierType.LisSourcedId
+										}),
+										createSystemIdentifier({
+											identifier: 'https://example.edu/users/554433',
+											identifierType: IdentifierType.LtiUserId,
+											source: createSoftwareApplication({ id: 'https://example.edu' }, JsonLdContextVersion.none)
+										}),
+										createSystemIdentifier({
+											identifier: 'jane@example.edu',
+											identifierType: IdentifierType.EmailAddress,
+											source: 'https://example.edu'
+										}),
+										createSystemIdentifier({
+											identifier: '4567',
+											identifierType: IdentifierType.SystemId,
+											extensions: {
+												'com.examplePlatformVendor.identifier_type': 'UserIdentifier'
+											}
+										})
+								  ]
+								: undefined
 					},
 					version
 				);
 
-				expect(person).toEqualFixture('caliperEntityPerson.json', version);
+				expect(person).toEqualEntityFixture(EntityType.Person, version);
 			});
 
 			it('softwareApplication entity matches expected json', () => {
@@ -38,7 +67,7 @@ describe('Agent Entities', () => {
 					version
 				);
 
-				expect(softwareApplication).toEqualFixture('caliperEntitySoftwareApplication.json', version);
+				expect(softwareApplication).toEqualEntityFixture(EntityType.SoftwareApplication, version);
 			});
 
 			it('organization entity matches expected json', () => {
@@ -54,7 +83,7 @@ describe('Agent Entities', () => {
 					version
 				);
 
-				expect(organization).toEqualFixture('caliperEntityOrganization.json', version);
+				expect(organization).toEqualEntityFixture(EntityType.Organization, version);
 			});
 
 			it('courseOffering entity matches expected json', () => {
@@ -65,12 +94,18 @@ describe('Agent Entities', () => {
 						courseNumber: 'CPS 435',
 						dateCreated: '2016-08-01T06:00:00.000Z',
 						dateModified: '2016-09-02T11:30:00.000Z',
-						name: 'CPS 435 Learning Analytics'
+						name: 'CPS 435 Learning Analytics',
+						otherIdentifiers: [
+							createSystemIdentifier({
+								identifier: 'example.edu:SI182-F16',
+								identifierType: IdentifierType.LisSourcedId
+							})
+						]
 					},
 					version
 				);
 
-				expect(courseOffering).toEqualFixture('caliperEntityCourseOffering.json', version);
+				expect(courseOffering).toEqualEntityFixture(EntityType.CourseOffering, version);
 			});
 
 			it('courseSection entity matches expected json', () => {
@@ -88,12 +123,18 @@ describe('Agent Entities', () => {
 								id: 'https://example.edu/terms/201601/courses/7'
 							},
 							JsonLdContextVersion.none
-						)
+						),
+						otherIdentifiers: [
+							createSystemIdentifier({
+								identifier: 'example.edu:SI182-001-F16',
+								identifierType: IdentifierType.LisSourcedId
+							})
+						]
 					},
 					version
 				);
 
-				expect(courseSection).toEqualFixture('caliperEntityCourseSection.json', version);
+				expect(courseSection).toEqualEntityFixture(EntityType.CourseSection, version);
 			});
 
 			it('membership entity matches expected json', () => {
@@ -115,7 +156,7 @@ describe('Agent Entities', () => {
 					version
 				);
 
-				expect(membership).toEqualFixture('caliperEntityMembership.json', version);
+				expect(membership).toEqualEntityFixture(EntityType.Membership, version);
 			});
 		});
 	});
