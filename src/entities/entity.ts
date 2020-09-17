@@ -1,4 +1,5 @@
 import { EntityType } from './entityType';
+import { SystemIdentifier } from './identifiers/systemIdentifier';
 
 export interface Entity {
 	'@context'?: string;
@@ -10,4 +11,5 @@ export interface Entity {
 	dateModified?: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	extensions?: Record<string, any>;
+	otherIdentifiers?: SystemIdentifier[];
 }
