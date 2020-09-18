@@ -13,6 +13,7 @@ export type DigitalResource = {
 	isPartOf?: Entity | string;
 	datePublished?: string;
 	version?: string;
+	storageName?: string;
 } & Entity;
 
 export type DigitalResourceParams = Omit<DigitalResource, '@context' | 'type'>;
