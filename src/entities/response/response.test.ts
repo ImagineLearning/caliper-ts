@@ -242,3 +242,79 @@ describe('Response Entities', () => {
 		});
 	});
 });
+
+describe('Response factories', () => {
+	it('createFillinBlankResponse(..) does not calculate duration when `calculateDuration` is false', () => {
+		const { duration } = createFillinBlankResponse(
+			{
+				id: 'my-cool-response',
+				startedAtTime: '1969-07-20T02:56:00+0000',
+				endedAtTime: '1969-07-21T17:54:00+0000',
+				duration: '1H0M0S'
+			},
+			false
+		);
+		expect(duration).toBe('1H0M0S');
+	});
+
+	it('createMultipleChoiceResponse(..) does not calculate duration when `calculateDuration` is false', () => {
+		const { duration } = createMultipleChoiceResponse(
+			{
+				id: 'my-cool-response',
+				startedAtTime: '1969-07-20T02:56:00+0000',
+				endedAtTime: '1969-07-21T17:54:00+0000',
+				duration: '1H0M0S'
+			},
+			false
+		);
+		expect(duration).toBe('1H0M0S');
+	});
+
+	it('createResponse(..) does not calculate duration when `calculateDuration` is false', () => {
+		const { duration } = createResponse(
+			{
+				id: 'my-cool-response',
+				startedAtTime: '1969-07-20T02:56:00+0000',
+				endedAtTime: '1969-07-21T17:54:00+0000',
+				duration: '1H0M0S'
+			},
+			false
+		);
+		expect(duration).toBe('1H0M0S');
+	});
+
+	it('createResponse(..) properly calculates duration from startedAtTime and endedAtTime', () => {
+		const { duration } = createResponse({
+			id: 'my-cool-response',
+			startedAtTime: '1969-07-20T02:56:00+0000',
+			endedAtTime: '1969-07-21T17:54:00+0000'
+		});
+		expect(duration).toBe('P0Y0M1DT14H58M0S');
+	});
+
+	it('createSelectTextResponse(..) does not calculate duration when `calculateDuration` is false', () => {
+		const { duration } = createSelectTextResponse(
+			{
+				id: 'my-cool-response',
+				startedAtTime: '1969-07-20T02:56:00+0000',
+				endedAtTime: '1969-07-21T17:54:00+0000',
+				duration: '1H0M0S'
+			},
+			false
+		);
+		expect(duration).toBe('1H0M0S');
+	});
+
+	it('createTrueFalseResponse(..) does not calculate duration when `calculateDuration` is false', () => {
+		const { duration } = createTrueFalseResponse(
+			{
+				id: 'my-cool-response',
+				startedAtTime: '1969-07-20T02:56:00+0000',
+				endedAtTime: '1969-07-21T17:54:00+0000',
+				duration: '1H0M0S'
+			},
+			false
+		);
+		expect(duration).toBe('1H0M0S');
+	});
+});

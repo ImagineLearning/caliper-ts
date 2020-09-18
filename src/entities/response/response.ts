@@ -25,7 +25,7 @@ export function createResponse(
 			duration:
 				calculateDuration && delegate.startedAtTime && delegate.endedAtTime
 					? getFormattedDuration(delegate.startedAtTime, delegate.endedAtTime)
-					: undefined
+					: delegate.duration
 		},
 		contextVersion
 	);
