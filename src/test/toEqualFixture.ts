@@ -22,12 +22,10 @@ function tryLoadFixture(
 	version: JsonLdContextVersion = DEFAULT_CONFIG.dataVersion,
 	extended?: string
 ) {
-	let path = `../caliper-spec/fixtures/${version}/`;
-	if (version === JsonLdContextVersion.v1p0) {
-		path += `caliper${type}${startCase(objectType)}${extended ?? ''}.json`;
-	} else {
-		path += `caliper${startCase(objectType)}${type}${extended ?? ''}.json`;
-	}
+	// EventTypes have an 'Event' suffix that doesn't line up with the fixture file names,
+	// so we'll just trim it off.
+	const fixedType = objectType === 'event' ? type.replace(/Event?/, '') : type;
+	const path = `../caliper-spec/fixtures/${version}/caliper${startCase(objectType)}${fixedType}${extended ?? ''}.json`;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let content: any;
 	try {
@@ -82,8 +80,7 @@ expect.extend({
 			promise: this.promise
 		};
 		const expected = tryLoadFixture(type, 'entity', version, extended);
-		// If we can't load a fixture, we'll just say it passed ¯\_(ツ)_/¯
-		const pass = !expected || this.equals(received, expected);
+		const pass = this.equals(received, expected);
 		const message = getMessage({
 			expand: this.expand,
 			expected,
