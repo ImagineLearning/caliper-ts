@@ -57,7 +57,8 @@ describe('Resource Entities', () => {
 						maxAttempts: 2,
 						maxScore: 50,
 						maxSubmits: 2,
-						name: 'Week 9 Reflection'
+						name: 'Week 9 Reflection',
+						storageName: 'assignment-2.pdf'
 					},
 					version
 				);
@@ -66,33 +67,45 @@ describe('Resource Entities', () => {
 			});
 
 			it('learningObjective entity matches expected json', () => {
-				const assignableDigitalResource = createAssignableDigitalResource(
-					{
-						dateCreated: '2016-11-01T06:00:00.000Z',
-						dateToActivate: '2016-11-10T11:59:59.000Z',
-						dateToShow: '2016-11-10T11:59:59.000Z',
-						dateToStartOn: '2016-11-15T11:59:59.000Z',
-						dateToSubmit: '2016-11-14T11:59:59.000Z',
-						description: 'Choose a learning activity and describe the actions, entities and events that comprise it.',
-						id: 'https://example.edu/terms/201601/courses/7/sections/1/assign/2',
-						maxAttempts: 2,
-						maxScore: 50,
-						maxSubmits: 2,
-						name: 'Caliper Profile Design',
-						learningObjectives: [
-							createLearningObjective(
+				const assignableDigitalResource =
+					version !== JsonLdContextVersion.v1p2
+						? createAssignableDigitalResource(
 								{
-									dateCreated: '2016-08-01T06:00:00.000Z',
-									description: 'Demonstrate ability to model a learning activity as a Caliper profile.',
-									id: 'https://example.edu/terms/201601/courses/7/sections/1/objectives/1',
-									name: 'Research techniques'
+									dateCreated: '2016-11-01T06:00:00.000Z',
+									dateToActivate: '2016-11-10T11:59:59.000Z',
+									dateToShow: '2016-11-10T11:59:59.000Z',
+									dateToStartOn: '2016-11-15T11:59:59.000Z',
+									dateToSubmit: '2016-11-14T11:59:59.000Z',
+									description:
+										'Choose a learning activity and describe the actions, entities and events that comprise it.',
+									id: 'https://example.edu/terms/201601/courses/7/sections/1/assign/2',
+									maxAttempts: 2,
+									maxScore: 50,
+									maxSubmits: 2,
+									name: 'Caliper Profile Design',
+									learningObjectives: [
+										createLearningObjective(
+											{
+												dateCreated: '2016-08-01T06:00:00.000Z',
+												description: 'Demonstrate ability to model a learning activity as a Caliper profile.',
+												id: 'https://example.edu/terms/201601/courses/7/sections/1/objectives/1',
+												name: 'Research techniques'
+											},
+											JsonLdContextVersion.none
+										)
+									]
 								},
-								JsonLdContextVersion.none
-							)
-						]
-					},
-					version
-				);
+								version
+						  )
+						: createLearningObjective(
+								{
+									id: 'https://example.edu/terms/201601/courses/7/sections/1/objectives/1',
+									name: 'Research techniques',
+									description: 'Demonstrate ability to model a learning activity as a Caliper profile.',
+									dateCreated: '2016-08-01T06:00:00.000Z'
+								},
+								version
+						  );
 
 				expect(assignableDigitalResource).toEqualEntityFixture(EntityType.LearningObjective, version);
 			});
@@ -115,7 +128,8 @@ describe('Resource Entities', () => {
 								)
 							},
 							JsonLdContextVersion.none
-						)
+						),
+						storageName: 'fall-2016-syllabus.pdf'
 					},
 					version
 				);
