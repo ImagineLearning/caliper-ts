@@ -1,12 +1,13 @@
+import { Action } from '../actions/actions';
+import { Membership } from '../entities/agent/membership';
+import { Organization } from '../entities/agent/organization';
 import { SoftwareApplication } from '../entities/agent/softwareApplication';
 import { Entity } from '../entities/entity';
-import { Session } from '../entities/session/session';
-import { Action } from '../actions/actions';
-import { EventType } from './eventType';
 import { Attempt } from '../entities/resource/attempt';
-import { Organization } from '../entities/agent/organization';
-import { Membership } from '../entities/agent/membership';
 import { LtiSession } from '../entities/session/ltiSession';
+import { Session } from '../entities/session/session';
+import { EventProfile } from './eventProfiles';
+import { EventType } from './eventType';
 
 export interface Event {
 	'@context'?: string;
@@ -25,4 +26,5 @@ export interface Event {
 	session?: Session | string;
 	federatedSession?: LtiSession | string;
 	extensions?: Record<string, string>;
+	profile?: EventProfile;
 }
