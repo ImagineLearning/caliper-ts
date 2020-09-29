@@ -1,12 +1,13 @@
 import ky from 'ky';
 import { Envelope } from '../envelope';
+import { Client } from './client';
 
 export interface ClientOptions {
 	uri: string;
 	headers: Record<string, string>;
 }
 
-export class HttpClient {
+export class HttpClient implements Client {
 	constructor(private id: string, private options: ClientOptions) {
 		if (!id) {
 			throw new Error('Caliper Sensor Client identifier (id) has not been provided.');
@@ -31,7 +32,7 @@ export class HttpClient {
 		return this.id;
 	}
 
-	send<T>(envelope: Envelope<T>) {
+	send<TEnvelope, TResponse>(envelope: Envelope<TEnvelope>) {
 		if (Object.keys(envelope).length === 0) {
 			throw new Error('Chosen Requestor has not been registered.');
 		}
@@ -41,7 +42,7 @@ export class HttpClient {
 				json: envelope,
 				headers: this.options.headers
 			})
-			.json();
+			.json<TResponse>();
 	}
 }
 
