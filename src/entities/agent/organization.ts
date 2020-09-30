@@ -10,6 +10,6 @@ export type Organization = {
 
 export type OrganizationParams = Omit<Organization, '@context' | 'type'>;
 
-export function createOrganization(delegate: OrganizationParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+export function createOrganization(delegate: OrganizationParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<Organization>({ ...delegate, type: EntityType.Organization }, contextVersion);
 }

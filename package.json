@@ -1,6 +1,6 @@
 {
 	"name": "@imaginelearning/caliper-ts",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"author": "Imagine Learning",
 	"license": "MIT",
 	"main": "dist/index.js",
@@ -31,13 +31,17 @@
 		}
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.14.161",
 		"@types/text-encoding": "^0.0.35",
 		"@types/uuid": "^8.3.0",
 		"cross-env": "^7.0.2",
 		"husky": "^4.2.5",
+		"jest-diff": "^26.4.2",
 		"jest-fetch-mock": "^3.0.3",
 		"jest-teamcity-reporter": "^0.9.0",
 		"lint-staged": "^10.2.13",
+		"lodash": "^4.17.20",
+		"lodash-es": "^4.17.15",
 		"prettier": "^2.1.1",
 		"pretty-quick": "^3.0.0",
 		"text-encoding": "^0.7.0",

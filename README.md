@@ -339,6 +339,7 @@ The following entity factory functions are available through the _caliper-ts_ li
 -   `createSelectTextResponse`
 -   `createSession`
 -   `createSoftwareApplication`
+-   `createSystemIdentifier`
 -   `createTrueFalseResponse`
 
 ```ts

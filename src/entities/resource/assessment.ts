@@ -8,6 +8,6 @@ export type Assessment = DigitalResourceCollection & AssignableDigitalResource;
 
 export type AssessmentParams = Omit<Assessment, '@context' | 'type'>;
 
-export function createAssessment(delegate: AssessmentParams, contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1) {
+export function createAssessment(delegate: AssessmentParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<Assessment>({ ...delegate, type: EntityType.Assessment }, contextVersion);
 }

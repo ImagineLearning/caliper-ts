@@ -15,9 +15,6 @@ export type AssignableDigitalResource = {
 
 export type AssignableDigitalResourceParams = Omit<AssignableDigitalResource, '@context' | 'type'>;
 
-export function createAssignableDigitalResource(
-	delegate: AssignableDigitalResourceParams,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
-) {
+export function createAssignableDigitalResource(delegate: AssignableDigitalResourceParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<AssignableDigitalResource>({ ...delegate, type: EntityType.AssignableDigitalResource }, contextVersion);
 }

@@ -38,6 +38,7 @@ export enum EntityType {
 	Session = 'Session',
 	SharedAnnotation = 'SharedAnnotation',
 	SoftwareApplication = 'SoftwareApplication',
+	SystemIdentifier = 'SystemIdentifier',
 	TagAnnotation = 'TagAnnotation',
 	Thread = 'Thread',
 	TrueFalseResponse = 'TrueFalseResponse',

@@ -9,9 +9,6 @@ export type DigitalResourceCollection = {
 
 export type DigitalResourceCollectionParams = Omit<DigitalResourceCollection, '@context' | 'type'>;
 
-export function createDigitalResourceCollection(
-	delegate: DigitalResourceCollectionParams,
-	contextVersion: JsonLdContextVersion = JsonLdContextVersion.v1p1
-) {
+export function createDigitalResourceCollection(delegate: DigitalResourceCollectionParams, contextVersion?: JsonLdContextVersion) {
 	return createEntity<DigitalResourceCollection>({ ...delegate, type: EntityType.DigitalResourceCollection }, contextVersion);
 }

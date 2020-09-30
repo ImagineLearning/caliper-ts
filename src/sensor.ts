@@ -1,5 +1,5 @@
 import { Client } from './clients/client';
-import { DEFAULT_CONFIG } from './config/config';
+import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
 import { getFormattedDateTime } from './utils/dateUtils';
 
@@ -20,7 +20,7 @@ export class Sensor {
 		}
 		const sensor = opts.sensor || this.id;
 		const sendTime = opts.sendTime || getFormattedDateTime();
-		const dataVersion = opts.dataVersion || DEFAULT_CONFIG.dataVersion;
+		const dataVersion = opts.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
 		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: opts.data });
 	}
 
