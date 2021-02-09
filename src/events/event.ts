@@ -25,6 +25,7 @@ export interface Event {
 	membership?: Membership | string;
 	session?: Session | string;
 	federatedSession?: LtiSession | string;
-	extensions?: Record<string, string>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	extensions?: Record<string, any>;
 	profile?: EventProfile;
 }
