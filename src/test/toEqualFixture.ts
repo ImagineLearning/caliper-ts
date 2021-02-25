@@ -1,16 +1,16 @@
 import diff from 'jest-diff';
-import { DEFAULT_CONFIG, JsonLdContextVersion } from '../config/config';
-import { EntityType } from '../entities/entityType';
-import { EventType } from '../events/eventType';
+import { DEFAULT_CONFIG, JsonLdContextVersion } from './../config/config';
+import { EntityType } from './../entities/entityType';
+import { EventType } from './../events/eventType';
 import { startCase } from 'lodash';
-import { Action } from '../actions/actions';
+import { CaliperAction } from './../Events/CaliperAction';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
 	namespace jest {
 		interface Matchers<R> {
 			toEqualEntityFixture(type: EntityType, version?: JsonLdContextVersion, extended?: string): CustomMatcherResult;
-			toEqualEventFixture(type: EventType, action: Action, version?: JsonLdContextVersion): CustomMatcherResult;
+			toEqualEventFixture(type: EventType, action: CaliperAction, version?: JsonLdContextVersion): CustomMatcherResult;
 		}
 	}
 }
@@ -94,7 +94,7 @@ expect.extend({
 		return { actual: received, message, pass };
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	toEqualEventFixture(received: any, type: EventType, action?: Action, version?: JsonLdContextVersion) {
+	toEqualEventFixture(received: any, type: EventType, action?: CaliperAction, version?: JsonLdContextVersion) {
 		const options = {
 			comment: 'deep equality',
 			isNot: this.isNot,
