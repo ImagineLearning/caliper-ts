@@ -1,7 +1,7 @@
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
-import { getFormattedDateTime } from './utils/dateUtils';
+import Caliper from './Caliper';
 
 export class Sensor {
 	private clients: Record<string, Client>;
@@ -19,7 +19,7 @@ export class Sensor {
 			throw new Error('Caliper Sensor Envelope data has not been provided.');
 		}
 		const sensor = opts.sensor || this.id;
-		const sendTime = opts.sendTime || getFormattedDateTime();
+		const sendTime = opts.sendTime || Caliper.timestamp();
 		const dataVersion = opts.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
 		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: opts.data });
 	}

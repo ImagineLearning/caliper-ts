@@ -1,5 +1,5 @@
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
-import { getFormattedDateTime } from './utils/dateUtils';
+import Caliper from './Caliper';
 
 export type Envelope<T> = {
 	sensor: string;
@@ -10,12 +10,12 @@ export type Envelope<T> = {
 
 export type EnvelopeOptions<T> = Partial<Omit<Envelope<T>, 'data' | 'sensor'>> & {
 	sensor: string;
-	data?: T | T[];
+	data?: T[];
 };
 
-export function createEnvelope<T>(opts: EnvelopeOptions<T>) {
-	const sendTime = getFormattedDateTime();
+export function createEnvelope<T>(options: EnvelopeOptions<T>) {
+	const sendTime = Caliper.timestamp();
 	const dataVersion = getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
-	const data = Array.isArray(opts.data) ? [...opts.data] : [opts.data];
-	return { sendTime, dataVersion, ...opts, data } as Envelope<T>;
+	const data = Array.isArray(options.data) ? [...options.data] : [options.data];
+	return { sendTime, dataVersion, ...options, data } as Envelope<T>;
 }
