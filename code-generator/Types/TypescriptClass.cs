@@ -47,6 +47,7 @@ namespace CodeGenerator.Types
             typeof(Guid),
             typeof(DateTime),
             typeof(DateTimeOffset),
+            typeof(TimeZoneInfo),
             typeof(TimeSpan),
             typeof(IPAddress),
             typeof(Uri),
