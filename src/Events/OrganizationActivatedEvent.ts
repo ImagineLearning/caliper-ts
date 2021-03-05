@@ -2,30 +2,29 @@
 
 import Caliper from './../Caliper';
 import { IAgent } from './../Entities/Agent';
-import { IClass } from './../Entities/Class';
+import { IDistrict } from './../Entities/District';
 import { IEntity } from './../Entities/Entity';
-import { IGroup } from './../Entities/Group';
 import { IInstructor } from './../Entities/Instructor';
 import { ILtiSession } from './../Entities/LtiSession';
 import { IMembership } from './../Entities/Membership';
 import { IOrganization } from './../Entities/Organization';
+import { ISchool } from './../Entities/School';
 import { ISession } from './../Entities/Session';
 import { ISoftwareApplication } from './../Entities/SoftwareApplication';
-import { IStudent } from './../Entities/Student';
 import { IUser } from './../Entities/User';
 import { CaliperAction } from './CaliperAction';
 import { CaliperProfile } from './CaliperProfile';
 import { IEvent } from './Event';
 import { EventType } from './EventType';
 
-export interface IGroupDeletedEvent extends IEvent {
-	actor: ISoftwareApplication | IUser | IInstructor | IStudent;
-	object: IGroup | IClass;
+export interface IOrganizationActivatedEvent extends IEvent {
+	actor: ISoftwareApplication | IUser | IInstructor;
+	object: IOrganization | ISchool | IDistrict;
 }
 
-interface IGroupDeletedEventParams {
-	actor: ISoftwareApplication | IUser | IInstructor | IStudent;
-	object: IGroup | IClass;
+interface IOrganizationActivatedEventParams {
+	actor: ISoftwareApplication | IUser | IInstructor;
+	object: IOrganization | ISchool | IDistrict;
 	profile?: CaliperProfile;
 	target?: IEntity;
 	generated?: IEntity;
@@ -37,11 +36,11 @@ interface IGroupDeletedEventParams {
 	extensions?: Record<string, any>;
 }
 
-export function GroupDeletedEvent(params: IGroupDeletedEventParams): IGroupDeletedEvent {
+export function OrganizationActivatedEvent(params: IOrganizationActivatedEventParams): IOrganizationActivatedEvent {
 	return {
-		['@context']: ['http://edgenuity.com/events/group-deleted/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		type: EventType.GroupEvent,
-		action: CaliperAction.Deleted,
+		['@context']: ['http://edgenuity.com/events/organization-activated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
+		type: EventType.OrganizationEvent,
+		action: CaliperAction.Activated,
 		id: Caliper.guid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
@@ -49,10 +48,10 @@ export function GroupDeletedEvent(params: IGroupDeletedEventParams): IGroupDelet
 	};
 }
 
-export const GroupDeletedEventSchema = {
-	context: 'http://edgenuity.com/events/group-deleted/0-0-2',
+export const OrganizationActivatedEventSchema = {
+	context: 'http://edgenuity.com/events/organization-activated/0-0-2',
 	schema: {
-		title: 'GroupDeletedEvent',
+		title: 'OrganizationActivatedEvent',
 		type: 'object',
 		required: ['@context', 'type', 'action', 'actor', 'object', 'id', 'eventTime', 'edApp'],
 		properties: {
@@ -61,8 +60,8 @@ export const GroupDeletedEventSchema = {
 				items: [
 					{
 						type: 'string',
-						default: 'http://edgenuity.com/events/group-deleted/0-0-2',
-						enum: ['http://edgenuity.com/events/group-deleted/0-0-2']
+						default: 'http://edgenuity.com/events/organization-activated/0-0-2',
+						enum: ['http://edgenuity.com/events/organization-activated/0-0-2']
 					},
 					{
 						type: 'string',
@@ -73,13 +72,13 @@ export const GroupDeletedEventSchema = {
 			},
 			type: {
 				type: 'string',
-				default: 'GroupEvent',
-				enum: ['GroupEvent']
+				default: 'OrganizationEvent',
+				enum: ['OrganizationEvent']
 			},
 			action: {
 				type: 'string',
-				default: 'Deleted',
-				enum: ['Deleted']
+				default: 'Activated',
+				enum: ['Activated']
 			},
 			actor: {
 				required: ['id', 'type'],
@@ -95,10 +94,6 @@ export const GroupDeletedEventSchema = {
 					{
 						title: 'Instructor',
 						$ref: '#/definitions/Instructor'
-					},
-					{
-						title: 'Student',
-						$ref: '#/definitions/Student'
 					}
 				]
 			},
@@ -106,12 +101,16 @@ export const GroupDeletedEventSchema = {
 				required: ['id', 'type'],
 				oneOf: [
 					{
-						title: 'Group',
-						$ref: '#/definitions/Group'
+						title: 'Organization',
+						$ref: '#/definitions/Organization'
 					},
 					{
-						title: 'Class',
-						$ref: '#/definitions/Class'
+						title: 'District',
+						$ref: '#/definitions/District'
+					},
+					{
+						title: 'School',
+						$ref: '#/definitions/School'
 					}
 				]
 			},
@@ -468,157 +467,6 @@ export const GroupDeletedEventSchema = {
 					}
 				}
 			},
-			Student: {
-				title: 'Student',
-				type: 'object',
-				properties: {
-					type: {
-						type: 'string',
-						default: 'Student',
-						enum: ['Student']
-					},
-					gradeLevel: {
-						type: 'number'
-					},
-					individualEducationPlan: {
-						type: 'boolean'
-					},
-					englishLanguageLearner: {
-						type: 'boolean'
-					},
-					settings: {
-						type: 'object',
-						additionalProperties: true,
-						properties: {
-							spanishLanguage: {
-								type: 'array',
-								items: {
-									type: 'string'
-								}
-							},
-							textToSpeech: {
-								type: 'array',
-								items: {
-									type: 'string'
-								}
-							},
-							languageTranslationTools: {
-								type: 'array',
-								items: {
-									type: 'string'
-								}
-							}
-						}
-					},
-					status: {
-						title: 'Status',
-						$ref: '#/definitions/Status'
-					},
-					name: {
-						type: 'string'
-					},
-					firstName: {
-						type: 'string'
-					},
-					lastName: {
-						type: 'string'
-					},
-					id: {
-						title: 'Uri',
-						$ref: '#/definitions/Uri'
-					},
-					description: {
-						type: 'string'
-					},
-					dateCreated: {
-						type: 'string',
-						format: 'date-time'
-					},
-					dateModified: {
-						type: 'string',
-						format: 'date-time'
-					},
-					otherIdentifiers: {
-						type: 'array',
-						items: {
-							title: 'SystemIdentifier',
-							allOf: [
-								{
-									required: ['type', 'identifierType', 'identifier', 'source']
-								},
-								{
-									title: 'SystemIdentifier',
-									$ref: '#/definitions/SystemIdentifier'
-								}
-							]
-						}
-					},
-					extensions: {
-						type: 'object',
-						additionalProperties: true
-					}
-				}
-			},
-			Group: {
-				title: 'Group',
-				type: 'object',
-				properties: {
-					type: {
-						type: 'string',
-						default: 'Group',
-						enum: ['Group']
-					},
-					subOrganizationOf: {
-						title: 'Organization',
-						allOf: [
-							{
-								required: ['type', 'id']
-							},
-							{
-								title: 'Organization',
-								$ref: '#/definitions/Organization'
-							}
-						]
-					},
-					id: {
-						title: 'Uri',
-						$ref: '#/definitions/Uri'
-					},
-					name: {
-						type: 'string'
-					},
-					description: {
-						type: 'string'
-					},
-					dateCreated: {
-						type: 'string',
-						format: 'date-time'
-					},
-					dateModified: {
-						type: 'string',
-						format: 'date-time'
-					},
-					otherIdentifiers: {
-						type: 'array',
-						items: {
-							title: 'SystemIdentifier',
-							allOf: [
-								{
-									required: ['type', 'identifierType', 'identifier', 'source']
-								},
-								{
-									title: 'SystemIdentifier',
-									$ref: '#/definitions/SystemIdentifier'
-								}
-							]
-						}
-					},
-					extensions: {
-						type: 'object',
-						additionalProperties: true
-					}
-				}
-			},
 			Organization: {
 				title: 'Organization',
 				type: 'object',
@@ -679,14 +527,78 @@ export const GroupDeletedEventSchema = {
 					}
 				}
 			},
-			Class: {
-				title: 'Class',
+			District: {
+				title: 'District',
 				type: 'object',
 				properties: {
 					type: {
 						type: 'string',
-						default: 'Class',
-						enum: ['Class']
+						default: 'District',
+						enum: ['District']
+					},
+					status: {
+						title: 'Status',
+						$ref: '#/definitions/Status'
+					},
+					subOrganizationOf: {
+						title: 'Organization',
+						allOf: [
+							{
+								required: ['type', 'id']
+							},
+							{
+								title: 'Organization',
+								$ref: '#/definitions/Organization'
+							}
+						]
+					},
+					id: {
+						title: 'Uri',
+						$ref: '#/definitions/Uri'
+					},
+					name: {
+						type: 'string'
+					},
+					description: {
+						type: 'string'
+					},
+					dateCreated: {
+						type: 'string',
+						format: 'date-time'
+					},
+					dateModified: {
+						type: 'string',
+						format: 'date-time'
+					},
+					otherIdentifiers: {
+						type: 'array',
+						items: {
+							title: 'SystemIdentifier',
+							allOf: [
+								{
+									required: ['type', 'identifierType', 'identifier', 'source']
+								},
+								{
+									title: 'SystemIdentifier',
+									$ref: '#/definitions/SystemIdentifier'
+								}
+							]
+						}
+					},
+					extensions: {
+						type: 'object',
+						additionalProperties: true
+					}
+				}
+			},
+			School: {
+				title: 'School',
+				type: 'object',
+				properties: {
+					type: {
+						type: 'string',
+						default: 'School',
+						enum: ['School']
 					},
 					status: {
 						title: 'Status',
@@ -960,14 +872,165 @@ export const GroupDeletedEventSchema = {
 					}
 				}
 			},
-			School: {
-				title: 'School',
+			Student: {
+				title: 'Student',
 				type: 'object',
 				properties: {
 					type: {
 						type: 'string',
-						default: 'School',
-						enum: ['School']
+						default: 'Student',
+						enum: ['Student']
+					},
+					gradeLevel: {
+						type: 'number'
+					},
+					individualEducationPlan: {
+						type: 'boolean'
+					},
+					englishLanguageLearner: {
+						type: 'boolean'
+					},
+					settings: {
+						type: 'object',
+						additionalProperties: true,
+						properties: {
+							spanishLanguage: {
+								type: 'array',
+								items: {
+									type: 'string'
+								}
+							},
+							textToSpeech: {
+								type: 'array',
+								items: {
+									type: 'string'
+								}
+							},
+							languageTranslationTools: {
+								type: 'array',
+								items: {
+									type: 'string'
+								}
+							}
+						}
+					},
+					status: {
+						title: 'Status',
+						$ref: '#/definitions/Status'
+					},
+					name: {
+						type: 'string'
+					},
+					firstName: {
+						type: 'string'
+					},
+					lastName: {
+						type: 'string'
+					},
+					id: {
+						title: 'Uri',
+						$ref: '#/definitions/Uri'
+					},
+					description: {
+						type: 'string'
+					},
+					dateCreated: {
+						type: 'string',
+						format: 'date-time'
+					},
+					dateModified: {
+						type: 'string',
+						format: 'date-time'
+					},
+					otherIdentifiers: {
+						type: 'array',
+						items: {
+							title: 'SystemIdentifier',
+							allOf: [
+								{
+									required: ['type', 'identifierType', 'identifier', 'source']
+								},
+								{
+									title: 'SystemIdentifier',
+									$ref: '#/definitions/SystemIdentifier'
+								}
+							]
+						}
+					},
+					extensions: {
+						type: 'object',
+						additionalProperties: true
+					}
+				}
+			},
+			Group: {
+				title: 'Group',
+				type: 'object',
+				properties: {
+					type: {
+						type: 'string',
+						default: 'Group',
+						enum: ['Group']
+					},
+					subOrganizationOf: {
+						title: 'Organization',
+						allOf: [
+							{
+								required: ['type', 'id']
+							},
+							{
+								title: 'Organization',
+								$ref: '#/definitions/Organization'
+							}
+						]
+					},
+					id: {
+						title: 'Uri',
+						$ref: '#/definitions/Uri'
+					},
+					name: {
+						type: 'string'
+					},
+					description: {
+						type: 'string'
+					},
+					dateCreated: {
+						type: 'string',
+						format: 'date-time'
+					},
+					dateModified: {
+						type: 'string',
+						format: 'date-time'
+					},
+					otherIdentifiers: {
+						type: 'array',
+						items: {
+							title: 'SystemIdentifier',
+							allOf: [
+								{
+									required: ['type', 'identifierType', 'identifier', 'source']
+								},
+								{
+									title: 'SystemIdentifier',
+									$ref: '#/definitions/SystemIdentifier'
+								}
+							]
+						}
+					},
+					extensions: {
+						type: 'object',
+						additionalProperties: true
+					}
+				}
+			},
+			Class: {
+				title: 'Class',
+				type: 'object',
+				properties: {
+					type: {
+						type: 'string',
+						default: 'Class',
+						enum: ['Class']
 					},
 					status: {
 						title: 'Status',

@@ -1,6 +1,7 @@
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
+import { IEvent } from './';
 import Caliper from './Caliper';
 
 export class Sensor {
@@ -14,14 +15,15 @@ export class Sensor {
 		this.clients = clients || {};
 	}
 
-	createEnvelope<T>(opts: Partial<EnvelopeOptions<T>>) {
-		if (opts.data === null || opts.data === undefined) {
+	createEnvelope<T extends IEvent>(options: Partial<EnvelopeOptions<T>>) {
+		if (options.data === null || options.data === undefined) {
 			throw new Error('Caliper Sensor Envelope data has not been provided.');
 		}
-		const sensor = opts.sensor || this.id;
-		const sendTime = opts.sendTime || Caliper.timestamp();
-		const dataVersion = opts.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
-		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: opts.data });
+
+		const sensor = options.sensor || this.id;
+		const sendTime = options.sendTime || Caliper.timestamp();
+		const dataVersion = options.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
+		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: options.data });
 	}
 
 	getClient(id: string) {
@@ -40,19 +42,33 @@ export class Sensor {
 		this.clients[client.getId()] = client;
 	}
 
-	sendToClient<TEnvelope, TResponse>(client: Client | string, envelope: Envelope<TEnvelope>) {
+	sendToClient<TEnvelope extends IEvent, TResponse>(client: Client | string, envelope: Envelope<TEnvelope>) {
 		const httpClient = this.clients[typeof client === 'string' ? client : client.getId()];
 		if (!httpClient) {
 			throw new Error('Chosen Client has not been registered.');
 		}
+
+		if (Caliper.settings.isValidationEnabled) {
+			envelope.data.forEach(event => {
+				Caliper.validate(event);
+			});
+		}
+
 		return httpClient.send<TEnvelope, TResponse>(envelope);
 	}
 
-	sendToClients<TEnvelope, TResponse>(envelope: Envelope<TEnvelope>) {
+	sendToClients<TEnvelope extends IEvent, TResponse>(envelope: Envelope<TEnvelope>) {
 		const clients = this.getClients();
 		if (!clients.length) {
 			throw new Error('No Clients have been registered.');
 		}
+
+		if (Caliper.settings.isValidationEnabled) {
+			envelope.data.forEach(event => {
+				Caliper.validate(event);
+			});
+		}
+
 		return Promise.all(clients.map(client => client.send<TEnvelope, TResponse>(envelope)));
 	}
 

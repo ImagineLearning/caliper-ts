@@ -1,18 +1,21 @@
 import { v4 } from 'uuid';
 import intervalToDuration from 'date-fns/intervalToDuration';
 import formatISODuration from 'date-fns/formatISODuration';
-import { EntityType } from './Entities/EntityType';
-import { ISoftwareApplication } from './Entities/SoftwareApplication';
+import { Validator } from 'jsonschema';
+
+import { schemas, EntityType, IEvent, ISoftwareApplication } from './';
 
 interface CaliperSettings {
 	applicationUri: string | null;
+	isValidationEnabled: boolean;
 }
 
 type CaliperTimestamp = string;
 type CaliperDuration = string;
 
 export const settings: CaliperSettings = {
-	applicationUri: null
+	applicationUri: null,
+	isValidationEnabled: true
 };
 
 export function guid() {
@@ -54,4 +57,21 @@ export function duration(startedAtTime: Date | string, endedAtTime: Date | strin
 	return isoDuration;
 }
 
-export default { settings, guid, edApp, timestamp, duration };
+export function getSchema(event: IEvent) {
+	return schemas[event['@context'][0]];
+}
+
+export function validate(event: IEvent, schema?: { [key: string]: any }) {
+	if (!schema) {
+		schema = getSchema(event);
+	}
+
+	const result = validator.validate(event, schema);
+	if (!result.valid) {
+		throw result.errors.map(error => error.stack);
+	}
+}
+
+export default { settings, guid, edApp, timestamp, duration, getSchema, validate };
+
+const validator = new Validator();

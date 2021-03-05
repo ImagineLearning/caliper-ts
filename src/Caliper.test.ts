@@ -1,7 +1,17 @@
 import Caliper from './Caliper';
-import { EntityType } from './Entities/EntityType';
+import {
+	EntityType,
+	Instructor,
+	Organization,
+	Role,
+	Status,
+	SystemIdentifier,
+	SystemIdentifierType,
+	UserCreatedEvent,
+	UserEvent_Student
+} from './';
 
-beforeEach(() => {
+beforeAll(() => {
 	Caliper.settings.applicationUri = 'https://unit.test';
 });
 
@@ -60,5 +70,70 @@ describe('Caliper.duration', () => {
 		const duration = Caliper.duration(start, end);
 		expect(duration).toBe(expectedDuration);
 		expect(duration).toMatch(durationRegex);
+	});
+});
+
+describe('Caliper.validate', () => {
+	Caliper.settings.applicationUri = 'https://unit.test';
+	const timestamp = Caliper.timestamp(new Date());
+	const model = UserCreatedEvent({
+		actor: Instructor({ id: 'https://foo.bar/user/1' }),
+		object: UserEvent_Student({
+			id: 'https://foo.bar/user/9999',
+			dateCreated: timestamp,
+			dateModified: timestamp,
+			firstName: 'Marc',
+			lastName: 'Lim',
+			status: Status.Active,
+			gradeLevel: 1,
+			englishLanguageLearner: true,
+			individualEducationPlan: true,
+			otherIdentifiers: [
+				SystemIdentifier({
+					sourceUrl: 'https://nwea.org',
+					identifier: 'https://nwea.org/fake-user/8c9a5212-c91c-4904-a3e6-ba98aa7d640f',
+					identifierType: SystemIdentifierType.SystemId
+				}),
+				SystemIdentifier({
+					sourceUrl: 'https://whatever.com/external',
+					identifier: '8ece0ac2-b4cd-4e66-ae26-a59cec4edad7',
+					identifierType: SystemIdentifierType.SystemId
+				}),
+				SystemIdentifier({
+					sourceUrl: 'https://renaissance.com',
+					identifier: 'ABC0005',
+					identifierType: SystemIdentifierType.SystemId
+				}),
+				SystemIdentifier({
+					sourceUrl: 'https://the-lmsadmin-url.com',
+					identifier: '12345',
+					identifierType: SystemIdentifierType.SystemId
+				})
+			],
+			settings: {
+				spanishLanguage: ['math'],
+				languageTranslationTools: ['math', 'reading'],
+				textToSpeech: ['math', 'reading']
+			}
+		})
+	});
+
+	it('validate_OK', () => {
+		const event = { ...model };
+		Caliper.validate(event);
+	});
+
+	it('validate_FAIL', () => {
+		const event = { ...model };
+		event.id = 'this-is-not-a-valid-id';
+
+		let errors = null;
+		try {
+			Caliper.validate(event);
+		} catch (ex) {
+			errors = ex;
+		}
+
+		expect(errors.length).toBeGreaterThan(0);
 	});
 });

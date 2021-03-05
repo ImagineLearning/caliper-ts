@@ -15,9 +15,9 @@ using Validation = ImsGlobal.Caliper.Validation;
 
 namespace CodeGenerator.Types
 {
-        class TypescriptClass
+    class TypescriptClass
     {
-        static TypescriptClass CaliperContext { get; } = new TypescriptClass(typeof(string[]));
+        static TypescriptClass CaliperContext { get; } = new TypescriptClass(typeof(string[]), "string[]");
 
         static CaliperRoleTypescriptClass Role { get; } = new CaliperRoleTypescriptClass();
 
@@ -69,6 +69,9 @@ namespace CodeGenerator.Types
 
             if (type == typeof(Domain))
                 return GetUserTypeDefinition(type, userTypes, () => new DomainTypescriptClass(userTypes));
+
+            if (typeof(Event).IsAssignableFrom(type))
+                return GetUserTypeDefinition(type, userTypes, () => new EventTypescriptClass(type, userTypes));
 
             if (StringTypes.Contains(type))
                 return TypescriptPrimitive.String;
@@ -238,7 +241,10 @@ namespace CodeGenerator.Types
                 {
                     var parameterName = parameter.GetCustomAttribute<CategoryAttribute>()?.Category ?? parameter.Name.ToCamelCase();
                     var parameterType = FromType(parameter.ParameterType, userTypes);
-                    includeMember(parameterName, parameterType, true);
+                    includeMember(parameterName, parameterType, !parameter.HasDefaultValue);
+
+                    if (parameter.HasDefaultValue && (!parameter.DefaultValue?.IsDefault() ?? false))
+                        initializers.Add(parameterName, parameter.DefaultValue.ToCodeText());
                 }
             }
 
@@ -269,8 +275,12 @@ namespace CodeGenerator.Types
                 var defaultValue = property.GetCustomAttribute<Validation.ConstantAttribute>()?.Value;
                 if (defaultValue == null && !Type.IsAbstract)
                 {
-                    var instance = Activator.CreateInstance(Type, true);
-                    defaultValue = property.GetValue(instance);
+                    try
+                    {
+                        var instance = Activator.CreateInstance(Type, true);
+                        defaultValue = property.GetValue(instance);
+                    }
+                    catch (Exception) { }
                 }
 
                 var inheritedProperty = baseProperties.FirstOrDefault(_ => _.Name == property.Name && _.PropertyType == property.PropertyType);

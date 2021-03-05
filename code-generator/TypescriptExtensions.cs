@@ -36,6 +36,12 @@ namespace CodeGenerator
             return pathBuilder.ToString();
         }
 
+        public static object IsDefault(this Type type)
+        {
+            var defaultValue = type.IsValueType ? Activator.CreateInstance(type) : null;
+            return defaultValue;
+        }
+
         public static string ToCamelCase(this string text)
         {
             return specialCharacterRegex.Match(text).Success ? $"[\"{text}\"]" : $"{char.ToLower(text[0])}{text.Substring(1)}";
@@ -43,6 +49,9 @@ namespace CodeGenerator
 
         public static bool IsDefault(this object value)
         {
+            if(value == null)
+                return true;
+
             var type = value.GetType();
             var defaultValue = type.IsValueType ? Activator.CreateInstance(type) : null;
             return value == defaultValue;

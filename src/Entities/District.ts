@@ -2,15 +2,19 @@
 
 import Caliper from './../Caliper';
 import { ISystemIdentifier } from './../SystemIdentifier';
-import { IEntity } from './Entity';
 import { EntityType } from './EntityType';
+import { IOrganization } from './Organization';
+import { Status } from './Status';
 
-export interface IEducationStandard extends IEntity {
+export interface IDistrict extends IOrganization {
 	id: string;
+	status?: Status;
 }
 
-interface IEducationStandardParams {
+interface IDistrictParams {
 	id: string;
+	status?: Status;
+	subOrganizationOf?: IOrganization;
 	name?: string;
 	description?: string;
 	dateCreated?: string;
@@ -19,9 +23,9 @@ interface IEducationStandardParams {
 	extensions?: Record<string, any>;
 }
 
-export function EducationStandard(params: IEducationStandardParams): IEducationStandard {
+export function District(params: IDistrictParams): IDistrict {
 	return {
-		type: EntityType.EducationStandard,
+		type: EntityType.District,
 		...params
 	};
 }

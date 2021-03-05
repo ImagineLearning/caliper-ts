@@ -2,17 +2,17 @@
 
 import Caliper from './../../Caliper';
 import { IAgent } from './../../Entities/Agent';
+import { IDistrict } from './../../Entities/District';
 import { IEntity } from './../../Entities/Entity';
 import { EntityType } from './../../Entities/EntityType';
 import { IInstructor } from './../../Entities/Instructor';
-import { InstructorPermissions } from './../../Entities/InstructorPermissions';
 import { ILtiSession } from './../../Entities/LtiSession';
 import { IMembership } from './../../Entities/Membership';
 import { IOrganization } from './../../Entities/Organization';
+import { ISchool } from './../../Entities/School';
 import { ISession } from './../../Entities/Session';
 import { ISoftwareApplication } from './../../Entities/SoftwareApplication';
 import { Status } from './../../Entities/Status';
-import { StudentProfileSettings } from './../../Entities/StudentProfileSettings';
 import { IUser } from './../../Entities/User';
 import { ISystemIdentifier } from './../../SystemIdentifier';
 import { CaliperAction } from './../CaliperAction';
@@ -20,108 +20,107 @@ import { CaliperProfile } from './../CaliperProfile';
 import { IEvent } from './../Event';
 import { EventType } from './../EventType';
 
-export interface IUserEvent extends IEvent {
+export interface IOrganizationEvent extends IEvent {
 	actor: IAgent | ISoftwareApplication | IUser | IInstructor;
-	object: IUserEventUser | IUserEventInstructor | IUserEventStudent;
+	object: IOrganizationEventOrganization | IOrganizationEventDistrict | IOrganizationEventSchool;
 	action: CaliperAction;
 }
 
-export interface IUserEventUser extends IUser {
+export interface IOrganizationEventOrganization extends IOrganization {
 	id: string;
 	dateCreated: string;
 	dateModified: string;
 	status: Status;
-	firstName: string;
-	lastName: string;
+	name: string;
+	state: string;
+	timezone: string;
+	subOrganizationOf?: IOrganization | IDistrict | ISchool;
 	otherIdentifiers?: ISystemIdentifier[];
 }
 
-interface IUserEventUserParams {
+interface IOrganizationEventOrganizationParams {
 	id: string;
 	dateCreated: string;
 	dateModified: string;
 	status: Status;
-	firstName: string;
-	lastName: string;
+	name: string;
+	state: string;
+	timezone: string;
+	subOrganizationOf?: IOrganization | IDistrict | ISchool;
 	otherIdentifiers?: ISystemIdentifier[];
-	name?: string;
 	description?: string;
 	extensions?: Record<string, any>;
 }
 
-export function UserEvent_User(params: IUserEventUserParams): IUserEventUser {
+export function OrganizationEvent_Organization(params: IOrganizationEventOrganizationParams): IOrganizationEventOrganization {
 	return {
-		type: EntityType.User,
+		type: EntityType.Organization,
 		...params
 	};
 }
 
-export interface IUserEventInstructor extends IUserEventUser {
+export interface IOrganizationEventDistrict extends IOrganizationEventOrganization {
 	id: string;
 	dateCreated: string;
 	dateModified: string;
 	status: Status;
-	firstName: string;
-	lastName: string;
+	name: string;
+	state: string;
+	timezone: string;
+	subOrganizationOf?: IOrganization | IDistrict | ISchool;
 	otherIdentifiers?: ISystemIdentifier[];
-	permissions?: InstructorPermissions;
 }
 
-interface IUserEventInstructorParams {
+interface IOrganizationEventDistrictParams {
 	id: string;
 	dateCreated: string;
 	dateModified: string;
 	status: Status;
-	firstName: string;
-	lastName: string;
+	name: string;
+	state: string;
+	timezone: string;
+	subOrganizationOf?: IOrganization | IDistrict | ISchool;
 	otherIdentifiers?: ISystemIdentifier[];
-	permissions?: InstructorPermissions;
-	name?: string;
 	description?: string;
 	extensions?: Record<string, any>;
 }
 
-export function UserEvent_Instructor(params: IUserEventInstructorParams): IUserEventInstructor {
+export function OrganizationEvent_District(params: IOrganizationEventDistrictParams): IOrganizationEventDistrict {
 	return {
-		type: EntityType.Instructor,
+		type: EntityType.District,
 		...params
 	};
 }
 
-export interface IUserEventStudent extends IUserEventUser {
+export interface IOrganizationEventSchool extends IOrganizationEventOrganization {
 	id: string;
 	dateCreated: string;
 	dateModified: string;
 	status: Status;
-	firstName: string;
-	lastName: string;
-	gradeLevel: number;
-	individualEducationPlan?: Boolean;
-	englishLanguageLearner?: Boolean;
+	name: string;
+	state: string;
+	timezone: string;
+	subOrganizationOf?: IOrganization | IDistrict | ISchool;
 	otherIdentifiers?: ISystemIdentifier[];
-	settings?: StudentProfileSettings;
 }
 
-interface IUserEventStudentParams {
+interface IOrganizationEventSchoolParams {
 	id: string;
 	dateCreated: string;
 	dateModified: string;
 	status: Status;
-	firstName: string;
-	lastName: string;
-	gradeLevel: number;
-	individualEducationPlan?: Boolean;
-	englishLanguageLearner?: Boolean;
+	name: string;
+	state: string;
+	timezone: string;
+	subOrganizationOf?: IOrganization | IDistrict | ISchool;
 	otherIdentifiers?: ISystemIdentifier[];
-	settings?: StudentProfileSettings;
-	name?: string;
 	description?: string;
 	extensions?: Record<string, any>;
 }
 
-export function UserEvent_Student(params: IUserEventStudentParams): IUserEventStudent {
+export function OrganizationEvent_School(params: IOrganizationEventSchoolParams): IOrganizationEventSchool {
 	return {
-		type: EntityType.Student,
+		type: EntityType.School,
 		...params
 	};
 }
