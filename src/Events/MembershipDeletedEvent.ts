@@ -39,7 +39,7 @@ export function MembershipDeletedEvent(params: IMembershipDeletedEventParams): I
 		['@context']: ['http://edgenuity.com/events/membership-deleted/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Deleted,
 		type: EventType.MembershipEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -1059,13 +1059,6 @@ export const MembershipDeletedEventSchema = {
 					name: {
 						type: 'string'
 					},
-					id: {
-						title: 'Uri',
-						$ref: '#/definitions/Uri'
-					},
-					description: {
-						type: 'string'
-					},
 					dateCreated: {
 						type: 'string',
 						format: 'date-time'
@@ -1073,6 +1066,13 @@ export const MembershipDeletedEventSchema = {
 					dateModified: {
 						type: 'string',
 						format: 'date-time'
+					},
+					id: {
+						title: 'Uri',
+						$ref: '#/definitions/Uri'
+					},
+					description: {
+						type: 'string'
 					},
 					otherIdentifiers: {
 						type: 'array',

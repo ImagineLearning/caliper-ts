@@ -39,7 +39,7 @@ export function LessonResetEvent(params: ILessonResetEventParams): ILessonResetE
 		['@context']: ['http://edgenuity.com/events/lesson-reset/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Reset,
 		type: EventType.LessonEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

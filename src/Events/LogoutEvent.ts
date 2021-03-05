@@ -44,7 +44,7 @@ export function LogoutEvent(params: ILogoutEventParams): ILogoutEvent {
 		['@context']: ['http://edgenuity.com/events/logout/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.LoggedOut,
 		type: EventType.SessionEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

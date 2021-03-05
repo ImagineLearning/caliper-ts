@@ -70,7 +70,7 @@ namespace CodeGenerator
                 return $"\"{value}\"";
 
             if (valueType == typeof(Guid))
-                return "Caliper.guid()";
+                return "Caliper.uuid()";
 
             if (valueType == typeof(DateTime) || valueType == typeof(DateTimeOffset))
                 return "Caliper.timestamp()";

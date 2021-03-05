@@ -56,7 +56,7 @@ interface IEventParams {
 export function Event(params: IEventParams): IEvent {
 	return {
 		['@context']: ['http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		type: EventType.Event,
 		action: CaliperAction.None,
 		eventTime: Caliper.timestamp(),

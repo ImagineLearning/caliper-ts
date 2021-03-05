@@ -40,7 +40,7 @@ export function UserDeactivatedEvent(params: IUserDeactivatedEventParams): IUser
 		['@context']: ['http://edgenuity.com/events/user-deactivated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		type: EventType.UserEvent,
 		action: CaliperAction.Deactivated,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -589,13 +589,6 @@ export const UserDeactivatedEventSchema = {
 					name: {
 						type: 'string'
 					},
-					id: {
-						title: 'Uri',
-						$ref: '#/definitions/Uri'
-					},
-					description: {
-						type: 'string'
-					},
 					dateCreated: {
 						type: 'string',
 						format: 'date-time'
@@ -603,6 +596,13 @@ export const UserDeactivatedEventSchema = {
 					dateModified: {
 						type: 'string',
 						format: 'date-time'
+					},
+					id: {
+						title: 'Uri',
+						$ref: '#/definitions/Uri'
+					},
+					description: {
+						type: 'string'
 					},
 					otherIdentifiers: {
 						type: 'array',

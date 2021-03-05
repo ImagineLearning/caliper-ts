@@ -39,7 +39,7 @@ export function UserUpdatedEvent(params: IUserUpdatedEventParams): IUserUpdatedE
 		['@context']: ['http://edgenuity.com/events/user-updated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Modified,
 		type: EventType.UserEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -603,19 +603,19 @@ export const UserUpdatedEventSchema = {
 				title: 'Entity',
 				type: 'object',
 				properties: {
+					dateModified: {
+						type: 'string',
+						format: 'date-time'
+					},
+					name: {
+						type: 'string'
+					},
 					type: {
 						type: 'string',
 						default: 'Entity',
 						enum: ['Entity']
 					},
-					name: {
-						type: 'string'
-					},
 					dateCreated: {
-						type: 'string',
-						format: 'date-time'
-					},
-					dateModified: {
 						type: 'string',
 						format: 'date-time'
 					},

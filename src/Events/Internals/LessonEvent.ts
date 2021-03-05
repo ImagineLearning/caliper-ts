@@ -49,7 +49,7 @@ export function LessonEvent(params: ILessonEventParams): ILessonEvent {
 	return {
 		type: EventType.LessonEvent,
 		['@context']: ['http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		action: CaliperAction.None,
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),

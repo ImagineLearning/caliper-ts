@@ -40,7 +40,7 @@ export function IlpIdentifiedEvent(params: IIlpIdentifiedEventParams): IIlpIdent
 		['@context']: ['http://edgenuity.com/events/ilp-identified/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Identified,
 		type: EventType.IlpEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

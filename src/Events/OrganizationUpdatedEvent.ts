@@ -44,7 +44,7 @@ export function OrganizationUpdatedEvent(params: IOrganizationUpdatedEventParams
 		['@context']: ['http://edgenuity.com/events/organization-updated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Modified,
 		type: EventType.OrganizationEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

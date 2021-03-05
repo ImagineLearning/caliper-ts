@@ -38,7 +38,7 @@ export function ToolUseEvent(params: IToolUseEventParams): IToolUseEvent {
 		type: EventType.ToolUseEvent,
 		action: CaliperAction.Used,
 		['@context']: ['http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

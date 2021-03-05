@@ -40,7 +40,7 @@ export function GroupCreatedEvent(params: IGroupCreatedEventParams): IGroupCreat
 		['@context']: ['http://edgenuity.com/events/group-created/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Created,
 		type: EventType.GroupEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

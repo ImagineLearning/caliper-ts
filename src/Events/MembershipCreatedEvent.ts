@@ -39,7 +39,7 @@ export function MembershipCreatedEvent(params: IMembershipCreatedEventParams): I
 		['@context']: ['http://edgenuity.com/events/membership-created/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Created,
 		type: EventType.MembershipEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -1056,6 +1056,14 @@ export const MembershipCreatedEventSchema = {
 						default: 'Entity',
 						enum: ['Entity']
 					},
+					dateCreated: {
+						type: 'string',
+						format: 'date-time'
+					},
+					dateModified: {
+						type: 'string',
+						format: 'date-time'
+					},
 					name: {
 						type: 'string'
 					},
@@ -1065,14 +1073,6 @@ export const MembershipCreatedEventSchema = {
 					},
 					description: {
 						type: 'string'
-					},
-					dateCreated: {
-						type: 'string',
-						format: 'date-time'
-					},
-					dateModified: {
-						type: 'string',
-						format: 'date-time'
 					},
 					otherIdentifiers: {
 						type: 'array',

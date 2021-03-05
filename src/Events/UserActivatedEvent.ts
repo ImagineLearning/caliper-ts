@@ -40,7 +40,7 @@ export function UserActivatedEvent(params: IUserActivatedEventParams): IUserActi
 		['@context']: ['http://edgenuity.com/events/user-activated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		type: EventType.UserEvent,
 		action: CaliperAction.Activated,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -589,13 +589,6 @@ export const UserActivatedEventSchema = {
 					name: {
 						type: 'string'
 					},
-					id: {
-						title: 'Uri',
-						$ref: '#/definitions/Uri'
-					},
-					description: {
-						type: 'string'
-					},
 					dateCreated: {
 						type: 'string',
 						format: 'date-time'
@@ -603,6 +596,13 @@ export const UserActivatedEventSchema = {
 					dateModified: {
 						type: 'string',
 						format: 'date-time'
+					},
+					id: {
+						title: 'Uri',
+						$ref: '#/definitions/Uri'
+					},
+					description: {
+						type: 'string'
 					},
 					otherIdentifiers: {
 						type: 'array',

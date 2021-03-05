@@ -41,7 +41,7 @@ export function OrganizationDeactivatedEvent(params: IOrganizationDeactivatedEve
 		['@context']: ['http://edgenuity.com/events/organization-deactivated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		type: EventType.OrganizationEvent,
 		action: CaliperAction.Deactivated,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

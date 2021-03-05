@@ -43,7 +43,7 @@ export function SessionEvent(params: ISessionEventParams): ISessionEvent {
 		type: EventType.SessionEvent,
 		action: CaliperAction.None,
 		['@context']: ['http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

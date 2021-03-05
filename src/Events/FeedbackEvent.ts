@@ -40,7 +40,7 @@ export function FeedbackEvent(params: IFeedbackEventParams): IFeedbackEvent {
 		type: EventType.FeedbackEvent,
 		action: CaliperAction.None,
 		['@context']: ['http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

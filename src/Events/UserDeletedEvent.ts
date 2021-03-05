@@ -39,7 +39,7 @@ export function UserDeletedEvent(params: IUserDeletedEventParams): IUserDeletedE
 		['@context']: ['http://edgenuity.com/events/user-deleted/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Deleted,
 		type: EventType.UserEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -608,6 +608,9 @@ export const UserDeletedEventSchema = {
 						default: 'Entity',
 						enum: ['Entity']
 					},
+					name: {
+						type: 'string'
+					},
 					dateCreated: {
 						type: 'string',
 						format: 'date-time'
@@ -615,9 +618,6 @@ export const UserDeletedEventSchema = {
 					dateModified: {
 						type: 'string',
 						format: 'date-time'
-					},
-					name: {
-						type: 'string'
 					},
 					id: {
 						title: 'Uri',

@@ -38,7 +38,7 @@ export function LessonCompletedEvent(params: ILessonCompletedEventParams): ILess
 		['@context']: ['http://edgenuity.com/events/lesson-completed/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Completed,
 		type: EventType.LessonEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

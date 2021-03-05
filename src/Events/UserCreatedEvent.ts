@@ -39,7 +39,7 @@ export function UserCreatedEvent(params: IUserCreatedEventParams): IUserCreatedE
 		['@context']: ['http://edgenuity.com/events/user-created/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Created,
 		type: EventType.UserEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -603,6 +603,14 @@ export const UserCreatedEventSchema = {
 				title: 'Entity',
 				type: 'object',
 				properties: {
+					dateCreated: {
+						type: 'string',
+						format: 'date-time'
+					},
+					dateModified: {
+						type: 'string',
+						format: 'date-time'
+					},
 					type: {
 						type: 'string',
 						default: 'Entity',
@@ -617,14 +625,6 @@ export const UserCreatedEventSchema = {
 					},
 					description: {
 						type: 'string'
-					},
-					dateCreated: {
-						type: 'string',
-						format: 'date-time'
-					},
-					dateModified: {
-						type: 'string',
-						format: 'date-time'
 					},
 					otherIdentifiers: {
 						type: 'array',

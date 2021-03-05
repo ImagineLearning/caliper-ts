@@ -44,7 +44,7 @@ export function NavigationEvent(params: INavigationEventParams): INavigationEven
 		['@context']: ['http://edgenuity.com/events/navigated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		type: EventType.NavigationEvent,
 		action: CaliperAction.NavigatedTo,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -495,12 +495,12 @@ export const NavigationEventSchema = {
 						default: 'Entity',
 						enum: ['Entity']
 					},
-					name: {
-						type: 'string'
-					},
 					id: {
 						title: 'Uri',
 						$ref: '#/definitions/Uri'
+					},
+					name: {
+						type: 'string'
 					},
 					description: {
 						type: 'string'

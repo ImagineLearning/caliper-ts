@@ -41,7 +41,7 @@ export function OrganizationActivatedEvent(params: IOrganizationActivatedEventPa
 		['@context']: ['http://edgenuity.com/events/organization-activated/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		type: EventType.OrganizationEvent,
 		action: CaliperAction.Activated,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -684,12 +684,12 @@ export const OrganizationActivatedEventSchema = {
 						default: 'Entity',
 						enum: ['Entity']
 					},
-					name: {
-						type: 'string'
-					},
 					id: {
 						title: 'Uri',
 						$ref: '#/definitions/Uri'
+					},
+					name: {
+						type: 'string'
 					},
 					description: {
 						type: 'string'

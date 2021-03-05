@@ -39,7 +39,7 @@ export function ViewEvent(params: IViewEventParams): IViewEvent {
 		type: EventType.ViewEvent,
 		action: CaliperAction.Viewed,
 		['@context']: ['http://purl.imsglobal.org/ctx/caliper/v1p2'],
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

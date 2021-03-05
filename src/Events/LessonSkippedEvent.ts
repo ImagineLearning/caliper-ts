@@ -39,7 +39,7 @@ export function LessonSkippedEvent(params: ILessonSkippedEventParams): ILessonSk
 		['@context']: ['http://edgenuity.com/events/lesson-skipped/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Skipped,
 		type: EventType.LessonEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

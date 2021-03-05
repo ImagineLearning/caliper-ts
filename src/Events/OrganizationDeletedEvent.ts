@@ -41,7 +41,7 @@ export function OrganizationDeletedEvent(params: IOrganizationDeletedEventParams
 		['@context']: ['http://edgenuity.com/events/organization-deleted/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		type: EventType.OrganizationEvent,
 		action: CaliperAction.Deleted,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -471,11 +471,6 @@ export const OrganizationDeletedEventSchema = {
 				title: 'Organization',
 				type: 'object',
 				properties: {
-					type: {
-						type: 'string',
-						default: 'Organization',
-						enum: ['Organization']
-					},
 					subOrganizationOf: {
 						title: 'Organization',
 						allOf: [
@@ -487,6 +482,11 @@ export const OrganizationDeletedEventSchema = {
 								$ref: '#/definitions/Organization'
 							}
 						]
+					},
+					type: {
+						type: 'string',
+						default: 'Organization',
+						enum: ['Organization']
 					},
 					id: {
 						title: 'Uri',
@@ -684,12 +684,12 @@ export const OrganizationDeletedEventSchema = {
 						default: 'Entity',
 						enum: ['Entity']
 					},
-					name: {
-						type: 'string'
-					},
 					id: {
 						title: 'Uri',
 						$ref: '#/definitions/Uri'
+					},
+					name: {
+						type: 'string'
 					},
 					description: {
 						type: 'string'

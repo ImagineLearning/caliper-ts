@@ -40,7 +40,7 @@ export function LessonStartedEvent(params: ILessonStartedEventParams): ILessonSt
 		['@context']: ['http://edgenuity.com/events/lesson-started/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Started,
 		type: EventType.LessonEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params

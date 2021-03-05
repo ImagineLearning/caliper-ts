@@ -5,9 +5,15 @@ beforeAll(() => {
 	Caliper.settings.applicationUri = 'https://unit.test';
 });
 
-describe('Caliper.guid', () => {
-	it('Caliper.guid OK', () => {
-		const value = Caliper.guid();
+describe('Caliper.uuid', () => {
+	it('Caliper.uuid new instance', () => {
+		const value = Caliper.uuid();
+		expect(value).toMatch(/urn\:uuid\:\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
+	});
+
+	it('Caliper.uuid format', () => {
+		const value = Caliper.uuid('cab85afa-de4f-4ee0-bce3-66030d906c25');
+		expect(value).toEqual('urn:uuid:cab85afa-de4f-4ee0-bce3-66030d906c25');
 		expect(value).toMatch(/urn\:uuid\:\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
 	});
 });

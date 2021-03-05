@@ -12,8 +12,9 @@ import {
 	UserEvent_Student,
 	validate
 } from './';
+import { CaliperAction } from './Events/CaliperAction';
 
-describe('Caliper.validate', () => {
+describe('validate', () => {
 	Caliper.settings.applicationUri = 'https://unit.test';
 
 	const getValidationErrors = (event: IEvent) => {
@@ -75,7 +76,7 @@ describe('Caliper.validate', () => {
 	it('validate_OK_OrganizationEvent', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
-			object: Organization({ id: 'https://foo.bar/organization/1' })
+			object: Organization({ id: Caliper.uuid('cab85afa-de4f-4ee0-bce3-66030d906c25') })
 		});
 		validate(event);
 	});
@@ -83,32 +84,43 @@ describe('Caliper.validate', () => {
 	it('validate_FAIL_InvalidEventId', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
-			object: Organization({ id: 'https://foo.bar/organization/1' })
+			object: Organization({ id: Caliper.uuid('cab85afa-de4f-4ee0-bce3-66030d906c25') })
 		});
 		event.id = 'this-is-not-a-valid-event-id';
 
 		const errors = getValidationErrors(event);
-		expect(errors.length).toBeGreaterThan(0);
+		expect(errors).not.toHaveLength(0);
+	});
+
+	it('validate_FAIL_InvalidEventAction', () => {
+		const event = OrganizationActivatedEvent({
+			actor: User({ id: 'https://foo.bar/user/1' }),
+			object: Organization({ id: Caliper.uuid('cab85afa-de4f-4ee0-bce3-66030d906c25') })
+		});
+		event.action = CaliperAction.ChangedResolution;
+
+		const errors = getValidationErrors(event);
+		expect(errors).not.toHaveLength(0);
 	});
 
 	it('validate_FAIL_InvalidTimestamp', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
-			object: Organization({ id: 'https://foo.bar/organization/1' })
+			object: Organization({ id: Caliper.uuid('cab85afa-de4f-4ee0-bce3-66030d906c25') })
 		});
 		event.eventTime = 'whatever, blah blah';
 
 		const errors = getValidationErrors(event);
-		expect(errors.length).toBeGreaterThan(0);
+		expect(errors).not.toHaveLength(0);
 	});
 
 	it('validate_FAIL_InvalidEntityId', () => {
 		const event = OrganizationActivatedEvent({
-			actor: User({ id: 'invalid-id' }),
-			object: Organization({ id: 'whatever I dont care' })
+			actor: User({ id: 'https://foo.bar/user/1' }),
+			object: Organization({ id: 'cab85afa-de4f-4ee0-bce3-66030d906c25' })
 		});
 
 		const errors = getValidationErrors(event);
-		expect(errors.length).toBeGreaterThan(0);
+		expect(errors).not.toHaveLength(0);
 	});
 });

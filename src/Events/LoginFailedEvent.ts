@@ -49,7 +49,7 @@ export function LoginFailedEvent(params: ILoginFailedEventParams): ILoginFailedE
 		['@context']: ['http://edgenuity.com/events/login-failed/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Declined,
 		type: EventType.SessionEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
@@ -1003,12 +1003,12 @@ export const LoginFailedEventSchema = {
 					name: {
 						type: 'string'
 					},
+					description: {
+						type: 'string'
+					},
 					id: {
 						title: 'Uri',
 						$ref: '#/definitions/Uri'
-					},
-					description: {
-						type: 'string'
 					},
 					dateCreated: {
 						type: 'string',

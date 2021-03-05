@@ -44,7 +44,7 @@ export function OrganizationCreatedEvent(params: IOrganizationCreatedEventParams
 		['@context']: ['http://edgenuity.com/events/organization-created/0-0-2', 'http://purl.imsglobal.org/ctx/caliper/v1p2'],
 		action: CaliperAction.Created,
 		type: EventType.OrganizationEvent,
-		id: Caliper.guid(),
+		id: Caliper.uuid(),
 		eventTime: Caliper.timestamp(),
 		edApp: Caliper.edApp(),
 		...params
