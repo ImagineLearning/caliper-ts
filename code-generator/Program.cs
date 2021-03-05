@@ -69,13 +69,13 @@ namespace CodeGenerator
         static void WriteTypescriptIndex(TypescriptClassCollection userTypes, string destination)
         {
             var schemaImports = new List<string>{ "" };
-            var schemaExports = new List<string>();
-               
-            var exports = new List<string>();
+            var schemaExports = new List<string>();        
+            var indexExports = new List<string>();
+
             foreach (var item in userTypes)
             {
                 var relativePath = $"{typeof(Caliper).GetRelativeDirectory(item.Value.Type)}{item.Value.Type.Name}";
-                exports.Add($"export * from '{relativePath}';");
+                indexExports.Add($"export * from '{relativePath}';");
                 
                 var eventDeclaration = item.Value as EventTypescriptClass;
                 if(eventDeclaration?.SchemaExport != null){
@@ -84,26 +84,31 @@ namespace CodeGenerator
                 }
             }
 
-            exports.Sort();
-            exports.InsertRange(0, new[]
-            {
-                "export * from './sensor';",
-                "export * from './clients/httpClient';",
-                "export * from './Caliper';",
-                "export { Config } from './config/config';",
-                "export { Envelope, EnvelopeOptions } from './envelope';",
-                "",
-            });
-            exports.AddRange(schemaImports);
-            exports.Add($@"
+            schemaImports.Add($@"
 export const schemas = {{
     {string.Join(",\n\t", schemaExports.Select(export => $"[{export}.context]: {export}.schema"))}
 }};
             ");
+            using (var writer = new StreamWriter($"{destination}/schemas.ts"))
+            {
+                writer.Write(string.Join("\n", schemaImports));
+            }
 
+            indexExports.Sort();
+            indexExports.InsertRange(0, new[]
+            {
+                "export { Config } from './config/config';",
+                "export { Envelope, EnvelopeOptions } from './envelope';",
+                "export * from './sensor';",
+                "export * from './clients/httpClient';",
+                "export * from './Caliper';",
+                "export * from './validate';",
+                "export * from './schemas';",
+                "",
+            });
             using (var writer = new StreamWriter($"{destination}/index.ts"))
             {
-                writer.Write(string.Join("\n", exports));
+                writer.Write(string.Join("\n", indexExports));
             }
         }
     }

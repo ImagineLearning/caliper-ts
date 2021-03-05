@@ -1,15 +1,5 @@
 import Caliper from './Caliper';
-import {
-	EntityType,
-	Instructor,
-	Organization,
-	Role,
-	Status,
-	SystemIdentifier,
-	SystemIdentifierType,
-	UserCreatedEvent,
-	UserEvent_Student
-} from './';
+import { EntityType, Instructor, Status, SystemIdentifier, SystemIdentifierType, UserCreatedEvent, UserEvent_Student, validate } from './';
 
 beforeAll(() => {
 	Caliper.settings.applicationUri = 'https://unit.test';
@@ -120,7 +110,7 @@ describe('Caliper.validate', () => {
 
 	it('validate_OK', () => {
 		const event = { ...model };
-		Caliper.validate(event);
+		validate(event);
 	});
 
 	it('validate_FAIL', () => {
@@ -129,7 +119,7 @@ describe('Caliper.validate', () => {
 
 		let errors = null;
 		try {
-			Caliper.validate(event);
+			validate(event);
 		} catch (ex) {
 			errors = ex;
 		}

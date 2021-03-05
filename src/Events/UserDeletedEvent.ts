@@ -608,9 +608,6 @@ export const UserDeletedEventSchema = {
 						default: 'Entity',
 						enum: ['Entity']
 					},
-					name: {
-						type: 'string'
-					},
 					dateCreated: {
 						type: 'string',
 						format: 'date-time'
@@ -618,6 +615,9 @@ export const UserDeletedEventSchema = {
 					dateModified: {
 						type: 'string',
 						format: 'date-time'
+					},
+					name: {
+						type: 'string'
 					},
 					id: {
 						title: 'Uri',

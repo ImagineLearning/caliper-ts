@@ -1,8 +1,10 @@
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
-import { IEvent } from './';
+
 import Caliper from './Caliper';
+import { validate } from './validate';
+import { IEvent } from './';
 
 export class Sensor {
 	private clients: Record<string, Client>;
@@ -50,7 +52,7 @@ export class Sensor {
 
 		if (Caliper.settings.isValidationEnabled) {
 			envelope.data.forEach(event => {
-				Caliper.validate(event);
+				validate(event);
 			});
 		}
 
@@ -65,7 +67,7 @@ export class Sensor {
 
 		if (Caliper.settings.isValidationEnabled) {
 			envelope.data.forEach(event => {
-				Caliper.validate(event);
+				validate(event);
 			});
 		}
 

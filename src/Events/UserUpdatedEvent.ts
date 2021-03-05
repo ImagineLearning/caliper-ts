@@ -603,13 +603,13 @@ export const UserUpdatedEventSchema = {
 				title: 'Entity',
 				type: 'object',
 				properties: {
-					name: {
-						type: 'string'
-					},
 					type: {
 						type: 'string',
 						default: 'Entity',
 						enum: ['Entity']
+					},
+					name: {
+						type: 'string'
 					},
 					dateCreated: {
 						type: 'string',
