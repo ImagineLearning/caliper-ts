@@ -1,13 +1,13 @@
 import { httpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
-import { Sensor, GroupDeletedEvent, User, Group } from './';
+import { Sensor, GroupDeletedEvent, User, Group } from '.';
 import Caliper from './Caliper';
 
 describe('Sensor', () => {
 	Caliper.settings.applicationUri = 'https://unit.test';
 	const event = GroupDeletedEvent({
 		actor: User({ id: 'https://foo.bar/user/123' }),
-		object: Group({ id: 'https://foo.bar/group/1' })
+		object: Group({ id: 'https://foo.bar/group/1' }),
 	});
 	let sensor: Sensor;
 
@@ -26,13 +26,17 @@ describe('Sensor', () => {
 		});
 
 		it('throws error on initialization if no ID provided', () => {
-			expect(() => new Sensor('')).toThrowError(new Error('Caliper Sensor identifier (id) has not been provided.'));
+			expect(() => new Sensor('')).toThrowError(
+				new Error('Caliper Sensor identifier (id) has not been provided.')
+			);
 		});
 	});
 
 	describe('createEnvelope(..)', () => {
 		it('throws error if envelope data is undefined', () => {
-			expect(() => sensor.createEnvelope({})).toThrowError(new Error('Caliper Sensor Envelope data has not been provided.'));
+			expect(() => sensor.createEnvelope({})).toThrowError(
+				new Error('Caliper Sensor Envelope data has not been provided.')
+			);
 		});
 
 		it('creates Envelope with supplied options', () => {
@@ -40,7 +44,7 @@ describe('Sensor', () => {
 				sensor: 'sensor-id',
 				data: [event],
 				dataVersion: 'data-version-1',
-				sendTime: 'now'
+				sendTime: 'now',
 			});
 			const { data, dataVersion, sendTime, sensor: id } = envelope;
 			expect(data).toEqual([event]);
@@ -61,7 +65,7 @@ describe('Sensor', () => {
 			const date = '2020-08-28T12:00:00.000Z';
 			jest.spyOn(Date, 'now').mockImplementation(() => Date.parse(date));
 			const envelope = sensor.createEnvelope({
-				data: [event]
+				data: [event],
 			});
 			const { dataVersion, sendTime, sensor: id } = envelope;
 			expect(dataVersion).toBe(getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion));
@@ -139,7 +143,9 @@ describe('Sensor', () => {
 
 		it('throws error if client not registered', () => {
 			const envelope = sensor.createEnvelope({ data: [event] });
-			expect(() => sensor.sendToClient('id', envelope)).toThrowError(new Error('Chosen Client has not been registered.'));
+			expect(() => sensor.sendToClient('id', envelope)).toThrowError(
+				new Error('Chosen Client has not been registered.')
+			);
 		});
 	});
 
@@ -158,7 +164,9 @@ describe('Sensor', () => {
 
 		it('throws error if no clients registered', () => {
 			const envelope = sensor.createEnvelope({ data: [event] });
-			expect(() => sensor.sendToClients(envelope)).toThrowError(new Error('No Clients have been registered.'));
+			expect(() => sensor.sendToClients(envelope)).toThrowError(
+				new Error('No Clients have been registered.')
+			);
 		});
 	});
 

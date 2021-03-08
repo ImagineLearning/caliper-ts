@@ -1,10 +1,10 @@
 export enum JsonLdContextVersion {
 	none = 'none',
 	v1p1 = 'v1p1',
-	v1p2 = 'v1p2'
+	v1p2 = 'v1p2',
 }
 
-type JsonLdContexts = {
+interface JsonLdContexts {
 	default: string;
 	feedback: string;
 	resourceManagement: string;
@@ -12,7 +12,7 @@ type JsonLdContexts = {
 	survey: string;
 	toolLaunch: string;
 	toolUse: string;
-};
+}
 
 export interface Config {
 	dataFormat: string;
@@ -31,15 +31,16 @@ export const DEFAULT_CONFIG: Config = {
 		[JsonLdContextVersion.v1p1]: {
 			default: 'http://purl.imsglobal.org/ctx/caliper/v1p1',
 			feedback: 'http://purl.imsglobal.org/ctx/caliper/v1p1/FeedbackProfile-extension',
-			resourceManagement: 'http://purl.imsglobal.org/ctx/caliper/v1p1/ResourceManagementProfile-extension',
+			resourceManagement:
+				'http://purl.imsglobal.org/ctx/caliper/v1p1/ResourceManagementProfile-extension',
 			search: 'http://purl.imsglobal.org/ctx/caliper/v1p1/SearchProfile-extension',
 			survey: 'http://purl.imsglobal.org/ctx/caliper/v1p1/SurveyProfile-extension',
 			toolLaunch: 'http://purl.imsglobal.org/ctx/caliper/v1p1/ToolLaunchProfile-extension',
-			toolUse: 'http://purl.imsglobal.org/ctx/caliper/v1p1/ToolUseProfile-extension'
+			toolUse: 'http://purl.imsglobal.org/ctx/caliper/v1p1/ToolUseProfile-extension',
 		},
-		[JsonLdContextVersion.v1p2]: 'http://purl.imsglobal.org/ctx/caliper/v1p2'
+		[JsonLdContextVersion.v1p2]: 'http://purl.imsglobal.org/ctx/caliper/v1p2',
 	},
-	uuidVersion: 4
+	uuidVersion: 4,
 };
 
 export function getJsonLdContext(
@@ -51,7 +52,10 @@ export function getJsonLdContext(
 	return typeof context === 'object' ? context[subVersion] : context;
 }
 
-export function compareJsonLdContextVersions(context1?: JsonLdContextVersion, context2?: JsonLdContextVersion) {
+export function compareJsonLdContextVersions(
+	context1?: JsonLdContextVersion,
+	context2?: JsonLdContextVersion
+) {
 	if (context1 === context2) {
 		return 0;
 	}

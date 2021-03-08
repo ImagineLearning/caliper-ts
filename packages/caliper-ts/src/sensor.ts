@@ -4,7 +4,7 @@ import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
 
 import Caliper from './Caliper';
 import { validate } from './validate';
-import { IEvent } from './';
+import { IEvent } from '.';
 
 export class Sensor {
 	private clients: Record<string, Client>;
@@ -24,7 +24,8 @@ export class Sensor {
 
 		const sensor = options.sensor || this.id;
 		const sendTime = options.sendTime || Caliper.timestamp();
-		const dataVersion = options.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
+		const dataVersion =
+			options.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
 		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: options.data });
 	}
 
@@ -44,14 +45,17 @@ export class Sensor {
 		this.clients[client.getId()] = client;
 	}
 
-	sendToClient<TEnvelope extends IEvent, TResponse>(client: Client | string, envelope: Envelope<TEnvelope>) {
+	sendToClient<TEnvelope extends IEvent, TResponse>(
+		client: Client | string,
+		envelope: Envelope<TEnvelope>
+	) {
 		const httpClient = this.clients[typeof client === 'string' ? client : client.getId()];
 		if (!httpClient) {
 			throw new Error('Chosen Client has not been registered.');
 		}
 
 		if (Caliper.settings.isValidationEnabled) {
-			envelope.data.forEach(event => {
+			envelope.data.forEach((event) => {
 				validate(event);
 			});
 		}
@@ -66,12 +70,12 @@ export class Sensor {
 		}
 
 		if (Caliper.settings.isValidationEnabled) {
-			envelope.data.forEach(event => {
+			envelope.data.forEach((event) => {
 				validate(event);
 			});
 		}
 
-		return Promise.all(clients.map(client => client.send<TEnvelope, TResponse>(envelope)));
+		return Promise.all(clients.map((client) => client.send<TEnvelope, TResponse>(envelope)));
 	}
 
 	unregisterClient(id: string) {

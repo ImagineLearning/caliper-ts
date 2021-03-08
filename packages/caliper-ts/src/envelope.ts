@@ -1,12 +1,12 @@
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import Caliper from './Caliper';
 
-export type Envelope<T> = {
+export interface Envelope<T> {
 	sensor: string;
 	sendTime: string;
 	dataVersion: string;
 	data: T[];
-};
+}
 
 export type EnvelopeOptions<T> = Partial<Omit<Envelope<T>, 'data' | 'sensor'>> & {
 	sensor: string;

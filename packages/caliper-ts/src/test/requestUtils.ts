@@ -21,7 +21,10 @@ function readStream(reader?: ReadableStreamDefaultReader<Uint8Array>): Promise<s
 
 	const decoder = new TextDecoder();
 
-	const processText = async (reader: ReadableStreamDefaultReader<Uint8Array>, text = ''): Promise<string> => {
+	const processText = async (
+		reader: ReadableStreamDefaultReader<Uint8Array>,
+		text = ''
+	): Promise<string> => {
 		const { done, value } = await reader.read();
 		const updatedText = text + decoder.decode(value);
 		return done ? updatedText : processText(reader, updatedText);

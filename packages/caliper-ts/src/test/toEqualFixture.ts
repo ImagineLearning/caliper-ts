@@ -1,16 +1,24 @@
 import diff from 'jest-diff';
-import { DEFAULT_CONFIG, JsonLdContextVersion } from './../config/config';
-import { EntityType } from './../entities/entityType';
-import { EventType } from './../events/eventType';
 import { startCase } from 'lodash';
-import { CaliperAction } from './../Events/CaliperAction';
+import { DEFAULT_CONFIG, JsonLdContextVersion } from '../config/config';
+import { EntityType } from '../entities/entityType';
+import { EventType } from '../events/eventType';
+import { CaliperAction } from '../Events/CaliperAction';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
 	namespace jest {
 		interface Matchers<R> {
-			toEqualEntityFixture(type: EntityType, version?: JsonLdContextVersion, extended?: string): CustomMatcherResult;
-			toEqualEventFixture(type: EventType, action: CaliperAction, version?: JsonLdContextVersion): CustomMatcherResult;
+			toEqualEntityFixture(
+				type: EntityType,
+				version?: JsonLdContextVersion,
+				extended?: string
+			): CustomMatcherResult;
+			toEqualEventFixture(
+				type: EventType,
+				action: CaliperAction,
+				version?: JsonLdContextVersion
+			): CustomMatcherResult;
 		}
 	}
 }
@@ -25,7 +33,9 @@ function tryLoadFixture(
 	// EventTypes have an 'Event' suffix that doesn't line up with the fixture file names,
 	// so we'll just trim it off.
 	const fixedType = objectType === 'event' ? type.replace(/Event?/, '') : type;
-	const path = `../caliper-spec/fixtures/${version}/caliper${startCase(objectType)}${fixedType}${extended ?? ''}.json`;
+	const path = `../caliper-spec/fixtures/${version}/caliper${startCase(objectType)}${fixedType}${
+		extended ?? ''
+	}.json`;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let content: any;
 	try {
@@ -43,7 +53,7 @@ function getMessage({
 	options,
 	pass,
 	received,
-	utils
+	utils,
 }: {
 	/* eslint-disable @typescript-eslint/no-explicit-any */
 	expand: boolean;
@@ -56,28 +66,39 @@ function getMessage({
 	/* eslint-enable */
 }) {
 	return pass
-		? () => utils.matcherHint(label, undefined, undefined, options) + `\n\nExpected: not ${expected}\nReceived: ${received}`
+		? () =>
+				`${utils.matcherHint(
+					label,
+					undefined,
+					undefined,
+					options
+				)}\n\nExpected: not ${expected}\nReceived: ${received}`
 		: () => {
 				const diffString = diff(expected, received, {
-					expand
+					expand,
 				});
-				return (
-					utils.matcherHint(label, undefined, undefined, options) +
-					'\n\n' +
-					(diffString && diffString.includes('- Expect')
+				return `${utils.matcherHint(label, undefined, undefined, options)}\n\n${
+					diffString && diffString.includes('- Expect')
 						? `Difference:\n\n${diffString}`
-						: `Expected: ${utils.printExpected(expected)}\nReceived: ${utils.printReceived(received)}`)
-				);
+						: `Expected: ${utils.printExpected(expected)}\nReceived: ${utils.printReceived(
+								received
+						  )}`
+				}`;
 		  };
 }
 
 expect.extend({
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	toEqualEntityFixture(received: any, type: EntityType, version?: JsonLdContextVersion, extended?: string) {
+	toEqualEntityFixture(
+		received: any,
+		type: EntityType,
+		version?: JsonLdContextVersion,
+		extended?: string
+	) {
 		const options = {
 			comment: 'deep equality',
 			isNot: this.isNot,
-			promise: this.promise
+			promise: this.promise,
 		};
 		const expected = tryLoadFixture(type, 'entity', version, extended);
 		const pass = this.equals(received, expected);
@@ -88,17 +109,22 @@ expect.extend({
 			options,
 			pass,
 			received,
-			utils: this.utils
+			utils: this.utils,
 		});
 
 		return { actual: received, message, pass };
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	toEqualEventFixture(received: any, type: EventType, action?: CaliperAction, version?: JsonLdContextVersion) {
+	toEqualEventFixture(
+		received: any,
+		type: EventType,
+		action?: CaliperAction,
+		version?: JsonLdContextVersion
+	) {
 		const options = {
 			comment: 'deep equality',
 			isNot: this.isNot,
-			promise: this.promise
+			promise: this.promise,
 		};
 		const expected = tryLoadFixture(type, 'event', version, action);
 		const pass = this.equals(received, expected);
@@ -109,9 +135,9 @@ expect.extend({
 			options,
 			pass,
 			received,
-			utils: this.utils
+			utils: this.utils,
 		});
 
 		return { actual: received, message, pass };
-	}
+	},
 });

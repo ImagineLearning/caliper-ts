@@ -34,7 +34,9 @@ describe('HttpClient', () => {
 			});
 
 			it('throws error if options not specified', () => {
-				expect(() => new HttpClient('id', {} as ClientOptions)).toThrowError(new Error('No options have been provided.'));
+				expect(() => new HttpClient('id', {} as ClientOptions)).toThrowError(
+					new Error('No options have been provided.')
+				);
 			});
 		});
 

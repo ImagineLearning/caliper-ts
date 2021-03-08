@@ -22,7 +22,7 @@ export class HttpClient implements Client {
 		if (token) {
 			options.headers = {
 				...options.headers,
-				Authorization: `Bearer ${token}`
+				Authorization: `Bearer ${token}`,
 			};
 		}
 		return new HttpClient(this.id, options);
@@ -40,7 +40,7 @@ export class HttpClient implements Client {
 		return ky
 			.post(this.options.uri, {
 				json: envelope,
-				headers: this.options.headers
+				headers: this.options.headers,
 			})
 			.json<TResponse>();
 	}
