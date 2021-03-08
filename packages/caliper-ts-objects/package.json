@@ -1,0 +1,29 @@
+{
+	"name": "@imaginelearning/caliper-ts-objects",
+	"version": "0.1.0",
+	"author": "Imagine Learning",
+	"license": "MIT",
+	"main": "dist/index.js",
+	"module": "dist/caliper-ts-objects.esm.js",
+	"typings": "dist/index.d.ts",
+	"files": [
+		"dist",
+		"src"
+	],
+	"engines": {
+		"node": ">=10"
+	},
+	"scripts": {
+		"start": "tsdx watch",
+		"build": "tsdx build",
+		"test": "tsdx test --watch",
+		"test:ci": "cross-env CI=true tsdx test --coverage",
+		"test:coverage": "tsdx test --coverage"
+	},
+	"peerDependencies": {},
+	"devDependencies": {
+		"tsdx": "^0.14.1",
+		"tslib": "^2.1.0",
+		"typescript": "^4.2.3"
+	}
+}

@@ -7,7 +7,8 @@
 	"license": "MIT",
 	"private": true,
 	"workspaces": [
-		"packages/caliper-ts"
+		"packages/caliper-ts",
+		"packages/caliper-ts-objects"
 	],
 	"scripts": {
 		"build:caliper-ts": "yarn --workspace packages/caliper-ts build",
