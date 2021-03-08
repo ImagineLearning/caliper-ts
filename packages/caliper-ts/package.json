@@ -18,17 +18,10 @@
 		"build": "tsdx build",
 		"test": "tsdx test --watch",
 		"test:ci": "cross-env CI=true tsdx test --coverage",
-		"test:coverage": "tsdx test --coverage",
-		"lint": "eslint \"src/**/*.{js,ts,tsx}\"",
-		"format": "prettier --config .prettierrc --ignore-path \"node_modules/**\" --write \"**/*.{css,js,json,scss,ts,tsx}\""
+		"test:coverage": "tsdx test --coverage"
 	},
 	"peerDependencies": {
 		"uuid": "^8.3.0"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
 	},
 	"devDependencies": {
 		"@types/jsonschema": "^1.1.1",
@@ -50,9 +43,6 @@
 		"tslib": "^2.0.1",
 		"typescript": "^3.9",
 		"uuid": "^8.3.0"
-	},
-	"lint-staged": {
-		"*.(css|js|json|scss|ts|tsx)": "pretty-quick --staged --config .prettierrc"
 	},
 	"dependencies": {
 		"date-fns": "^2.16.1",

@@ -1,4 +1,7 @@
 # See https://prettier.io/docs/en/ignore.html for more about ignoring files and code.
 
-*.htm
-*.html
+node_modules
+dist
+caliper-spec
+code-generator
+coverage
