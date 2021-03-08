@@ -8,6 +8,7 @@ import { CaliperAction } from '../Events/CaliperAction';
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {
 	namespace jest {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		interface Matchers<R> {
 			toEqualEntityFixture(
 				type: EntityType,
@@ -39,6 +40,7 @@ function tryLoadFixture(
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let content: any;
 	try {
+		// eslint-disable-next-line
 		content = require(path);
 	} catch {
 		// ignore
@@ -78,7 +80,7 @@ function getMessage({
 					expand,
 				});
 				return `${utils.matcherHint(label, undefined, undefined, options)}\n\n${
-					diffString && diffString.includes('- Expect')
+					diffString?.includes('- Expect')
 						? `Difference:\n\n${diffString}`
 						: `Expected: ${utils.printExpected(expected)}\nReceived: ${utils.printReceived(
 								received
@@ -88,9 +90,8 @@ function getMessage({
 }
 
 expect.extend({
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	toEqualEntityFixture(
-		received: any,
+		received: unknown,
 		type: EntityType,
 		version?: JsonLdContextVersion,
 		extended?: string
@@ -114,9 +115,8 @@ expect.extend({
 
 		return { actual: received, message, pass };
 	},
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	toEqualEventFixture(
-		received: any,
+		received: unknown,
 		type: EventType,
 		action?: CaliperAction,
 		version?: JsonLdContextVersion

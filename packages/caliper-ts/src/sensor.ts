@@ -14,7 +14,7 @@ export class Sensor {
 			throw new Error('Caliper Sensor identifier (id) has not been provided.');
 		}
 
-		this.clients = clients || {};
+		this.clients = clients ?? {};
 	}
 
 	createEnvelope<T extends IEvent>(options: Partial<EnvelopeOptions<T>>) {
@@ -22,10 +22,10 @@ export class Sensor {
 			throw new Error('Caliper Sensor Envelope data has not been provided.');
 		}
 
-		const sensor = options.sensor || this.id;
-		const sendTime = options.sendTime || Caliper.timestamp();
+		const sensor = options.sensor ?? this.id;
+		const sendTime = options.sendTime ?? Caliper.timestamp();
 		const dataVersion =
-			options.dataVersion || getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
+			options.dataVersion ?? getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
 		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: options.data });
 	}
 

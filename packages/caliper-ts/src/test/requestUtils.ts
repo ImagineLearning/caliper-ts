@@ -1,7 +1,7 @@
 import { TextDecoder } from 'text-encoding';
 
 export async function parseRequestBody(request: Request | null) {
-	const body = request && request.body;
+	const { body } = request ?? {};
 	let text: string | undefined;
 
 	const decoder = new TextDecoder();
@@ -22,12 +22,12 @@ function readStream(reader?: ReadableStreamDefaultReader<Uint8Array>): Promise<s
 	const decoder = new TextDecoder();
 
 	const processText = async (
-		reader: ReadableStreamDefaultReader<Uint8Array>,
+		streamReader: ReadableStreamDefaultReader<Uint8Array>,
 		text = ''
 	): Promise<string> => {
-		const { done, value } = await reader.read();
+		const { done, value } = await streamReader.read();
 		const updatedText = text + decoder.decode(value);
-		return done ? updatedText : processText(reader, updatedText);
+		return done ? updatedText : processText(streamReader, updatedText);
 	};
 
 	return processText(reader);

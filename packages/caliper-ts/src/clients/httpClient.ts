@@ -22,6 +22,7 @@ export class HttpClient implements Client {
 		if (token) {
 			options.headers = {
 				...options.headers,
+				// eslint-disable-next-line @typescript-eslint/naming-convention
 				Authorization: `Bearer ${token}`,
 			};
 		}

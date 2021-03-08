@@ -112,12 +112,12 @@ describe('HttpClient', () => {
 
 	describe('httpClient(..)', () => {
 		it('returns instance of HttpClient', () => {
-			const client = httpClient('id', 'https://example.com');
+			client = httpClient('id', 'https://example.com');
 			expect(client).toBeInstanceOf(HttpClient);
 		});
 
 		it('initializes client with bearer token if specified', async () => {
-			const client = httpClient('id', 'https://example.com', 'my-token');
+			client = httpClient('id', 'https://example.com', 'my-token');
 			const envelope = createEnvelope({ data: [{ hello: 'world' }], sensor: 'id' });
 			await client.send(envelope);
 			const { headers } = fetchMock.mock.calls[0][0] as Request;
