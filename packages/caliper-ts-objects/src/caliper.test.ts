@@ -1,5 +1,5 @@
-import Caliper from './Caliper';
-import { EntityType } from './';
+import Caliper from './caliper';
+import { EntityType } from './Entities/EntityType';
 
 beforeAll(() => {
 	Caliper.settings.applicationUri = 'https://unit.test';
@@ -8,7 +8,7 @@ beforeAll(() => {
 describe('Caliper.guid', () => {
 	it('Caliper.guid OK', () => {
 		const value = Caliper.guid();
-		expect(value).toMatch(/urn\:uuid\:\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
+		expect(value).toMatch(/urn:uuid:\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
 	});
 });
 
@@ -16,7 +16,7 @@ describe('Caliper.edApp', () => {
 	it('Caliper.edApp OK', () => {
 		const model = {
 			id: 'https://unit.test',
-			type: EntityType.SoftwareApplication
+			type: EntityType.SoftwareApplication,
 		};
 
 		const value = Caliper.edApp();

@@ -1,9 +1,8 @@
-import { v4 } from 'uuid';
-import intervalToDuration from 'date-fns/intervalToDuration';
 import formatISODuration from 'date-fns/formatISODuration';
-
-import { ISoftwareApplication } from './Entities/SoftwareApplication';
+import intervalToDuration from 'date-fns/intervalToDuration';
+import { v4 } from 'uuid';
 import { EntityType } from './Entities/EntityType';
+import { ISoftwareApplication } from './Entities/SoftwareApplication';
 
 interface CaliperSettings {
 	applicationUri: string | null;
@@ -13,27 +12,27 @@ interface CaliperSettings {
 type CaliperTimestamp = string;
 type CaliperDuration = string;
 
-export const settings: CaliperSettings = {
+const settings: CaliperSettings = {
 	applicationUri: null,
-	isValidationEnabled: true
+	isValidationEnabled: true,
 };
 
-export function guid() {
+function guid() {
 	return `urn:uuid:${v4()}`;
 }
 
-export function edApp(): ISoftwareApplication {
+function edApp() {
 	if (!settings.applicationUri) {
-		return null as any;
+		return null;
 	}
 
 	return {
 		id: settings.applicationUri,
-		type: EntityType.SoftwareApplication
-	};
+		type: EntityType.SoftwareApplication,
+	} as ISoftwareApplication;
 }
 
-export function timestamp(date?: Date | number | string): CaliperTimestamp {
+function timestamp(date?: Date | number | string): CaliperTimestamp {
 	let dateObj: Date;
 	if (!date) {
 		dateObj = new Date(Date.now());
@@ -47,14 +46,11 @@ export function timestamp(date?: Date | number | string): CaliperTimestamp {
 	return dateObj.toISOString();
 }
 
-export function duration(startedAtTime: Date | string, endedAtTime: Date | string): CaliperDuration {
+function duration(startedAtTime: Date | string, endedAtTime: Date | string): CaliperDuration {
 	const start = startedAtTime instanceof Date ? startedAtTime : new Date(Date.parse(startedAtTime));
 	const end = endedAtTime instanceof Date ? endedAtTime : new Date(Date.parse(endedAtTime));
 
-	const duration = intervalToDuration({ start, end });
-	const isoDuration = formatISODuration(duration);
-
-	return isoDuration;
+	return formatISODuration(intervalToDuration({ start, end }));
 }
 
 export default { settings, guid, edApp, timestamp, duration };
