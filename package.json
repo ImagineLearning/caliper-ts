@@ -11,7 +11,8 @@
 		"packages/caliper-ts-objects"
 	],
 	"scripts": {
-		"build:caliper-ts": "yarn --workspace packages/caliper-ts build",
+		"build:caliper-ts": "yarn workspace @imaginelearning/caliper-ts build",
+		"build:caliper-ts-objects": "yarn workspace @imaginelearning/caliper-ts-objects build",
 		"lint": "eslint packages/**/*.{js,ts}",
 		"format": "prettier --write **/*.{js,json,ts}"
 	},
@@ -27,6 +28,7 @@
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-prettier": "^3.3.1",
 		"husky": "^4.2.0",
+		"lint-staged": "^10.5.4",
 		"prettier": "^2.2.1",
 		"pretty-quick": "^3.1.0",
 		"typescript": "^4.2.3"
