@@ -1,12 +1,11 @@
 {
-	"include": ["packages/capliper-ts/src"],
 	"compilerOptions": {
 		"module": "esnext",
 		"lib": ["dom", "esnext"],
 		"importHelpers": true,
 		"declaration": true,
 		"sourceMap": true,
-		"rootDir": "./src",
+		"rootDir": "./",
 		"strict": true,
 		//"noUnusedLocals": true,
 		"noUnusedParameters": true,

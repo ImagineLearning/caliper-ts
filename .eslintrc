@@ -1,6 +1,10 @@
 {
 	"extends": ["@imaginelearning/eslint-config/base"],
 	"parserOptions": {
-		"project": ["./tsconfig.json", "./packages/caliper-ts/tsconfig.json"]
+		"project": [
+			"./tsconfig.json",
+			"./packages/caliper-ts/tsconfig.json",
+			"./packages/caliper-ts/tsconfig.tests.json"
+		]
 	}
 }
