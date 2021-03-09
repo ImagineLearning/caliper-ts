@@ -4,14 +4,14 @@ import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
 
 export class Sensor {
-	private clients: Record<string, Client>;
-
-	constructor(private id: string, clients?: Record<string, Client>) {
+	constructor(
+		private id: string,
+		private clients: Record<string, Client> = {},
+		private settings = Caliper.settings
+	) {
 		if (!id) {
 			throw new Error('Caliper Sensor identifier (id) has not been provided.');
 		}
-
-		this.clients = clients ?? {};
 	}
 
 	createEnvelope<T extends IEvent>(options: Partial<EnvelopeOptions<T>>) {
@@ -51,7 +51,7 @@ export class Sensor {
 			throw new Error('Chosen Client has not been registered.');
 		}
 
-		if (Caliper.settings.isValidationEnabled) {
+		if (this.settings.isValidationEnabled) {
 			envelope.data.forEach((event) => {
 				validate(event);
 			});
@@ -66,7 +66,7 @@ export class Sensor {
 			throw new Error('No Clients have been registered.');
 		}
 
-		if (Caliper.settings.isValidationEnabled) {
+		if (this.settings.isValidationEnabled) {
 			envelope.data.forEach((event) => {
 				validate(event);
 			});
