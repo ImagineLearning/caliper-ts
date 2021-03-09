@@ -1,6 +1,6 @@
 {
 	"name": "@imaginelearning/caliper-ts",
-	"version": "0.4.1",
+	"version": "1.0.0",
 	"author": "Imagine Learning",
 	"license": "MIT",
 	"main": "dist/index.js",
@@ -21,9 +21,9 @@
 		"test:coverage": "tsdx test --coverage"
 	},
 	"peerDependencies": {
-		"@imaginelearning/caliper-ts-models": "^0.1.0",
-		"jsonschema": "^1.4.0",
-		"uuid": "^8.3.0"
+		"@imaginelearning/caliper-ts-models": ">=0.1",
+		"jsonschema": ">=1.4",
+		"uuid": ">=8"
 	},
 	"devDependencies": {
 		"@imaginelearning/caliper-ts-models": "^0.1.0",
