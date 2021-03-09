@@ -78,7 +78,7 @@ namespace CodeGenerator
                 return "Caliper.timestamp()";
 
             if (valueType == typeof(SoftwareApplication))
-                return "Caliper.edApp() as ISoftwareApplication";
+                return "Caliper.edApp(settings) as ISoftwareApplication";
 
             if (typeof(IEnumerable).IsAssignableFrom(valueType))
                 return $"[{string.Join(", ", (value as IEnumerable).OfType<object>().Select(_ => _.ToCodeText()))}]";

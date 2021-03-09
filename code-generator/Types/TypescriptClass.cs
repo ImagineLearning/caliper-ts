@@ -61,6 +61,10 @@ namespace CodeGenerator.Types
             if (type == typeof(object))
                 return TypescriptPrimitive.Object;
 
+            if (type == typeof(bool)) {
+                return TypescriptPrimitive.Boolean;
+            }
+
             if (type == typeof(CaliperContext))
                 return CaliperContext;
 
@@ -200,7 +204,7 @@ namespace CodeGenerator.Types
             if (!Type.IsNested)
             {
                 var caliperPath = Type.GetRelativeDirectory(typeof(Caliper));
-                caliperImport = $"import Caliper from \"{caliperPath}caliper\";\n";
+                caliperImport = $"import Caliper, {{ CaliperSettings }} from \"{caliperPath}caliper\";\n";
                 importList = totalImports.Select(_ => (Key: _.Key, Value: string.Join(", ", _.Value.Keys))).ToList();
                 importList?.Sort((a, b) => string.Compare(a.Key, b.Key));
             }

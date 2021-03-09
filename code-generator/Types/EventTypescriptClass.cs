@@ -48,7 +48,7 @@ interface I{className}Params {{
 {string.Join('\n', options.Values.Select(option => $"\t{option};"))}
 }}
 
-export function {className}(params: I{className}Params) : {Name} {{
+export function {className}(params: I{className}Params, settings?: CaliperSettings) : {Name} {{
     return {{
         {string.Join(",\n\t\t", initializers.Select(_ => $"{_.Key}: {_.Value}"))},
         ...params

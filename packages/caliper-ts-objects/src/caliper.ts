@@ -4,13 +4,13 @@ import { v4 } from 'uuid';
 import { EntityType } from './Entities/EntityType';
 import { ISoftwareApplication } from './Entities/SoftwareApplication';
 
-interface CaliperSettings {
+export interface CaliperSettings {
 	applicationUri: string | null;
 	isValidationEnabled: boolean;
 }
 
-type CaliperTimestamp = string;
-type CaliperDuration = string;
+export type CaliperTimestamp = string;
+export type CaliperDuration = string;
 
 const settings: CaliperSettings = {
 	applicationUri: null,
@@ -21,13 +21,13 @@ function guid() {
 	return `urn:uuid:${v4()}`;
 }
 
-function edApp() {
-	if (!settings.applicationUri) {
+function edApp({ applicationUri } = settings ?? {}) {
+	if (!applicationUri) {
 		return null;
 	}
 
 	return {
-		id: settings.applicationUri,
+		id: applicationUri,
 		type: EntityType.SoftwareApplication,
 	} as ISoftwareApplication;
 }
