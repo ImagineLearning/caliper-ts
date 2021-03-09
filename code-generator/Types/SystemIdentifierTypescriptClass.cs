@@ -38,7 +38,7 @@ export interface {Name}{inheritance} {{
 }}
 
 {(!initializers.Any() ? "" : $@"
-interface I{Type.GetTypescriptName()}Params {{
+export interface I{Type.GetTypescriptName()}Params {{
 {string.Join('\n', options.Values.Select(option => $"\t{option};"))}
 }}
 

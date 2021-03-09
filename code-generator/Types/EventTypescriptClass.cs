@@ -44,7 +44,7 @@ export interface {Name}{inheritance} {{
 }}
 
 {(!initializers.Any() || Type.IsAbstract ? "" : $@"
-interface I{className}Params {{
+export interface I{className}Params {{
 {string.Join('\n', options.Values.Select(option => $"\t{option};"))}
 }}
 
