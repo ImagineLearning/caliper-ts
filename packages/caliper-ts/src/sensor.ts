@@ -7,8 +7,8 @@ import { validate } from './validate';
 export class Sensor {
 	constructor(
 		private id: string,
-		private clients: Record<string, Client> = {},
-		private settings = Caliper.settings
+		private settings = Caliper.settings,
+		private clients: Record<string, Client> = {}
 	) {
 		if (!id) {
 			throw new Error('Caliper Sensor identifier (id) has not been provided.');

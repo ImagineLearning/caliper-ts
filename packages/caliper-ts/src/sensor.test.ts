@@ -30,7 +30,7 @@ describe('Sensor', () => {
 			applicationUri: 'https://unit.test',
 			isValidationEnabled: false,
 		};
-		sensor = new Sensor('id', undefined, settings);
+		sensor = new Sensor('id', settings);
 	});
 
 	afterEach(() => {
@@ -93,7 +93,7 @@ describe('Sensor', () => {
 
 	describe('createEvent(..)', () => {
 		it('creates event with CaliperSettings from sensor', () => {
-			sensor = new Sensor('id', undefined, {
+			sensor = new Sensor('id', {
 				applicationUri: 'https://example.com',
 				isValidationEnabled: false,
 			});
@@ -111,7 +111,7 @@ describe('Sensor', () => {
 	describe('getClient(..)', () => {
 		it('returns client with specified ID', () => {
 			const client = httpClient('id-1', 'https://example.com');
-			sensor = new Sensor('id', { 'id-1': client });
+			sensor = new Sensor('id', settings, { 'id-1': client });
 			expect(sensor.getClient('id-1')).toBe(client);
 		});
 
@@ -124,7 +124,7 @@ describe('Sensor', () => {
 		it('returns array of clients', () => {
 			const client1 = httpClient('id-1', 'https://example.com/1');
 			const client2 = httpClient('id-2', 'https://example.com/2');
-			sensor = new Sensor('id', { 'id-1': client1, 'id-2': client2 });
+			sensor = new Sensor('id', settings, { 'id-1': client1, 'id-2': client2 });
 			expect(sensor.getClients()).toEqual([client1, client2]);
 		});
 
@@ -191,7 +191,7 @@ describe('Sensor', () => {
 		it('validates event before sending', () => {
 			const client = httpClient('id-1', 'https://example.com');
 			jest.spyOn(client, 'send').mockImplementation(() => Promise.resolve());
-			sensor = new Sensor('id', { 'id-1': client }, { ...settings, isValidationEnabled: true });
+			sensor = new Sensor('id', { ...settings, isValidationEnabled: true }, { 'id-1': client });
 			const envelope = sensor.createEnvelope({ data: [event] });
 			sensor.sendToClient('id-1', envelope);
 			expect(validate).toHaveBeenCalledWith(event);
@@ -206,8 +206,8 @@ describe('Sensor', () => {
 			jest.spyOn(client2, 'send').mockImplementation(() => Promise.resolve());
 			sensor = new Sensor(
 				'id',
-				{ 'id-1': client1, 'id-2': client2 },
-				{ ...settings, isValidationEnabled: false }
+				{ ...settings, isValidationEnabled: false },
+				{ 'id-1': client1, 'id-2': client2 }
 			);
 			const envelope = sensor.createEnvelope({ data: [event] });
 			sensor.sendToClients(envelope);
@@ -229,8 +229,8 @@ describe('Sensor', () => {
 			jest.spyOn(client2, 'send').mockImplementation(() => Promise.resolve());
 			sensor = new Sensor(
 				'id',
-				{ 'id-1': client1, 'id-2': client2 },
-				{ ...settings, isValidationEnabled: true }
+				{ ...settings, isValidationEnabled: true },
+				{ 'id-1': client1, 'id-2': client2 }
 			);
 			const envelope = sensor.createEnvelope({ data: [event] });
 			sensor.sendToClients(envelope);
@@ -241,7 +241,7 @@ describe('Sensor', () => {
 	describe('unregisterClient(..)', () => {
 		it('removes specified client from clients record', () => {
 			const client = httpClient('id-1', 'https://example.com/1');
-			sensor = new Sensor('id', { 'id-1': client });
+			sensor = new Sensor('id', settings, { 'id-1': client });
 			sensor.unregisterClient('id-1');
 			expect(sensor.getClient('id-1')).toBeUndefined();
 		});
