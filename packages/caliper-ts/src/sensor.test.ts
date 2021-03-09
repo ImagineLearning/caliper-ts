@@ -5,7 +5,7 @@ import {
 	GroupDeletedEvent,
 	IGroupDeletedEvent,
 	User,
-} from '@imaginelearning/caliper-ts-objects';
+} from '@imaginelearning/caliper-ts-models';
 import { httpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { Sensor } from './sensor';

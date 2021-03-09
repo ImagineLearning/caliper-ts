@@ -8,11 +8,17 @@
 	"private": true,
 	"workspaces": [
 		"packages/caliper-ts",
-		"packages/caliper-ts-objects"
+		"packages/caliper-ts-models"
 	],
 	"scripts": {
+		"build": "yarn build:caliper-ts-objects && yarn build:caliper-ts",
 		"build:caliper-ts": "yarn workspace @imaginelearning/caliper-ts build",
-		"build:caliper-ts-objects": "yarn workspace @imaginelearning/caliper-ts-objects build",
+		"build:caliper-ts-models": "yarn workspace @imaginelearning/caliper-ts-models build",
+		"test:caliper-ts": "yarn workspace @imaginelearning/caliper-ts test",
+		"test:caliper-ts-models": "yarn workspace @imaginelearning/caliper-ts-models test",
+		"test:ci": "yarn test:ci:caliper-ts-models && yarn test:ci:caliper-ts",
+		"test:ci:caliper-ts": "yarn workspace @imaginelearning/caliper-ts test:ci",
+		"test:ci:caliper-ts-models": "yarn workspace @imaginelearning/caliper-ts-models test:ci",
 		"lint": "eslint packages/**/*.{js,ts}",
 		"format": "prettier --write **/*.{js,json,ts}"
 	},

@@ -21,12 +21,12 @@
 		"test:coverage": "tsdx test --coverage"
 	},
 	"peerDependencies": {
-		"@imaginelearning/caliper-ts-objects": "^0.1.0",
+		"@imaginelearning/caliper-ts-models": "^0.1.0",
 		"jsonschema": "^1.4.0",
 		"uuid": "^8.3.0"
 	},
 	"devDependencies": {
-		"@imaginelearning/caliper-ts-objects": "^0.1.0",
+		"@imaginelearning/caliper-ts-models": "^0.1.0",
 		"@types/jsonschema": "^1.1.1",
 		"@types/lodash": "^4.14.161",
 		"@types/text-encoding": "^0.0.35",

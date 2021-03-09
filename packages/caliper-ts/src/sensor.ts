@@ -1,4 +1,4 @@
-import { Caliper, CaliperSettings, IEvent } from '@imaginelearning/caliper-ts-objects';
+import { Caliper, CaliperSettings, IEvent } from '@imaginelearning/caliper-ts-models';
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';

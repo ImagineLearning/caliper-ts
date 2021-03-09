@@ -1,4 +1,4 @@
-import { CaliperAction, EntityType, EventType } from '@imaginelearning/caliper-ts-objects';
+import { CaliperAction, EntityType, EventType } from '@imaginelearning/caliper-ts-models';
 import diff from 'jest-diff';
 import { startCase } from 'lodash';
 import { DEFAULT_CONFIG, JsonLdContextVersion } from '../config/config';

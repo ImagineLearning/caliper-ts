@@ -1,5 +1,5 @@
 import { validate as validateSchema } from 'jsonschema';
-import { IEvent, schemas } from '@imaginelearning/caliper-ts-objects';
+import { IEvent, schemas } from '@imaginelearning/caliper-ts-models';
 
 function getSchema<T extends IEvent>(event: T) {
 	const [context] = event['@context'];

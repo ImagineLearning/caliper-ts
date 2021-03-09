@@ -4,13 +4,14 @@
 		"project": [
 			"./tsconfig.json",
 			"./packages/caliper-ts/tsconfig.json",
-			"./packages/caliper-ts/tsconfig.tests.json"
+			"./packages/caliper-ts/tsconfig.tests.json",
+			"./packages/caliper-ts-models/tsconfig.json"
 		]
 	},
 	"overrides": [
 		{
 			// Overrides for generated code
-			"files": ["packages/caliper-ts-objects/src/**/*.ts"],
+			"files": ["packages/caliper-ts-models/src/**/*.ts"],
 			"rules": {
 				"@typescript-eslint/no-explicit-any": "off",
 				"@typescript-eslint/naming-convention": [

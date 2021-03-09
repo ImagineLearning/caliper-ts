@@ -1,4 +1,4 @@
-import { Caliper } from '@imaginelearning/caliper-ts-objects';
+import { Caliper } from '@imaginelearning/caliper-ts-models';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 
 export interface Envelope<T> {

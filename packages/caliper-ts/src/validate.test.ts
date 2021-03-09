@@ -9,7 +9,7 @@ import {
 	User,
 	UserCreatedEvent,
 	UserEvent_Student,
-} from '@imaginelearning/caliper-ts-objects';
+} from '@imaginelearning/caliper-ts-models';
 import { validate } from './validate';
 
 describe('validate(..)', () => {
