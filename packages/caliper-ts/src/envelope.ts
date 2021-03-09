@@ -10,7 +10,7 @@ export interface Envelope<T> {
 
 export type EnvelopeOptions<T> = Partial<Omit<Envelope<T>, 'data' | 'sensor'>> & {
 	sensor: string;
-	data?: T[];
+	data?: T | T[];
 };
 
 export function createEnvelope<T>(options: EnvelopeOptions<T>) {

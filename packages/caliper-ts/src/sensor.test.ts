@@ -1,19 +1,39 @@
-import { Caliper, Group, GroupDeletedEvent, User } from '@imaginelearning/caliper-ts-objects';
+import {
+	CaliperSettings,
+	Group,
+	GroupDeletedEvent,
+	IGroupDeletedEvent,
+	User,
+	validate,
+} from '@imaginelearning/caliper-ts-objects';
 import { httpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { Sensor } from './sensor';
 
+jest.mock('@imaginelearning/caliper-ts-objects', () => {
+	const actual = jest.requireActual('@imaginelearning/caliper-ts-objects');
+	return {
+		...actual,
+		validate: jest.fn(),
+	};
+});
+
 describe('Sensor', () => {
-	Caliper.settings.applicationUri = 'https://unit.test';
-	const event = GroupDeletedEvent({
-		actor: User({ id: 'https://foo.bar/user/123' }),
-		object: Group({ id: 'https://foo.bar/group/1' }),
-	});
+	let event: IGroupDeletedEvent;
 	let sensor: Sensor;
+	let settings: CaliperSettings;
 
 	beforeEach(() => {
 		jest.resetAllMocks();
-		sensor = new Sensor('id');
+		event = GroupDeletedEvent({
+			actor: User({ id: 'https://foo.bar/user/123' }),
+			object: Group({ id: 'https://foo.bar/group/1' }),
+		});
+		settings = {
+			applicationUri: 'https://unit.test',
+			isValidationEnabled: false,
+		};
+		sensor = new Sensor('id', undefined, settings);
 	});
 
 	afterEach(() => {
@@ -53,13 +73,13 @@ describe('Sensor', () => {
 			expect(id).toBe('sensor-id');
 		});
 
-		// it('converts data to array if it is not already an array', () => {
-		// 	const envelope = sensor.createEnvelope({
-		// 		data: event
-		// 	});
-		// 	const { data } = envelope;
-		// 	expect(data).toEqual([{ hello: 'world' }]);
-		// });
+		it('converts data to array if it is not already an array', () => {
+			const envelope = sensor.createEnvelope({
+				data: event,
+			});
+			const { data } = envelope;
+			expect(data).toEqual([event]);
+		});
 
 		it('create Envelope with default options if not supplied', () => {
 			const date = '2020-08-28T12:00:00.000Z';
@@ -123,10 +143,6 @@ describe('Sensor', () => {
 	});
 
 	describe('sendToClient(..)', () => {
-		beforeEach(() => {
-			Caliper.settings.isValidationEnabled = false;
-		});
-
 		it('sends envelope to specified client', () => {
 			const client = httpClient('id-1', 'https://example.com');
 			jest.spyOn(client, 'send').mockImplementation(() => Promise.resolve());
@@ -151,6 +167,15 @@ describe('Sensor', () => {
 				new Error('Chosen Client has not been registered.')
 			);
 		});
+
+		it('validates event before sending', () => {
+			const client = httpClient('id-1', 'https://example.com');
+			jest.spyOn(client, 'send').mockImplementation(() => Promise.resolve());
+			sensor = new Sensor('id', { 'id-1': client }, { ...settings, isValidationEnabled: true });
+			const envelope = sensor.createEnvelope({ data: [event] });
+			sensor.sendToClient('id-1', envelope);
+			expect(validate).toHaveBeenCalledWith(event);
+		});
 	});
 
 	describe('sendToClients(..)', () => {
@@ -159,7 +184,11 @@ describe('Sensor', () => {
 			jest.spyOn(client1, 'send').mockImplementation(() => Promise.resolve());
 			const client2 = httpClient('id-2', 'https://example.com/2');
 			jest.spyOn(client2, 'send').mockImplementation(() => Promise.resolve());
-			sensor = new Sensor('id', { 'id-1': client1, 'id-2': client2 });
+			sensor = new Sensor(
+				'id',
+				{ 'id-1': client1, 'id-2': client2 },
+				{ ...settings, isValidationEnabled: false }
+			);
 			const envelope = sensor.createEnvelope({ data: [event] });
 			sensor.sendToClients(envelope);
 			expect(client1.send).toHaveBeenCalledWith(envelope);
@@ -171,6 +200,21 @@ describe('Sensor', () => {
 			expect(() => sensor.sendToClients(envelope)).toThrowError(
 				new Error('No Clients have been registered.')
 			);
+		});
+
+		it('validates event before sending', () => {
+			const client1 = httpClient('id-1', 'https://example.com/1');
+			jest.spyOn(client1, 'send').mockImplementation(() => Promise.resolve());
+			const client2 = httpClient('id-2', 'https://example.com/2');
+			jest.spyOn(client2, 'send').mockImplementation(() => Promise.resolve());
+			sensor = new Sensor(
+				'id',
+				{ 'id-1': client1, 'id-2': client2 },
+				{ ...settings, isValidationEnabled: true }
+			);
+			const envelope = sensor.createEnvelope({ data: [event] });
+			sensor.sendToClients(envelope);
+			expect(validate).toHaveBeenCalledWith(event);
 		});
 	});
 
