@@ -10,6 +10,8 @@ namespace CodeGenerator.Types
 
         public static TypescriptPrimitive Number { get; } = new TypescriptPrimitive(typeof(long), "number");
 
+        public static TypescriptPrimitive Boolean { get; } = new TypescriptPrimitive(typeof(bool), "boolean");
+
         public TypescriptPrimitive(Type type, string name) : base(type, name) { }
     }
 }
