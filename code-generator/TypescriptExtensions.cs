@@ -30,8 +30,10 @@ namespace CodeGenerator
                     break;
             }
 
-            var pathBuilder = new StringBuilder("./");
+            var pathBuilder = new StringBuilder();
             source.ForEach(_ => pathBuilder.Append("../"));
+            if (pathBuilder.Length == 0)
+                pathBuilder.Append("./");
             target.ForEach(_ => pathBuilder.Append(_ + "/"));
             return pathBuilder.ToString();
         }
@@ -44,7 +46,7 @@ namespace CodeGenerator
 
         public static string ToCamelCase(this string text)
         {
-            return specialCharacterRegex.Match(text).Success ? $"[\"{text}\"]" : $"{char.ToLower(text[0])}{text.Substring(1)}";
+            return specialCharacterRegex.Match(text).Success ? $"\"{text}\"" : $"{char.ToLower(text[0])}{text.Substring(1)}";
         }
 
         public static bool IsDefault(this object value)
@@ -76,7 +78,7 @@ namespace CodeGenerator
                 return "Caliper.timestamp()";
 
             if (valueType == typeof(SoftwareApplication))
-                return "Caliper.edApp()";
+                return "Caliper.edApp() as ISoftwareApplication";
 
             if (typeof(IEnumerable).IsAssignableFrom(valueType))
                 return $"[{string.Join(", ", (value as IEnumerable).OfType<object>().Select(_ => _.ToCodeText()))}]";
