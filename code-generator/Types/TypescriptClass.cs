@@ -200,7 +200,7 @@ namespace CodeGenerator.Types
             if (!Type.IsNested)
             {
                 var caliperPath = Type.GetRelativeDirectory(typeof(Caliper));
-                caliperImport = $"import Caliper from \"{caliperPath}Caliper\";\n";
+                caliperImport = $"import Caliper from \"{caliperPath}caliper\";\n";
                 importList = totalImports.Select(_ => (Key: _.Key, Value: string.Join(", ", _.Value.Keys))).ToList();
                 importList?.Sort((a, b) => string.Compare(a.Key, b.Key));
             }
