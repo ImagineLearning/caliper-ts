@@ -1,5 +1,6 @@
 import {
 	CaliperSettings,
+	EntityType,
 	Group,
 	GroupDeletedEvent,
 	IGroupDeletedEvent,
@@ -87,6 +88,23 @@ describe('Sensor', () => {
 			expect(dataVersion).toBe(getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion));
 			expect(sendTime).toBe(date);
 			expect(id).toBe('id');
+		});
+	});
+
+	describe('createEvent(..)', () => {
+		it('creates event with CaliperSettings from sensor', () => {
+			sensor = new Sensor('id', undefined, {
+				applicationUri: 'https://example.com',
+				isValidationEnabled: false,
+			});
+			const { edApp } = sensor.createEvent(GroupDeletedEvent, {
+				actor: User({ id: 'https://foo.bar/user/123' }),
+				object: Group({ id: 'https://foo.bar/group/1' }),
+			});
+			expect(edApp).toEqual({
+				id: 'https://example.com',
+				type: EntityType.SoftwareApplication,
+			});
 		});
 	});
 

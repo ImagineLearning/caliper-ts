@@ -1,4 +1,4 @@
-import { Caliper, IEvent } from '@imaginelearning/caliper-ts-objects';
+import { Caliper, CaliperSettings, IEvent } from '@imaginelearning/caliper-ts-objects';
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
@@ -25,6 +25,13 @@ export class Sensor {
 		const dataVersion =
 			options.dataVersion ?? getJsonLdContext(DEFAULT_CONFIG, DEFAULT_CONFIG.dataVersion);
 		return createEnvelope<T>({ sensor, sendTime, dataVersion, data: options.data });
+	}
+
+	createEvent<TEvent extends IEvent, TParams>(
+		eventFactory: (params: TParams, settings?: CaliperSettings) => TEvent,
+		params: TParams
+	) {
+		return eventFactory(params, this.settings);
 	}
 
 	getClient(id: string) {
