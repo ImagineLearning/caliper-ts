@@ -1,9 +1,7 @@
+import { CaliperAction, EntityType, EventType } from '@imaginelearning/caliper-ts-objects';
 import diff from 'jest-diff';
 import { startCase } from 'lodash';
 import { DEFAULT_CONFIG, JsonLdContextVersion } from '../config/config';
-import { EntityType } from '../entities/entityType';
-import { EventType } from '../events/eventType';
-import { CaliperAction } from '../Events/CaliperAction';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 declare global {

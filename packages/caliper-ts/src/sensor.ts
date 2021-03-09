@@ -1,10 +1,7 @@
+import { Caliper, IEvent, validate } from '@imaginelearning/caliper-ts-objects';
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
-
-import Caliper from './Caliper';
-import { validate } from './validate';
-import { IEvent } from '.';
 
 export class Sensor {
 	private clients: Record<string, Client>;

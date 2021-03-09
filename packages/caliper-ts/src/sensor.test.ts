@@ -1,7 +1,7 @@
+import { Caliper, Group, GroupDeletedEvent, User } from '@imaginelearning/caliper-ts-objects';
 import { httpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
-import { Sensor, GroupDeletedEvent, User, Group } from '.';
-import Caliper from './Caliper';
+import { Sensor } from './sensor';
 
 describe('Sensor', () => {
 	Caliper.settings.applicationUri = 'https://unit.test';
@@ -123,6 +123,10 @@ describe('Sensor', () => {
 	});
 
 	describe('sendToClient(..)', () => {
+		beforeEach(() => {
+			Caliper.settings.isValidationEnabled = false;
+		});
+
 		it('sends envelope to specified client', () => {
 			const client = httpClient('id-1', 'https://example.com');
 			jest.spyOn(client, 'send').mockImplementation(() => Promise.resolve());
