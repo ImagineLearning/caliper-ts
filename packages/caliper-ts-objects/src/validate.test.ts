@@ -1,17 +1,15 @@
-import Caliper from './Caliper';
-import {
-	IEvent,
-	Instructor,
-	Organization,
-	OrganizationActivatedEvent,
-	Status,
-	SystemIdentifier,
-	SystemIdentifierType,
-	User,
-	UserCreatedEvent,
-	UserEvent_Student,
-	validate
-} from './';
+import Caliper from './caliper';
+import { Instructor } from './Entities/Instructor';
+import { Organization } from './Entities/Organization';
+import { Status } from './Entities/Status';
+import { User } from './Entities/User';
+import { IEvent } from './Events/Event';
+import { UserEvent_Student } from './Events/Internals/UserEvent';
+import { OrganizationActivatedEvent } from './Events/OrganizationActivatedEvent';
+import { UserCreatedEvent } from './Events/UserCreatedEvent';
+import { SystemIdentifier } from './SystemIdentifier';
+import { SystemIdentifierType } from './SystemIdentifierType';
+import { validate } from './validate';
 
 describe('Caliper.validate', () => {
 	Caliper.settings.applicationUri = 'https://unit.test';
@@ -44,30 +42,30 @@ describe('Caliper.validate', () => {
 					SystemIdentifier({
 						sourceUrl: 'https://nwea.org',
 						identifier: 'https://nwea.org/fake-user/8c9a5212-c91c-4904-a3e6-ba98aa7d640f',
-						identifierType: SystemIdentifierType.SystemId
+						identifierType: SystemIdentifierType.SystemId,
 					}),
 					SystemIdentifier({
 						sourceUrl: 'https://whatever.com/external',
 						identifier: '8ece0ac2-b4cd-4e66-ae26-a59cec4edad7',
-						identifierType: SystemIdentifierType.SystemId
+						identifierType: SystemIdentifierType.SystemId,
 					}),
 					SystemIdentifier({
 						sourceUrl: 'https://renaissance.com',
 						identifier: 'ABC0005',
-						identifierType: SystemIdentifierType.SystemId
+						identifierType: SystemIdentifierType.SystemId,
 					}),
 					SystemIdentifier({
 						sourceUrl: 'https://the-lmsadmin-url.com',
 						identifier: '12345',
-						identifierType: SystemIdentifierType.SystemId
-					})
+						identifierType: SystemIdentifierType.SystemId,
+					}),
 				],
 				settings: {
 					spanishLanguage: ['math'],
 					languageTranslationTools: ['math', 'reading'],
-					textToSpeech: ['math', 'reading']
-				}
-			})
+					textToSpeech: ['math', 'reading'],
+				},
+			}),
 		});
 		validate(event);
 	});
@@ -75,7 +73,7 @@ describe('Caliper.validate', () => {
 	it('validate_OK_OrganizationEvent', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
-			object: Organization({ id: 'https://foo.bar/organization/1' })
+			object: Organization({ id: 'https://foo.bar/organization/1' }),
 		});
 		validate(event);
 	});
@@ -83,7 +81,7 @@ describe('Caliper.validate', () => {
 	it('validate_FAIL_InvalidEventId', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
-			object: Organization({ id: 'https://foo.bar/organization/1' })
+			object: Organization({ id: 'https://foo.bar/organization/1' }),
 		});
 		event.id = 'this-is-not-a-valid-event-id';
 
@@ -94,7 +92,7 @@ describe('Caliper.validate', () => {
 	it('validate_FAIL_InvalidTimestamp', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
-			object: Organization({ id: 'https://foo.bar/organization/1' })
+			object: Organization({ id: 'https://foo.bar/organization/1' }),
 		});
 		event.eventTime = 'whatever, blah blah';
 
@@ -105,7 +103,7 @@ describe('Caliper.validate', () => {
 	it('validate_FAIL_InvalidEntityId', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'invalid-id' }),
-			object: Organization({ id: 'whatever I dont care' })
+			object: Organization({ id: 'whatever I dont care' }),
 		});
 
 		const errors = getValidationErrors(event);

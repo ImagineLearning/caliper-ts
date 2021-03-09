@@ -1,21 +1,15 @@
-import { Validator } from 'jsonschema';
-
+import { validate as validateSchema } from 'jsonschema';
 import { IEvent } from './Events/Event';
 import { schemas } from './schemas';
 
 export function getSchema(event: IEvent) {
-	return schemas[event['@context'][0]];
+	const [context] = event['@context'];
+	return schemas[context];
 }
 
-export function validate(event: IEvent, schema?: { [key: string]: any }) {
-	if (!schema) {
-		schema = getSchema(event);
-	}
-
-	const result = validator.validate(event, schema);
-	if (!result.valid) {
-		throw result.errors.map(error => error.stack);
+export function validate(event: IEvent, schema?: Record<string, any>) {
+	const { errors, valid } = validateSchema(event, schema ?? getSchema(event));
+	if (!valid) {
+		throw errors.map((error) => error.stack);
 	}
 }
-
-const validator = new Validator();
