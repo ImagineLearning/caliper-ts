@@ -83,5 +83,5 @@ export enum EntityType {
 	PlacementScore = 'PlacementScore',
 	UserSession = 'UserSession',
 	EducationStandard = 'EducationStandard',
-	Domain = 'Domain'
+	Domain = 'Domain',
 }

@@ -11,5 +11,5 @@ export enum SystemIdentifierType {
 	OneRosterSourcedId = 'OneRosterSourcedId',
 	Other = 'Other',
 	SisSourcedId = 'SisSourcedId',
-	SystemId = 'SystemId'
+	SystemId = 'SystemId',
 }

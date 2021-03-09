@@ -5,5 +5,5 @@ export enum LoginType {
 	CleverApi = 'CleverApi',
 	LtiSSO = 'LtiSSO',
 	GoogleAuthentication = 'GoogleAuthentication',
-	ApplicationLoginPage = 'ApplicationLoginPage'
+	ApplicationLoginPage = 'ApplicationLoginPage',
 }

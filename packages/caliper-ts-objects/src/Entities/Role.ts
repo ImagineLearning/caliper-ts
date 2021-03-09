@@ -57,5 +57,5 @@ export enum Role {
 	OFFICER_CHAIR = 'Officer#Chair',
 	OFFICER_SECRETARY = 'Officer#Secretary',
 	OFFICER_TREASURER = 'Officer#Treasurer',
-	OFFICER_VICE_CHAIR = 'Officer#Vice-Chair'
+	OFFICER_VICE_CHAIR = 'Officer#Vice-Chair',
 }

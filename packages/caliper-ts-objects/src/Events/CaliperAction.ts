@@ -80,5 +80,5 @@ export enum CaliperAction {
 	Unsubscribed = 'Unsubscribed',
 	Uploaded = 'Uploaded',
 	Used = 'Used',
-	Viewed = 'Viewed'
+	Viewed = 'Viewed',
 }

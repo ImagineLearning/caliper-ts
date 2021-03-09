@@ -13,5 +13,5 @@ export enum CaliperProfile {
 	SearchProfile = 'SearchProfile',
 	SessionProfile = 'SessionProfile',
 	ToolLaunchProfile = 'ToolLaunchProfile',
-	ToolUseProfile = 'ToolUseProfile'
+	ToolUseProfile = 'ToolUseProfile',
 }

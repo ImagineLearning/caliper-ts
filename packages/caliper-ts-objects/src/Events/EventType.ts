@@ -29,5 +29,5 @@ export enum EventType {
 	PlacementEvent = 'PlacementEvent',
 	IlpEvent = 'IlpEvent',
 	LessonEvent = 'LessonEvent',
-	MembershipEvent = 'MembershipEvent'
+	MembershipEvent = 'MembershipEvent',
 }
