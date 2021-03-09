@@ -1,7 +1,8 @@
-import { Caliper, IEvent, validate } from '@imaginelearning/caliper-ts-objects';
+import { Caliper, IEvent } from '@imaginelearning/caliper-ts-objects';
 import { Client } from './clients/client';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { createEnvelope, Envelope, EnvelopeOptions } from './envelope';
+import { validate } from './validate';
 
 export class Sensor {
 	constructor(
@@ -36,6 +37,10 @@ export class Sensor {
 
 	getId() {
 		return this.id;
+	}
+
+	getSettings() {
+		return this.settings;
 	}
 
 	registerClient(client: Client) {

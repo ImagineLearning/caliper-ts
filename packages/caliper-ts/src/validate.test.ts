@@ -1,30 +1,27 @@
-import Caliper from './caliper';
-import { Instructor } from './Entities/Instructor';
-import { Organization } from './Entities/Organization';
-import { Status } from './Entities/Status';
-import { User } from './Entities/User';
-import { IEvent } from './Events/Event';
-import { UserEvent_Student } from './Events/Internals/UserEvent';
-import { OrganizationActivatedEvent } from './Events/OrganizationActivatedEvent';
-import { UserCreatedEvent } from './Events/UserCreatedEvent';
-import { SystemIdentifier } from './SystemIdentifier';
-import { SystemIdentifierType } from './SystemIdentifierType';
+import {
+	Caliper,
+	Instructor,
+	Organization,
+	OrganizationActivatedEvent,
+	Status,
+	SystemIdentifier,
+	SystemIdentifierType,
+	User,
+	UserCreatedEvent,
+	UserEvent_Student,
+} from '@imaginelearning/caliper-ts-objects';
 import { validate } from './validate';
 
-describe('Caliper.validate', () => {
-	Caliper.settings.applicationUri = 'https://unit.test';
+describe('validate(..)', () => {
+	beforeEach(() => {
+		Caliper.settings.applicationUri = 'https://unit.test';
+	});
 
-	const getValidationErrors = (event: IEvent) => {
-		let errors = null;
-		try {
-			validate(event);
-		} catch (ex) {
-			errors = ex;
-		}
-		return errors;
-	};
+	afterEach(() => {
+		Caliper.settings.applicationUri = undefined;
+	});
 
-	it('validate_OK_UserEvent', () => {
+	it('passes for valid UserCreatedEvent', () => {
 		const timestamp = Caliper.timestamp(new Date());
 		const event = UserCreatedEvent({
 			actor: Instructor({ id: 'https://foo.bar/user/1' }),
@@ -67,46 +64,43 @@ describe('Caliper.validate', () => {
 				},
 			}),
 		});
-		validate(event);
+		expect(() => validate(event)).not.toThrowError();
 	});
 
-	it('validate_OK_OrganizationEvent', () => {
+	it('passes for valid OrganizationActivatedEvent', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
 			object: Organization({ id: 'https://foo.bar/organization/1' }),
 		});
-		validate(event);
+		expect(() => validate(event)).not.toThrowError();
 	});
 
-	it('validate_FAIL_InvalidEventId', () => {
+	it('throws error for invalid ID', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
 			object: Organization({ id: 'https://foo.bar/organization/1' }),
 		});
 		event.id = 'this-is-not-a-valid-event-id';
 
-		const errors = getValidationErrors(event);
-		expect(errors.length).toBeGreaterThan(0);
+		expect(() => validate(event)).toThrowError();
 	});
 
-	it('validate_FAIL_InvalidTimestamp', () => {
+	it('throws error for invalid timestamp', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'https://foo.bar/user/1' }),
 			object: Organization({ id: 'https://foo.bar/organization/1' }),
 		});
 		event.eventTime = 'whatever, blah blah';
 
-		const errors = getValidationErrors(event);
-		expect(errors.length).toBeGreaterThan(0);
+		expect(() => validate(event)).toThrowError();
 	});
 
-	it('validate_FAIL_InvalidEntityId', () => {
+	it('throws error for invalid entity ID', () => {
 		const event = OrganizationActivatedEvent({
 			actor: User({ id: 'invalid-id' }),
 			object: Organization({ id: 'whatever I dont care' }),
 		});
 
-		const errors = getValidationErrors(event);
-		expect(errors.length).toBeGreaterThan(0);
+		expect(() => validate(event)).toThrowError();
 	});
 });

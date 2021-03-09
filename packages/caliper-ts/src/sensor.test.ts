@@ -4,19 +4,15 @@ import {
 	GroupDeletedEvent,
 	IGroupDeletedEvent,
 	User,
-	validate,
 } from '@imaginelearning/caliper-ts-objects';
 import { httpClient } from './clients/httpClient';
 import { DEFAULT_CONFIG, getJsonLdContext } from './config/config';
 import { Sensor } from './sensor';
+import { validate } from './validate';
 
-jest.mock('@imaginelearning/caliper-ts-objects', () => {
-	const actual = jest.requireActual('@imaginelearning/caliper-ts-objects');
-	return {
-		...actual,
-		validate: jest.fn(),
-	};
-});
+jest.mock('./validate', () => ({
+	validate: jest.fn(),
+}));
 
 describe('Sensor', () => {
 	let event: IGroupDeletedEvent;
@@ -122,6 +118,12 @@ describe('Sensor', () => {
 	describe('getId()', () => {
 		it('returns sensor ID', () => {
 			expect(sensor.getId()).toBe('id');
+		});
+	});
+
+	describe('getSettings()', () => {
+		it('returns current settings object', () => {
+			expect(sensor.getSettings()).toEqual(settings);
 		});
 	});
 
