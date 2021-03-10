@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"author": "Imagine Learning",
 	"license": "MIT",
+	"repository": "git@github.com:ImagineLearning/caliper-ts.git",
 	"main": "dist/index.js",
 	"module": "dist/caliper-ts.esm.js",
 	"typings": "dist/index.d.ts",
