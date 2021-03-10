@@ -23,6 +23,7 @@
 	"peerDependencies": {},
 	"devDependencies": {
 		"cross-env": "^7.0.2",
+		"jest-teamcity-reporter": "^0.9.0",
 		"tsdx": "^0.14.1",
 		"tslib": "^2.1.0",
 		"typescript": "^4.2.3"
