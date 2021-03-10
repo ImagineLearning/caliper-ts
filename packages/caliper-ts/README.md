@@ -14,16 +14,16 @@ To install it, you will need to configure your project by adding a `.npmrc` file
 @imaginelearning:registry=https://npm.pkg.github.com
 ```
 
-You can then install it using npm or yarn.
+You can then install it using npm or yarn. You will also need to install the _caliper-ts-models_ package as a peer dependency.
 
 ```sh
-npm install @imaginelearning/caliper-ts
+npm install @imaginelearning/caliper-ts @imaginelearning/caliper-ts-models
 ```
 
 Or
 
 ```sh
-yarn add @imaginelearning/caliper-ts
+yarn add @imaginelearning/caliper-ts @imaginelearning/caliper-ts-models
 ```
 
 ## Caliper vocabulary
@@ -544,75 +544,3 @@ const urn = getFormattedUrnUuid('ff9ec22a-fc59-4ae1-ae8d-2c9463ee2f8f');
 console.log(urn);
 // => "urn:uuid:ff9ec22a-fc59-4ae1-ae8d-2c9463ee2f8f"
 ```
-
-## Local development
-
-This project was bootstrapped with [TSDX](https://tsdx.io/).
-
-### Commands
-
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
-
-```bash
-yarn start
-```
-
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-To do a one-off build, use `yarn build`.
-
-To run tests, use `yarn test`.
-
-### Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`.
-
-#### Jest
-
-Jest tests are set up to run with `yarn test`. You can generate a code coverage report with `yarn test:coverage`.
-
-#### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-#### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-### Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-	console.log('foo');
-}
-```
-
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-### Module formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-### Named exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your app instead of your library.
-
----
-
----
-
-## Code Generation
-
-The **code-generator** C# project included in this repo is used to generate typescript definitions for events and entities using the .NET Caliper Sensor Library.
-
-A **generate-caliper.ps1** script file is also included to execute the code-generator project. Before running this script file, it is recommended to first update the nuget package for the .NET caliper sensor library.

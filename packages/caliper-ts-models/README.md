@@ -1,99 +1,68 @@
-# TSDX User Guide
+# caliper-ts-models
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+The [Caliper Analytics&reg; Specification](https://www.imsglobal.org/caliper/v1p1/caliper-spec-v1p1) provides a structured approach to describing, collecting and exchanging learning activity data at scale.
+Caliper also defines an application programming interface (the Sensor API™) for marshalling and transmitting event data from instrumented applications to target endpoints for storage, analysis and use.
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+_caliper-ts-models_ is a reference implementation of Caliper Entities and Events written in TypeScript, generated from the [.NET Caliper Sensor Library](https://github.com/edgenuity/caliper-net).
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+## Installation
 
-## Commands
+The _caliper-ts-models_ package is available on [GitHub Package Registry](https://github.com/ImagineLearning/caliper-ts/packages).
+To install it, you will need to configure your project by adding a `.npmrc` file to the project root with the following content:
 
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
-
-```bash
-npm start # or yarn start
+```
+@imaginelearning:registry=https://npm.pkg.github.com
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+You can then install it using npm or yarn.
 
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```sh
+npm install @imaginelearning/caliper-ts-models
 ```
 
-### Rollup
+Or
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-A simple action is included that runs these steps on all pushes:
-
-- Installs deps w/ cache
-- Lints, tests, and builds
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
+```sh
+yarn add @imaginelearning/caliper-ts-models
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+## Usage
 
-## Module Formats
+_caliper-ts-models_ provides a number of interfaces and factory functions to facilitate working with the Sensor API in a consistent way.
 
-CJS, ESModules, and UMD module formats are supported.
+**NOTE:** To actually send Caliper Events you will need a Caliper Sensor, such as the one provided through the [_caliper-ts_ library](../caliper-ts/REAMDE.md).
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+### Basic example
 
-## Named Exports
+Below is a basic example of creating an event using the factory functions.
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+```ts
+// Set Event property values
+// Note: only actor and object property assignments shown
+const actor = Person({ id: 'https://example.edu/users/554433' });
+const object = Assessment({
+	id: 'https://example.edu/terms/201801/courses/7/sections/1/assess/1',
+	dateToStartOn: getFormattedDateTime('2018-08-16T05:00:00.000Z'),
+	dateToSubmit: getFormattedDateTime('2018-09-28T11:59:59.000Z'),
+	maxAttempts: 1,
+	maxScore: 25.0,
+	// ... add additional optional property assignments
+});
 
-## Including Styles
+// ... Use the entity factories to mint additional entity values.
+const membership = Membership({
+	// ...
+});
+const session = Session({
+	// ...
+});
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+// Create Event
+const event = AssessmentEvent({
+	actor,
+	action: Action.Started,
+	object,
+	membership,
+	session,
+});
+```
