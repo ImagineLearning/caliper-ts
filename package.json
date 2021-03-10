@@ -11,7 +11,7 @@
 		"packages/caliper-ts-models"
 	],
 	"scripts": {
-		"build": "yarn build:caliper-ts-objects && yarn build:caliper-ts",
+		"build": "yarn build:caliper-ts-models && yarn build:caliper-ts",
 		"build:caliper-ts": "yarn workspace @imaginelearning/caliper-ts build",
 		"build:caliper-ts-models": "yarn workspace @imaginelearning/caliper-ts-models build",
 		"test:caliper-ts": "yarn workspace @imaginelearning/caliper-ts test",
